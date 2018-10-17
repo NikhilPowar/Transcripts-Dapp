@@ -1,4 +1,8 @@
-# Ang6Dapp
+# Digital Identity Management
+
+This project is a fully decentralized app based on blockchain and IPFS. The app will provide a simple user-friendly interface to view and manage all documents related to identity. 
+
+# Angular Info
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
 
