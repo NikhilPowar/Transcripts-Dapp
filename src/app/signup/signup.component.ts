@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators,FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import {RegisterService} from '../register.service';
+import { Subscriber } from '../../../node_modules/rxjs';
+declare var g;
+//declare var f;
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
+
+//static hash:null; tr;
+
 
 export class SignupComponent implements OnInit {
   
@@ -19,6 +26,11 @@ export class SignupComponent implements OnInit {
   submitted = false;
   content;
   str;
+ hash;
+  static f;
+  getter(){ return SignupComponent.f; }
+  setter(val) { SignupComponent.f = val; }
+
   constructor(private formBuilder: FormBuilder,private regservice: RegisterService) { 
     
   }
@@ -32,6 +44,36 @@ export class SignupComponent implements OnInit {
   });
   }
 
+
+  add_to_ipfs(data,h)
+  {
+    const IPFS = require('ipfs-mini');
+    const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol: 'https'});
+    //get hash
+    ipfs.add(data, function(err, hash){
+      if (err) {
+        return console.log(err);
+      }
+      else{
+      console.log("HASH returned: ", hash);
+      //this.hash=hash;
+      ipfs.cat(hash, (err, data) => {
+        if (err) {
+          return console.log(err);
+        }
+        
+        console.log("DATA:", data);
+        });
+      //this.setter(hash);
+      //console.log("this.hash: ", g);
+      }
+     });
+
+     
+    
+     
+
+  }
   copyMessage(val: string){
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -55,23 +97,45 @@ export class SignupComponent implements OnInit {
     this.loading = true;
     this.regservice.generateAccount().subscribe(
       res=>{
-        this.content=res
-        this.str=JSON.stringify(this.content);
-        console.log(this.str);
-        this.copyMessage(this.str)
-        //alert("Credentials are copied to clipboard. Please save them somewhere safe!!");
+        
+        this.setter(JSON.stringify(res));
+        console.log("Data: ",this.getter());
+        var x;
+        this.add_to_ipfs(this.getter(),x);
+
+
+        //this.copyMessage(this.str)
+        //alert("Credentials are copied to clipboard. Please save them somewhere safe!!");        
+      }
+    );
        
-const IPFS = require('ipfs-mini');
-const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol: 'https'});
-        const randomData = this.str; 
-        ipfs.add(randomData, (err, hash) => {
+       // const IPFS = require('ipfs-mini');
+        //const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol: 'https'});
+        //const randomData = this.getter(); 
+
+      //send data to ipfs
+      /*ipfs.add(randomData, function(err, hash){
         if (err) {
           return console.log(err);
         }
-        
-        console.log("HASH:", hash);
-        });
-      }
-    );
+        else{
+        console.log("HASH returned: ", hash);
+        //this.hash=hash;
+        g=hash;
+        //this.setter(hash);
+        //console.log("this.hash: ", g);
+        }
+       });
+
+       //console.log("this.hash: ", g);
+          //console.log(this.hash);
+        //get data from ipfs
+          ipfs.cat(g, (err, data) => {
+          if (err) {
+            return console.log(err);
+          }
+          
+          console.log("DATA:", data);
+          });*/
   }
 }
