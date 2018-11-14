@@ -46,8 +46,9 @@ export class EnsService {
     } else {
       console.log('Subdomain already exists; Owner:');
       console.log(owner);
-      await this.registerSubdomain(appname, username, address);
+      return false;
     }
+    await this.registerSubdomain(appname, username, address);
     return true;
   }
 
