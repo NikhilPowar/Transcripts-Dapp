@@ -1,6 +1,6 @@
 # Digital Identity Management
 
-This project is a fully decentralized app based on blockchain and IPFS. The app will provide a simple user-friendly interface to view and manage all documents related to identity. 
+This project is a fully decentralized app based on blockchain and IPFS. The app will provide a simple user-friendly interface to apply for and manage academic transcripts. It will enable easy verification of authenticity of transcripts by others.
 
 # Angular Info
 
