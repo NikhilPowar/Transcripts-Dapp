@@ -28,7 +28,6 @@
     "rxjs": "~6.2.0",
     "scrypt": "^6.0.3",
     "web3": "^1.0.0-beta.36",
-    "windows-build-tools": "^5.0.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -50,6 +49,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~2.9.2"
+    "typescript": "~2.9.2",
+    "windows-build-tools": "^5.0.0"
   }
 }
