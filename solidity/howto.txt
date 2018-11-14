@@ -1,0 +1,12 @@
+To write contract:-
+    Write contract code in .sol files and save in contracts folder
+
+To compile and deploy contracts:-
+    Start up Ganache if not already running
+    Execute command: truffle compile
+    Create migration script for all contracts and save in /migrations subdirectory
+    Execute command: truffle deploy
+
+To test contracts:-
+    Write the .js test files and save them in the /test subdirectory
+    Execute command: truffle test
