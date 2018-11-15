@@ -29,6 +29,10 @@ export class LoginService {
   async login(appname: string, username: string) {
     console.log('In login service.');
     const idContractAddress = await this.ensService.getSubdomainOwner(appname, username);
+    if (idContractAddress === false) {
+      // Domain doesn't exist
+      // Ask user whether they wish to create a new sub-domain
+    }
     this.registerKey(idContractAddress);
   }
 }
