@@ -47,7 +47,6 @@ export class EnsService {
 
   async createSubdomain(appname: string, username: string, address: string) {
     if (await this.checkSubdomain(appname, username) === true) {
-      await this.registerSubdomain(appname, username, address);
       return true;
     }
     await this.registerSubdomain(appname, username, address);

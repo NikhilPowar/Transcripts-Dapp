@@ -16,9 +16,12 @@ export class LoginService {
 
   async registerKey(address: string) {
     const idContract = await this.contractService.accessContract(address, abi);
-    const key = this.connectService.getAccount()['address'];
+    const key = this.connectService.getPublicKey32Bytes();
     console.log(await idContract.getKey('0x576e8d30aae6fca912ebacac8a99e814b5e623f328ee236c23d9a0d3f1b59628'));
-    await idContract.addKey(key, 4, 1);
+    const tx = await idContract.addKey(key, 4, 1);
+    console.log(tx);
+    await tx.wait();
+    console.log('Transaction done');
     idContract.getKeysByPurpose(4).then(succ => console.log(succ), err => console.log(err));
     idContract.getKeysByPurpose(1).then(succ => console.log(succ), err => console.log(err));
   }

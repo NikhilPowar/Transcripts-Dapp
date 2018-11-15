@@ -81,4 +81,8 @@ export class ConnectService {
   public getAccount() {
     return this.account;
   }
+
+  public getPublicKey32Bytes() {
+    return ethers.utils.keccak256('0x' + this.account['publicKey']);
+  }
 }
