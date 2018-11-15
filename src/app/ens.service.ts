@@ -16,12 +16,23 @@ export class EnsService {
   ) { }
 
   async checkSubdomain(appname: string, username: string) {
+    const ensAddress = this.connectService.getProvider()['network']['ensAddress'];
+    this.registrarContract = this.contractService.accessContract(ensAddress, this.registrarContractAbi);
+    console.log(this.registrarContract);
     console.log(username + '.' + appname + '.test :' + ethers.utils.namehash(username + '.' + appname + '.test'));
-    return await this.registrarContract.owner(ethers.utils.namehash(username + '.' + appname + '.test'));
+    const owner = await this.registrarContract.owner(ethers.utils.namehash(username + '.' + appname + '.test'));
+    console.log(owner);
+    if (owner === '0x0000000000000000000000000000000000000000') {
+      console.log('Subdomain available');
+      return true;
+    } else {
+      console.log('Subdomain already exists; Owner:');
+      console.log(owner);
+      return owner;
+    }
   }
 
   async registerSubdomain(appname: string, username: string, address: string) {
-    const wallet = this.connectService.getWallet();
     const signedRegistrarContract = this.registrarContract;
     console.log(signedRegistrarContract);
     console.log(ethers.utils.namehash(appname + '.test'));
@@ -35,23 +46,20 @@ export class EnsService {
   }
 
   async createSubdomain(appname: string, username: string, address: string) {
-    const ensAddress = this.connectService.getProvider()['network']['ensAddress'];
-    console.log('Here');
-    this.registrarContract = this.contractService.accessContract(ensAddress, this.registrarContractAbi);
-    console.log(this.registrarContract);
-    const owner = await this.checkSubdomain(appname, username);
-    console.log(owner);
-    if (owner === '0x0000000000000000000000000000000000000000') {
-      console.log('Subdomain available');
-    } else {
-      console.log('Subdomain already exists; Owner:');
-      console.log(owner);
-      return false;
+    if (await this.checkSubdomain(appname, username) === true) {
+      await this.registerSubdomain(appname, username, address);
+      return true;
     }
     await this.registerSubdomain(appname, username, address);
-    return true;
+    return false;
   }
 
-  verifySubdomain(appname: string, username: string) {
+  async getSubdomainOwner(appname: string, username: string) {
+    let owner;
+    owner = await this.checkSubdomain(appname, username);
+    if (owner === true) {
+      return false;
+    }
+    return owner;
   }
 }

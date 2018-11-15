@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RegisterService } from '../register.service';
-import { IpfsService } from '../ipfs.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,8 +21,7 @@ export class SignupComponent implements OnInit {
   str;
 
   constructor(private formBuilder: FormBuilder,
-    private regService: RegisterService,
-    private ipfsService: IpfsService
+    private regService: RegisterService
   ) { }
 
   ngOnInit() {
