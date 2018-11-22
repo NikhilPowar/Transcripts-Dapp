@@ -9,6 +9,7 @@ const Web3 = require('web3');
 })
 export class ConnectService {
   private provider;
+  private web3;
   private address;
   private wallet;
   private addressURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
@@ -47,19 +48,18 @@ export class ConnectService {
 
   async connect() {
     // Perform login operations
-    let web3;
     if (window['ethereum']) {
-      web3 = new Web3(window['ethereum']);
+      this.web3 = new Web3(window['ethereum']);
       await window['ethereum'].enable();
     } else if (window['web3']) {
-      web3 = new Web3(window['web3']);
+      this.web3 = new Web3(window['web3']);
     } else {
       console.log('Web3 not found. Stopping...');
     }
-    console.log(web3);
-    this.provider = await new ethers.providers.Web3Provider(web3.currentProvider);
+    console.log(this.web3);
+    this.provider = await new ethers.providers.Web3Provider(this.web3.currentProvider);
     console.log(this.provider);
-    this.address = (await web3.eth.getAccounts())[0];
+    this.address = (await this.web3.eth.getAccounts())[0];
     console.log(this.address);
     this.generateKey();
     this.wallet = await new ethers.Wallet('468e048a5af776c9a7690db90694fed44fd5c599118afb7c9e1313efeafc46a9', this.provider);
@@ -68,6 +68,10 @@ export class ConnectService {
 
   public getProvider() {
     return this.provider;
+  }
+
+  public getWeb3() {
+    return this.web3;
   }
 
   public getAddress() {

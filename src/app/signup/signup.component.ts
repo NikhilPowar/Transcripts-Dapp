@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RegisterService } from '../register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -20,8 +21,10 @@ export class SignupComponent implements OnInit {
   content;
   str;
 
-  constructor(private formBuilder: FormBuilder,
-    private regService: RegisterService
+  constructor(
+    private formBuilder: FormBuilder,
+    private regService: RegisterService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -55,5 +58,6 @@ export class SignupComponent implements OnInit {
     this.loading = true;
     console.log(this.registerForm);
     this.regService.register('transcripts', this.registerForm['value']['username']);
+    this.router.navigate(['transcript-form']);
   }
 }

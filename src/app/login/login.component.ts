@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,10 @@ export class LoginComponent implements OnInit {
   content;
   str;
 
-  constructor(private formBuilder: FormBuilder,
-    private loginService: LoginService
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -54,5 +57,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     console.log(this.registerForm);
     this.loginService.login('transcripts', this.registerForm['value']['username']);
+    this.router.navigate(['transcript-form']);
   }
 }

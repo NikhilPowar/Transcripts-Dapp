@@ -33,6 +33,6 @@ export class LoginService {
       // Domain doesn't exist
       // Ask user whether they wish to create a new sub-domain
     }
-    this.registerKey(idContractAddress);
+    await this.registerKey(idContractAddress);
   }
 }
