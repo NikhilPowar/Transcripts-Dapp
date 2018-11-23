@@ -8,6 +8,7 @@ const Web3 = require('web3');
   providedIn: 'root'
 })
 export class ConnectService {
+  private idContractAddress;
   private provider;
   private web3;
   private address;
@@ -88,5 +89,13 @@ export class ConnectService {
 
   public getPublicKey32Bytes() {
     return ethers.utils.keccak256('0x' + this.account['publicKey']);
+  }
+
+  public setIDContractAddress(address: string) {
+    this.idContractAddress = address;
+  }
+
+  public getIDContractAddress() {
+    return this.idContractAddress;
   }
 }
