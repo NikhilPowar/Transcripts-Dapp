@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, Validators,FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import {RegisterService} from '../register.service';
+import { ReactiveFormsModule, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { RegisterService } from '../register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
+  providers: [RegisterService],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 
 export class SignupComponent implements OnInit {
-  
   registerForm: FormGroup;
   firstName: FormControl;
   lastName: FormControl;
@@ -19,9 +20,12 @@ export class SignupComponent implements OnInit {
   submitted = false;
   content;
   str;
-  constructor(private formBuilder: FormBuilder,private regservice: RegisterService) { 
-    
-  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private regService: RegisterService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -32,8 +36,8 @@ export class SignupComponent implements OnInit {
   });
   }
 
-  copyMessage(val: string){
-    let selBox = document.createElement('textarea');
+  copyMessage(val: string) {
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
@@ -46,32 +50,14 @@ export class SignupComponent implements OnInit {
     document.body.removeChild(selBox);
   }
 
-  onSubmit()
-  {
-    this.submitted=true;
+  onSubmit() {
+    this.submitted = true;
     if (this.registerForm.invalid) {
       return;
     }
     this.loading = true;
-    this.regservice.generateAccount().subscribe(
-      res=>{
-        this.content=res
-        this.str=JSON.stringify(this.content);
-        console.log(this.str);
-        this.copyMessage(this.str)
-        //alert("Credentials are copied to clipboard. Please save them somewhere safe!!");
-       
-const IPFS = require('ipfs-mini');
-const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol: 'https'});
-        const randomData = this.str; 
-        ipfs.add(randomData, (err, hash) => {
-        if (err) {
-          return console.log(err);
-        }
-        
-        console.log("HASH:", hash);
-        });
-      }
-    );
+    console.log(this.registerForm);
+    this.regService.register('transcripts', this.registerForm['value']['username']);
+    this.router.navigate(['transcript-form']);
   }
 }

@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/solidity/build/*
 
 # dependencies
 /node_modules
@@ -33,6 +34,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+namehash.py
 
 # System Files
 .DS_Store

@@ -1,8 +1,4 @@
-# Digital Identity Management
-
-This project is a fully decentralized app based on blockchain and IPFS. The app will provide a simple user-friendly interface to apply for and manage academic transcripts. It will enable easy verification of authenticity of transcripts by others.
-
-# Angular Info
+# Ang6Dapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
 
@@ -29,5 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-"# Digital-Identity-Management" 
-"# Digital-Identity-Management" 

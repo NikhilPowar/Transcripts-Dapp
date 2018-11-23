@@ -1,25 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
-import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './login/login.component';
-import {RegisterService} from './register.service'
-import {LoginService} from './login.service'
-import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConnectComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent,
+    ApplicationFormComponent,
+    IncludesValuePipe
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    AngularFileUploaderModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [RegisterService,LoginService],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
