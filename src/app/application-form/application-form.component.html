@@ -9,8 +9,8 @@
     NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet has ether before proceeding.
   </p>
 
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
+  <form class="material-form">
+    <mat-form-field class="material-full-width">
       <input type="text" placeholder="Select your college/university" aria-label="Number" matInput
         [matAutocomplete]="auto" [(ngModel)]="college" name="college">
       <mat-autocomplete #auto="matAutocomplete">
@@ -19,10 +19,10 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="material-full-width">
       <input matInput placeholder="Enter your college/university ID" [(ngModel)]="id" name="id">
     </mat-form-field>
-    <div class="example-button-row">
+    <div class="material-button-row">
       <button mat-flat-button color="primary" (click)="submitApplication()" name="submit">Apply</button>
     </div>
   </form>
