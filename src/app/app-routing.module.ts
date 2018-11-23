@@ -4,6 +4,7 @@ import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { ApplicationFormComponent } from './application-form/application-form.component';
 
 const appRoutes: Routes = [
   {
@@ -17,6 +18,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'application',
+    component: ApplicationFormComponent
   },
   {
     path: '',

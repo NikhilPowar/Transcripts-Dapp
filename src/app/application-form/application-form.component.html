@@ -1,0 +1,29 @@
+<div align="center">
+  <h1>Transcript Application</h1>
+
+  <p>
+    Apply for transcripts from any of the college/university you have attended.
+  </p>
+
+  <p>
+    NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet has ether before proceeding.
+  </p>
+
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Select your college/university" aria-label="Number" matInput
+        [matAutocomplete]="auto" [(ngModel)]="college" name="college">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options | includesValue:college" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Enter your college/university ID" [(ngModel)]="id" name="id">
+    </mat-form-field>
+    <div class="example-button-row">
+      <button mat-flat-button color="primary" (click)="submitApplication()" name="submit">Apply</button>
+    </div>
+  </form>
+</div>

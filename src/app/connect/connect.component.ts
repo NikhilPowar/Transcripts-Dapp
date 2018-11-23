@@ -18,7 +18,7 @@ export class ConnectComponent implements OnInit {
 
   connect() {
     this.connectService.connect();
-    this.router.navigate(['signup']);
+    this.router.navigate(['application']);
   }
 
 }
