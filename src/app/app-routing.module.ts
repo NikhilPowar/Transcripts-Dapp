@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 
@@ -10,10 +9,6 @@ const appRoutes: Routes = [
   {
     path: 'connect',
     component: ConnectComponent
-  },
-  {
-    path: 'signup',
-    component: SignupComponent
   },
   {
     path: 'login',
