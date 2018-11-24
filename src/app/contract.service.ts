@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ethers } from 'ethers';
 import { ConnectService } from './connect.service';
 
 @Injectable({
