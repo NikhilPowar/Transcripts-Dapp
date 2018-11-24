@@ -13,6 +13,7 @@ import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
+import { ApplicationListComponent } from './application-list/application-list.component';
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 
@@ -23,7 +24,8 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
     LoginComponent,
     PageNotFoundComponent,
     ApplicationFormComponent,
-    IncludesValuePipe
+    IncludesValuePipe,
+    ApplicationListComponent
   ],
   imports: [
     BrowserModule,
