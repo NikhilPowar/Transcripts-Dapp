@@ -23,14 +23,13 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
-    "angular-file-uploader": "^4.1.4",
     "core-js": "^2.5.4",
     "ethers": "^4.0.7",
     "ipfs-mini": "^1.1.2",
     "node-gyp": "^3.8.0",
     "rxjs": "~6.2.0",
     "scrypt": "^6.0.3",
-    "web3": "^1.0.0-beta.36",
+    "web3": "1.0.0-beta.34",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

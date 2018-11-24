@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
+import { TranscriptFormComponent } from './transcript-form/transcript-form.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 
 const appRoutes: Routes = [
@@ -17,6 +18,10 @@ const appRoutes: Routes = [
   {
     path: 'application',
     component: ApplicationFormComponent
+  },
+  {
+    path: 'transcript-form',
+    component: TranscriptFormComponent
   },
   {
     path: '',

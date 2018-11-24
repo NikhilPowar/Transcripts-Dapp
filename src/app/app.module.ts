@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { AngularFileUploaderModule } from 'angular-file-uploader';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -24,18 +23,18 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
     ConnectComponent,
     LoginComponent,
     PageNotFoundComponent,
+    TranscriptFormComponent,
     ApplicationFormComponent,
     IncludesValuePipe
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatAutocompleteModule,
+    FormsModule,
     MatInputModule,
     MatFormFieldModule,
-    FormsModule,
+    MatAutocompleteModule,
     MatButtonModule,
-    AngularFileUploaderModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule
