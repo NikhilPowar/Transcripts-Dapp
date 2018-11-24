@@ -20,7 +20,7 @@ export class EnsService {
     this.registrarContract = this.contractService.accessContract(ensAddress, this.registrarContractAbi);
     console.log(this.registrarContract);
     console.log(username + '.' + appname + '.test :' + ethers.utils.namehash(username + '.' + appname + '.test'));
-    const owner = await this.registrarContract.owner(ethers.utils.namehash(username + '.' + appname + '.test'));
+    const owner = await this.registrarContract.methods.owner(ethers.utils.namehash(username + '.' + appname + '.test')).call();
     console.log(owner);
     if (owner === '0x0000000000000000000000000000000000000000') {
       console.log('Subdomain available');
@@ -33,15 +33,13 @@ export class EnsService {
   }
 
   async registerSubdomain(appname: string, username: string, address: string) {
-    const signedRegistrarContract = this.registrarContract;
-    console.log(signedRegistrarContract);
+    console.log(this.registrarContract);
     console.log(ethers.utils.namehash(appname + '.test'));
     console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
     console.log(address);
-    const tx = await signedRegistrarContract.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
+    const from = this.connectService.getAddress();
+    const tx = await this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address).send({from: from});
     console.log(tx);
-    console.log(ethers.utils.formatEther(tx.gasLimit), ethers.utils.formatEther(tx.gasPrice));
-    await tx.wait();
     console.log('Transaction done.');
   }
 

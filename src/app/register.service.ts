@@ -15,21 +15,21 @@ export class RegisterService {
   ) { }
 
   async createIdContract() {
-    // Library address = 0x491a6a85B90Bd8d7B45a304BABf897fAd552F926
+    // Key Holder Library address = 0x491a6a85B90Bd8d7B45a304BABf897fAd552F926
     return await this.contractService.deployContract(abi, bytecode, []);
   }
 
   async registerKey(address: string) {
     const contract = await this.contractService.accessContract(address, abi);
-    console.log(await contract.getKeysByPurpose(1));
+    console.log(await contract.methods.getKeysByPurpose(1).call());
   }
 
   async register(appname: string, username: string) {
     console.log('In register service.');
-    const idContract = await this.createIdContract();
-    console.log('Received contract: ' + idContract.address);
-    this.registerKey(idContract.address);
-    if (await this.ensService.createSubdomain(appname, username, idContract.address) === false) {
+    const idContractAddress = await this.createIdContract();
+    console.log('Received contract: ' + idContractAddress);
+    this.registerKey(idContractAddress);
+    if (await this.ensService.createSubdomain(appname, username, idContractAddress) === false) {
       // Subdomain already exists.
       // Ask user if they want to log in.
     }

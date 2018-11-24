@@ -63,7 +63,9 @@ export class ConnectService {
     this.address = (await this.web3.eth.getAccounts())[0];
     console.log(this.address);
     this.generateKey();
-    this.wallet = await new ethers.Wallet('468e048a5af776c9a7690db90694fed44fd5c599118afb7c9e1313efeafc46a9', this.provider);
+    console.log(this.web3.eth.accounts.wallet);
+    this.wallet = this.web3.eth.accounts.wallet;
+    // this.wallet = await new ethers.Wallet('468e048a5af776c9a7690db90694fed44fd5c599118afb7c9e1313efeafc46a9', this.provider);
     console.log(this.wallet);
   }
 
