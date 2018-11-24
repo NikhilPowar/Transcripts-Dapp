@@ -51,12 +51,12 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
+    // if (this.registerForm.invalid) {
+    //   return;
+    // }
     this.loading = true;
     console.log(this.registerForm);
     this.loginService.login('transcripts', this.registerForm['value']['username']);
-    this.router.navigate(['transcript-form']);
+    this.router.navigate(['application']);
   }
 }
