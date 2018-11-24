@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
+import { LoginPopupComponent } from './login/login-popup.component';
 import { TranscriptFormComponent } from './transcript-form/transcript-form.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 
@@ -22,6 +23,7 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
     AppComponent,
     ConnectComponent,
     LoginComponent,
+    LoginPopupComponent,
     PageNotFoundComponent,
     TranscriptFormComponent,
     ApplicationFormComponent,

@@ -1,19 +1,19 @@
 <div class="center-outer">
   <div class="center-middle">
-    <div class="center-inner">
+    <form class="material-form center-inner" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2>Login</h2>
-      <form class="material-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <mat-form-field class="form-group material-full-width">
-          <input type="text" placeholder="Enter username here" matInput formControlName="username" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f?.username.errors }" />
-          <div *ngIf="submitted && f?.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
-          </div>
-        </mat-form-field>
-        <div class="material-button-row">
-          <button mat-flat-button color="primary" [disabled]="loading" name="submit">Login</button>
+      <mat-form-field class="form-group material-full-width">
+        <input type="text" placeholder="Enter username here" matInput formControlName="username" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f?.username.errors }" />
+        <div *ngIf="submitted && f?.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Username is required</div>
         </div>
-      </form>
-    </div>
+      </mat-form-field>
+      <div class="material-button-row">
+        <button mat-flat-button color="primary" [disabled]="loading" name="submit">Login</button>
+      </div>
+    </form>
   </div>
 </div>
+
+<app-login-popup [hidden]="!showPopup" [show]="showPopup" (showChange)="hidePopup()" [name]="usernameString"></app-login-popup>

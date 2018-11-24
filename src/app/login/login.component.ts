@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 
@@ -10,15 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  registerForm: FormGroup;
-  firstName: FormControl;
-  lastName: FormControl;
+  loginForm: FormGroup;
   username: FormControl;
-  password: FormControl;
+  usernameString: string;
   loading = false;
   submitted = false;
-  content;
-  str;
+  showPopup = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,12 +24,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-  });
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required]
+    });
   }
 
   copyMessage(val: string) {
@@ -51,12 +45,22 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.invalid) {
+    if (this.loginForm.invalid) {
       return;
     }
-    this.loading = true;
-    console.log(this.registerForm);
-    this.loginService.login('transcripts', this.registerForm['value']['username']);
-    this.router.navigate(['transcript-form']);
+    this.usernameString = this.loginForm['value']['username'];
+    console.log(this.loginForm);
+    this.loginService.login('transcripts', this.usernameString).then((success) => {
+      if (success) {
+        this.loading = true;
+        this.router.navigate(['transcript-form']);
+      } else {
+        this.showPopup = true;
+      }
+    });
+  }
+
+  hidePopup() {
+    this.showPopup = false;
   }
 }

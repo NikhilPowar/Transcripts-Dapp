@@ -24,16 +24,18 @@ export class LoginService {
     idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
   }
 
-  async login(appname: string, username: string) {
+  async login(appname: string, username: string): Promise<boolean> {
     console.log('In login service.');
     const idContractAddress = await this.ensService.getSubdomainOwner(appname, username);
     console.log('ID Contract Address: ', idContractAddress);
     if (idContractAddress === false) {
       // Domain doesn't exist
-      // Ask user whether they wish to create a new sub-domain
       console.log('Domain doesn\'t exist');
+      return false;
     }
+    // Domain exists. Connect to domain
     this.connectService.setIDContractAddress(idContractAddress);
     await this.registerKey(idContractAddress);
+    return true;
   }
 }
