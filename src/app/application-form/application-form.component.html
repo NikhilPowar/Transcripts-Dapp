@@ -1,29 +1,34 @@
-<div align="center">
-  <h1>Transcript Application</h1>
+<div class="center-outer">
+  <div class="center-middle">
+    <div class="center-inner" align=center>
+      <h1>Transcript Application</h1>
 
-  <p>
-    Apply for transcripts from any of the college/university you have attended.
-  </p>
+      <p>
+        Apply for transcripts from any of the college/university you have attended.
+      </p>
 
-  <p>
-    NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet has ether before proceeding.
-  </p>
+      <p>
+        NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet
+        has ether before proceeding.
+      </p>
 
-  <form class="material-form">
-    <mat-form-field class="material-full-width">
-      <input type="text" placeholder="Select your college/university" aria-label="Number" matInput
-        [matAutocomplete]="auto" [(ngModel)]="college" name="college">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options | includesValue:college" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field class="material-full-width">
-      <input matInput placeholder="Enter your college/university ID" [(ngModel)]="id" name="id">
-    </mat-form-field>
-    <div class="material-button-row">
-      <button mat-flat-button color="primary" (click)="submitApplication()" name="submit">Apply</button>
+      <form class="material-form">
+        <mat-form-field class="material-full-width">
+          <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto" [(ngModel)]="college"
+            name="college">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of options | includesValue:college" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter your college/university ID" [(ngModel)]="id" name="id">
+        </mat-form-field>
+        <div class="material-button-row">
+          <button mat-flat-button color="primary" (click)="submitApplication()" name="submit">Apply</button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>

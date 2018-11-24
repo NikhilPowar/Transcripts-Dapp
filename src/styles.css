@@ -1,2 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.material-form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+  color: black;
+}
+
+.material-full-width {
+  width: 100%;
+  color: black;
+}
+
+.center-outer {
+  display: table;
+  position: absolute;
+  height: 90%;
+  width: 100%
+}
+
+.center-middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.center-inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  align-content: center;
+}
