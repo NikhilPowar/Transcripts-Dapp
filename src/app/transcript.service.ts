@@ -27,6 +27,8 @@ export class TranscriptService {
 
   async getTranscripts(address: string) {
     const transcriptListContract = this.contractService.accessContract(this.transcriptListContractAddress, this.transcriptListABI);
-    return await transcriptListContract.methods.getTranscripts(address).call();
+    const transcripts = await transcriptListContract.methods.getTranscripts(address).call();
+    console.log(transcripts);
+    return transcripts;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranscriptService } from '../transcript.service';
 import { ConnectService } from '../connect.service';
 
@@ -12,7 +13,8 @@ export class ApplicationListComponent implements OnInit {
 
   constructor(
     private transcriptService: TranscriptService,
-    private connectService: ConnectService
+    private connectService: ConnectService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -20,12 +22,14 @@ export class ApplicationListComponent implements OnInit {
   }
 
   async getApplicationList() {
-    const address = this.connectService.getAddress();
+    const address = this.connectService.getIDContractAddress();
     this.applications = await this.transcriptService.getTranscripts(address);
+    console.log(this.applications);
   }
 
   viewApplication(address: string) {
     console.log(address);
+    this.router.navigate(['application-list', address]);
   }
 
 }

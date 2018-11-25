@@ -1,4 +1,4 @@
-<div class="list-group-item" *ngFor="let application of applications | async as _applications">
+<div class="list-group-item" *ngFor="let application of applications">
   {{application}}
-  <button (onclick)="viewApplication(application)">View this application</button>
+  <button (click)="viewApplication(application)">View this application</button>
 </div>

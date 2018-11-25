@@ -16,6 +16,7 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { ApplicationListComponent } from './application-list/application-list.component';
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
+import { ApplicationViewComponent } from './application-view/application-view.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
     PageNotFoundComponent,
     ApplicationFormComponent,
     IncludesValuePipe,
-    ApplicationListComponent
+    ApplicationListComponent,
+    ApplicationViewComponent
   ],
   imports: [
     BrowserModule,

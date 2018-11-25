@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { ApplicationListComponent } from './application-list/application-list.component';
+import { ApplicationViewComponent } from './application-view/application-view.component';
 
 const appRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
   {
     path: 'application-list',
     component: ApplicationListComponent
+  },
+  {
+    path: 'application-view/:transcriptAddress',
+    component: ApplicationViewComponent
   },
   {
     path: '',
