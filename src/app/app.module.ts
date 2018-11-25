@@ -13,10 +13,11 @@ import { ConnectComponent } from './connect/connect.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { LoginPopupComponent } from './login/login-popup.component';
-import { TranscriptFormComponent } from './transcript-form/transcript-form.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
+import { ApplicationListComponent } from './application-list/application-list.component';
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
+import { ApplicationViewComponent } from './application-view/application-view.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,10 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
     LoginComponent,
     LoginPopupComponent,
     PageNotFoundComponent,
-    TranscriptFormComponent,
     ApplicationFormComponent,
-    IncludesValuePipe
+    IncludesValuePipe,
+    ApplicationListComponent,
+    ApplicationViewComponent
   ],
   imports: [
     BrowserModule,
