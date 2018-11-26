@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -39,6 +40,7 @@ import { ApplicationViewComponent } from './application-view/application-view.co
     MatFormFieldModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

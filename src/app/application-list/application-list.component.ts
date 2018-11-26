@@ -22,8 +22,10 @@ export class ApplicationListComponent implements OnInit {
   }
 
   async getApplicationList() {
-    const address = this.connectService.getIDContractAddress();
-    this.applications = await this.transcriptService.getTranscripts(address);
+    // TODO: Remove Comment
+    // const address = this.connectService.getIDContractAddress();
+    // this.applications = await this.transcriptService.getTranscripts(address);
+    this.applications = await this.transcriptService.getTranscripts('0x5E4eE285830bAdcc57f056a03Ffbc1f2a1797E00');
     console.log(this.applications);
   }
 
