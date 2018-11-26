@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
+const Tx = require('ethereumjs-tx');
 import { ContractService } from './contract.service';
 import { ConnectService } from './connect.service';
 
@@ -40,8 +41,25 @@ export class EnsService {
     console.log(address);
     const from = this.connectService.getAddress();
     // tslint:disable-next-line:max-line-length
-    const tx = await this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address).send({from: from});
+    const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
+    const data = func.encodeABI();
+    const web3 = this.connectService.getWeb3();
+    const gasEstimate = await func.estimateGas({from: '0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643'});
+    const tx = new Tx({
+      nonce: web3.utils.toHex(await web3.eth.getTransactionCount('0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643')),
+      data: data,
+      gas: gasEstimate,
+      to: this.registrarContract.address,
+      from: '0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643',
+      value: '0x00'
+    });
     console.log(tx);
+    tx.sign(new Buffer('468e048a5af776c9a7690db90694fed44fd5c599118afb7c9e1313efeafc46a9', 'hex'));
+    console.log(tx);
+    const serializedTx = tx.serialize();
+    console.log('Sending signed transaction');
+    const result = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
+    console.log(result);
     console.log('Transaction done.');
   }
 

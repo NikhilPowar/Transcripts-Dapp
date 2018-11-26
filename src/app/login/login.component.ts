@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login('transcripts', this.usernameString).then((success) => {
       if (success) {
         this.loading = true;
-        this.router.navigate(['transcript-form']);
+        this.router.navigate(['application-list']);
       } else {
         this.showPopup = true;
       }

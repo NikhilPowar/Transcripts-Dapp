@@ -29,7 +29,7 @@ export class ApplicationListComponent implements OnInit {
 
   viewApplication(address: string) {
     console.log(address);
-    this.router.navigate(['application-list', address]);
+    this.router.navigate(['application-view', address.toString()]);
   }
 
 }

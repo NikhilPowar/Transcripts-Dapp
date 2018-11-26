@@ -20,17 +20,20 @@ export class ApplicationViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.transcriptAddress = this.route.paramMap.pipe(map(params => params.get('transcriptAddress') || 'None'));
-    if (this.transcriptAddress !== 'None') {
-      this.getTranscriptData();
-    }
+    this.route.params.subscribe(params => {
+      this.transcriptAddress = params.transcriptAddress;
+      console.log(this.transcriptAddress);
+      if (this.transcriptAddress !== 'None') {
+        this.getTranscriptData();
+      }
+    });
   }
 
   async getTranscriptData() {
     this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
-    console.log(await this.transcriptContract.getTranscriptHash().call());
-    console.log(await this.transcriptContract.getTranscrioptOwner().call());
+    console.log(await this.transcriptContract.methods.getTranscriptHash().call());
+    console.log(await this.transcriptContract.methods.getTranscriptOwner().call());
   }
 
   uploadTranscript() {
