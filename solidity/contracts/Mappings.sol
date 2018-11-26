@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 contract Colleges{
     
@@ -27,37 +27,37 @@ contract Colleges{
         setCollege(0x7467A9383cEF730A2A95Fda45f6d93ec2CED7831,"VJTI","vjti@gmail.com");
     }
 
-    function setCollege (address _address, string name, string email) public {
-        College newCollege = Collegelist[_address];
+    function setCollege (address _address, string memory name, string memory email) public {
+        College storage newCollege = Collegelist[_address];
 
         newCollege.Name = name;
-        newCollege.email=email;
-        newCollege.account=_address;
+        newCollege.email = email;
+        newCollege.account = _address;
     
-        College_accts.push(_address) -1;
+        College_accts.push(_address) - 1;
 
     }
     
-    function addStudent (address _address,string name, string ID, string password, address college) public
+    function addStudent (address _address,string memory name, string memory ID, string memory password, address college) public
     {
-        Student newStudent=Studentlist[_address];
-        newStudent.Name=name;
-        newStudent.ID=ID;
-        newStudent.password=password;
-        newStudent.College=college;
-        newStudent.account=_address;
-        Student_accts.push(_address)-1;
+        Student storage newStudent = Studentlist[_address];
+        newStudent.Name = name;
+        newStudent.ID = ID;
+        newStudent.password = password;
+        newStudent.College = college;
+        newStudent.account = _address;
+        Student_accts.push(_address) - 1;
     }
 
-    function getColleges() view public returns (address[]) {
+    function getColleges() public view returns (address[] memory) {
         return College_accts;
     }
     
-    function getCollege(address ins) view public returns (string, string) {
+    function getCollege(address ins) public view returns (string memory, string memory) {
         return (Collegelist[ins].Name, Collegelist[ins].email);
     }
     
-    function countCollegess() view public returns (uint) {
+    function countCollegess() public view returns (uint) {
         return College_accts.length;
     }
     

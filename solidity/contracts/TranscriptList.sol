@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 contract TranscriptList {
 
@@ -17,7 +17,7 @@ contract TranscriptList {
     function getTranscripts (address account)
         public
         view
-        returns (address[])
+        returns (address[] memory)
     {
         return transcriptList[account];
     }

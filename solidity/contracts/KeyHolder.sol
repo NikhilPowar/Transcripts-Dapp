@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "./ERC725.sol";
 import "./KeyHolderLibrary.sol";
@@ -10,15 +10,15 @@ contract KeyHolder is ERC725 {
         KeyHolderLibrary.init(keyHolderData);
     }
 
-    function getKey(bytes32 _key) public view returns(uint256[] purposes, uint256 keyType, bytes32 key) {
+    function getKey(bytes32 _key) public view returns(uint256[] memory purposes, uint256 keyType, bytes32 key) {
         return KeyHolderLibrary.getKey(keyHolderData, _key);
     }
 
-    function getKeyPurposes(bytes32 _key) public view returns(uint256[] purposes) {
+    function getKeyPurposes(bytes32 _key) public view returns(uint256[] memory purposes) {
         return KeyHolderLibrary.getKeyPurposes(keyHolderData, _key);
     }
 
-    function getKeysByPurpose(uint256 _purpose) public view returns(bytes32[] _keys) {
+    function getKeysByPurpose(uint256 _purpose) public view returns(bytes32[] memory _keys) {
         return KeyHolderLibrary.getKeysByPurpose(keyHolderData, _purpose);
     }
 
@@ -30,7 +30,7 @@ contract KeyHolder is ERC725 {
         return KeyHolderLibrary.approve(keyHolderData, _id, _approve);
     }
 
-    function execute(address _to, uint256 _value, bytes _data) public returns (uint256 executionId) {
+    function execute(address _to, uint256 _value, bytes memory _data) public returns (uint256 executionId) {
         return KeyHolderLibrary.execute(keyHolderData, _to, _value, _data);
     }
 

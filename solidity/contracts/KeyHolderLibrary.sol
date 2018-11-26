@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 library KeyHolderLibrary {
     event KeyAdded(bytes32 indexed key, uint256 indexed purpose, uint256 indexed keyType);
@@ -43,7 +43,7 @@ library KeyHolderLibrary {
     function getKey(KeyHolderData storage _keyHolderData, bytes32 _key)
         public
         view
-        returns(uint256[] purposes, uint256 keyType, bytes32 key)
+        returns(uint256[] memory purposes, uint256 keyType, bytes32 key)
     {
         return (
             _keyHolderData.keys[_key].purposes,
@@ -55,7 +55,7 @@ library KeyHolderLibrary {
     function getKeyPurposes(KeyHolderData storage _keyHolderData, bytes32 _key)
         public
         view
-        returns(uint256[] purposes)
+        returns(uint256[] memory purposes)
     {
         return (_keyHolderData.keys[_key].purposes);
     }
@@ -63,7 +63,7 @@ library KeyHolderLibrary {
     function getKeysByPurpose(KeyHolderData storage _keyHolderData, uint256 _purpose)
         public
         view
-        returns(bytes32[] _keys)
+        returns(bytes32[] memory _keys)
     {
         return _keyHolderData.keysByPurpose[_purpose];
     }
@@ -99,7 +99,8 @@ library KeyHolderLibrary {
 
         if (_approve == true) {
             _keyHolderData.executions[_id].approved = true;
-            success = _keyHolderData.executions[_id].to.call(_keyHolderData.executions[_id].data, 0);
+            bytes memory dummy_data;
+            (success, dummy_data) = _keyHolderData.executions[_id].to.call(_keyHolderData.executions[_id].data);
             if (success) {
                 _keyHolderData.executions[_id].executed = true;
                 emit Executed(
@@ -108,7 +109,7 @@ library KeyHolderLibrary {
                     _keyHolderData.executions[_id].value,
                     _keyHolderData.executions[_id].data
                 );
-                return;
+                return true;
             } else {
                 emit ExecutionFailed(
                     _id,
@@ -116,7 +117,7 @@ library KeyHolderLibrary {
                     _keyHolderData.executions[_id].value,
                     _keyHolderData.executions[_id].data
                 );
-                return;
+                return false;
             }
         } else {
             _keyHolderData.executions[_id].approved = false;
@@ -124,7 +125,7 @@ library KeyHolderLibrary {
         return true;
     }
 
-    function execute(KeyHolderData storage _keyHolderData, address _to, uint256 _value, bytes _data)
+    function execute(KeyHolderData storage _keyHolderData, address _to, uint256 _value, bytes memory _data)
         public
         returns (uint256 executionId)
     {
