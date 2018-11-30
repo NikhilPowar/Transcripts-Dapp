@@ -10,6 +10,7 @@ body {
   max-width: 300px;
   width: 100%;
   color: black;
+  margin: 0 auto;
 }
 
 .material-full-width {
@@ -31,4 +32,8 @@ body {
 .center-inner {
   text-align: center;
   margin: 0 auto;
+}
+
+.instructions {
+  max-width: 100%;
 }

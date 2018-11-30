@@ -1,33 +1,61 @@
 <div class="center-outer">
   <div class="center-middle">
-    <form class="material-form center-inner">
+    <div class="center-inner">
       <h1>Transcript Application</h1>
-      <p>
+      <p class="instructions">
         Apply for transcripts from any of the college/university you have attended.
       </p>
-      <p>
+      <p class="instructions">
         NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet
         has ether before proceeding.
       </p>
-      <mat-form-field class="material-full-width">
-        <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto" [(ngModel)]="college"
-          name="college">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of options | includesValue:college" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field class="material-full-width">
-        <input matInput placeholder="Enter your college/university ID" [(ngModel)]="id" name="id">
-      </mat-form-field>
-      <div class="material-button-row">
-        <button mat-flat-button color="primary" (click)="submitApplication()" name="submit">Apply</button>
-      </div>
-    </form>
+      <form class="material-form">
+        <mat-form-field class="material-full-width">
+          <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto"
+            [formControl]="college">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of options | includesValue:college.value" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="college.invalid">{{getErrorMessage(college)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter your college/university ID" [formControl]="id">
+          <mat-error *ngIf="id.invalid">{{getErrorMessage(id)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter Full Name" [formControl]="name" value="">
+          <mat-error *ngIf="name.invalid">{{getErrorMessage(name)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter Course Name" [formControl]="course" value="">
+          <mat-error *ngIf="course.invalid">{{getErrorMessage(course)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="material-full-width">
+          <mat-select placeholder="Select Start Year" [formControl]="startYear" (selectionChange)="startYearChanged()">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let year of yearRange" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="startYear.invalid">{{getErrorMessage(startYear)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="material-full-width">
+          <mat-select placeholder="Select Completion Year" [formControl]="completionYear">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let year of yearRange | greaterThan:startYear.value+1" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="completionYear.invalid">{{getErrorMessage(completionYear)}}</mat-error>
+        </mat-form-field>
+
+        <div class="material-button-row">
+          <button mat-flat-button color="primary" (click)="submitApplication()">Apply</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <br><br>
-  <a routerLink="/application-list"><button class="btn btn-success" >View Application List</button></a>
-
 </div>
