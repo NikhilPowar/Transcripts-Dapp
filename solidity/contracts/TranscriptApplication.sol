@@ -9,11 +9,11 @@ contract TranscriptApplication {
     string name;
     string id;
     string courseName;
-    bytes4 courseStartYear;
-    bytes4 courseCompletionYear;
+    uint courseStartYear;
+    uint courseCompletionYear;
 
     constructor (address _owner, address _provider, string memory _name, string memory _id, 
-                 string memory _courseName, bytes4 _startYear, bytes4 _completionYear) 
+                 string memory _courseName, uint _startYear, uint _completionYear) 
         public 
     {
         transcriptHash = "Not set";
