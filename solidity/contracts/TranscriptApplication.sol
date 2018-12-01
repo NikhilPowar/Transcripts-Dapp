@@ -6,11 +6,11 @@ contract TranscriptApplication {
     address providingAuthority; // Authority who provides the transcript hash
 
     // Student Details
-    string name;
-    string id;
-    string courseName;
-    uint courseStartYear;
-    uint courseCompletionYear;
+    string public name;
+    string public id;
+    string public courseName;
+    uint public courseStartYear;
+    uint public courseCompletionYear;
 
     constructor (address _owner, address _provider, string memory _name, string memory _id, 
                  string memory _courseName, uint _startYear, uint _completionYear) 
