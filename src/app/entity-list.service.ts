@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { ContractService } from './contract.service';
+import { ConnectService } from './connect.service';
+
+const entityListContractAddress = '0x9AD9Da14d8ff7aC38D6E5333041425c02392A16e';
+// tslint:disable-next-line:max-line-length
+const entityListContractAbi = [ { 'constant': true, 'inputs': [ { 'name': '', 'type': 'uint256' } ], 'name': 'admins', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [ { 'name': '', 'type': 'uint256' } ], 'name': 'providingAuthorities', 'outputs': [ { 'name': 'name', 'type': 'string' }, { 'name': 'addr', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'constant': false, 'inputs': [ { 'name': 'addr', 'type': 'address' } ], 'name': 'addAdmin', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'name', 'type': 'string' }, { 'name': 'addr', 'type': 'address' } ], 'name': 'addProvidingAuthority', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'addr', 'type': 'address' } ], 'name': 'removeProvidingAuthority', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getProvidingAuthoritiesLength', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getAdminsLength', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' } ];
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EntityListService {
+  private entityListContract;
+
+  constructor(
+    private contractService: ContractService,
+    private connectService: ConnectService
+  ) {
+    this.entityListContract = this.contractService.accessContract(entityListContractAddress, entityListContractAbi);
+  }
+
+  async getAdminList() {
+    console.log(this.entityListContract);
+    const adminLength = await this.entityListContract.methods.getAdminsLength().call();
+    const admins = [];
+    for (let i = 0; i < adminLength; i++) {
+      admins.push(await this.entityListContract.methods.admins(i).call());
+    }
+  }
+
+  async getProvidersList() {
+    console.log(this.entityListContract);
+    const providersLength = await this.entityListContract.methods.getProvidingAuthoritiesLength().call();
+    const providers = [];
+    for (let i = 0; i < providersLength; i++) {
+      providers.push(await this.entityListContract.methods.providingAuthorities(i).call());
+    }
+  }
+
+  async addProvider(name: string, address: string) {
+    console.log(this.entityListContract);
+    const from = this.connectService.getAddress();
+    console.log(await this.entityListContract.methods.addProvidingAuthority(name, address).send({from: from}));
+  }
+
+  async addAdmin(address: string) {
+    console.log(this.entityListContract);
+    const from = this.connectService.getAddress();
+    console.log(await this.entityListContract.methods.addAdmin(address).send({from: from}));
+  }
+
+  async removeProvider(address: string) {
+    console.log(this.entityListContract);
+    const from = this.connectService.getAddress();
+    console.log(await this.entityListContract.methods.removeProvidingAuthority(address).send({from: from}));
+  }
+
+}

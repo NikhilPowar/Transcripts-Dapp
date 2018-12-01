@@ -83,4 +83,12 @@ contract EntityList {
     {
         return providingAuthorities.length;
     }
+
+    function getAdminsLength ()
+        public
+        view
+        returns (uint)
+    {
+        return admins.length;
+    }
 }
