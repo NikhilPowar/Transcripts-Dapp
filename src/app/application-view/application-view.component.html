@@ -1,3 +1,5 @@
 <div *ngIf="transcriptAddress!=='None'">
   
 </div>
+<input type="file" (change)="convertFileToBuffer($event)"/>
+<button (click)="uploadTranscript()">Upload transcript</button>

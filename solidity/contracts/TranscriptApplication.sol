@@ -35,9 +35,9 @@ contract TranscriptApplication {
     {
         // Only designated address can set the hash
         if(msg.sender != providingAuthority) {
-            return 'Error';
+            return "Error";
         }
         transcriptHash = s;
-        return 'Success';
+        return "Success";
     }
 }
