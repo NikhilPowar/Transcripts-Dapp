@@ -6,7 +6,7 @@ contract EntityList {
         string name;
         address addr;
     }
-    address[] admins;
+    address[] public admins;
     ProvidingAuthority[] public providingAuthorities;
 
     constructor ()
@@ -16,7 +16,7 @@ contract EntityList {
     }
 
     function toString(address x) 
-        public
+        private
         returns (string) 
     {
         bytes memory b = new bytes(20);
@@ -74,5 +74,13 @@ contract EntityList {
             }
         }
         return "Error";
+    }
+
+    function getProvidingAuthoritiesLength ()
+        public
+        view
+        returns (uint)
+    {
+        return providingAuthorities.length;
     }
 }

@@ -18,6 +18,7 @@ import { ApplicationListComponent } from './application-list/application-list.co
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { ApplicationViewComponent } from './application-view/application-view.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ApplicationViewComponent } from './application-view/application-view.co
     ApplicationFormComponent,
     IncludesValuePipe,
     ApplicationListComponent,
-    ApplicationViewComponent
+    ApplicationViewComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
