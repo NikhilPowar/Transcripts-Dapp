@@ -5,10 +5,13 @@
       <form class="material-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="form-group material-full-width">
           <input type="text" placeholder="Enter username here" matInput formControlName="username" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f?.username.errors }" />
-          <div *ngIf="submitted && f?.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+            [ngClass]="{ 'is-invalid': submitted && loginForm?.username.errors }" />
+          <div *ngIf="submitted && loginForm?.username.errors" class="invalid-feedback">
+            <div *ngIf="loginForm.username.errors.required">Username is required</div>
           </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Login as"></mat-select>
         </mat-form-field>
         <div class="material-button-row">
           <button mat-flat-button color="primary" [disabled]="loading" name="submit">Login</button>

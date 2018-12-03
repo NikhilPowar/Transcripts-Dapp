@@ -9,6 +9,7 @@ import { EntityListService } from '../entity-list.service';
 export class AdminPageComponent implements OnInit {
   providers;
   providerForm = false;
+  adminForm = false;
 
   constructor(
     private entityListService: EntityListService

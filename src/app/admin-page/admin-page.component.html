@@ -14,15 +14,15 @@
       <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new provider</button>
     </div>
     <div class="center-inner" [style.display]="providerForm? 'block' : 'none'">
-      <form class="material-form">
+      <form class="material-form" [formGroup]="providerForm" (ngSubmit)="submitProviderForm()">
         <mat-form-field class="material-full-width">
-          <input matInput placeholder="Enter college/university name" [(ngModel)]="name" name="name">
+          <input matInput placeholder="Enter college/university name" formControlName="name">
         </mat-form-field>
         <mat-form-field class="material-full-width">
-          <input matInput placeholder="Enter college/university account address" [(ngModel)]="address" name="address">
+          <input matInput placeholder="Enter college/university account address" formControlName="address">
         </mat-form-field>
         <div class="material-button-row">
-          <button mat-flat-button color="primary" (click)="submitProviderForm()" name="submit">Submit</button>
+          <button mat-flat-button color="primary" name="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -30,10 +30,10 @@
     <div class="material-button-row center-inner">
         <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new admin</button>
       </div>
-      <div class="center-inner" [style.display]="providerForm? 'block' : 'none'">
-        <form class="material-form">
+      <div class="center-inner" [style.display]="adminForm? 'block' : 'none'">
+        <form class="material-form" [formGroup]="providerForm" (ngSubmit)="submitAdminForm()">
           <mat-form-field class="material-full-width">
-            <input matInput placeholder="Enter admin account address" [(ngModel)]="address" name="address">
+            <input matInput placeholder="Enter admin account address" formControlName="address">
           </mat-form-field>
           <div class="material-button-row">
             <button mat-flat-button color="primary" (click)="submitAdminForm()" name="submit">Submit</button>
