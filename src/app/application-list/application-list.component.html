@@ -15,8 +15,8 @@
           <br>
           Duration: {{ application.course_start }} - {{ application.course_end }}
         </mat-card-subtitle>
-        <mat-card-actions class="application-actions">
-          <button mat-button color="secondary" (click)="viewApplication(application.address)">View this application</button>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" class="application-actions" (click)="viewApplication(application.address)">View this application</button>
         </mat-card-actions>
       </mat-card>
     </div>
