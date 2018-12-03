@@ -3,31 +3,31 @@ import { RegisterService } from '../register.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-login-popup',
-    providers: [RegisterService],
-    templateUrl: './login-popup.component.html',
-    styleUrls: ['./login-popup.component.css']
+  selector: 'app-login-popup',
+  providers: [RegisterService],
+  templateUrl: './login-popup.component.html',
+  styleUrls: ['./login-popup.component.css']
 })
 export class LoginPopupComponent {
-    @Input() name: string;
+  @Input() name: string;
 
-    @Input() show: boolean;
-    @Output() showChange = new EventEmitter<boolean>();
+  @Input() show: boolean;
+  @Output() showChange = new EventEmitter<boolean>();
 
-    constructor(
-        private registerService: RegisterService,
-        private router: Router
-    ) { }
+  constructor(
+    private registerService: RegisterService,
+    private router: Router
+  ) { }
 
-    createAccount() {
-        this.registerService.register('transcripts', this.name).then(() => {
-            console.log('Registration successful');
-        });
-        // TODO: Route to some page
-    }
+  createAccount() {
+    this.registerService.register('transcripts', this.name).then(() => {
+      console.log('Registration successful');
+    });
+    // TODO: Route to some page
+  }
 
-    closePopup() {
-        this.show = false;
-        this.showChange.emit();
-    }
+  closePopup() {
+    this.show = false;
+    this.showChange.emit();
+  }
 }
