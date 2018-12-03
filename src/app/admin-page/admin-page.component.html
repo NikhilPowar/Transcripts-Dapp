@@ -1,0 +1,44 @@
+<div class="center-outer">
+  <div class="center-middle">
+    <div class="list-group-item center-inner" *ngFor="let provider of providers">
+      {{provider.name}}
+      <br>
+      {{provider.addr}}
+      <br>
+      <div class="material-button-row center-inner">
+        <button mat-flat-button color="primary" (click)="removeProvider(provider.addr)">Remove</button>
+      </div>
+    </div>
+
+    <div class="material-button-row center-inner">
+      <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new provider</button>
+    </div>
+    <div class="center-inner" [style.display]="providerForm? 'block' : 'none'">
+      <form class="material-form">
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter college/university name" [(ngModel)]="name" name="name">
+        </mat-form-field>
+        <mat-form-field class="material-full-width">
+          <input matInput placeholder="Enter college/university account address" [(ngModel)]="address" name="address">
+        </mat-form-field>
+        <div class="material-button-row">
+          <button mat-flat-button color="primary" (click)="submitProviderForm()" name="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="material-button-row center-inner">
+        <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new admin</button>
+      </div>
+      <div class="center-inner" [style.display]="providerForm? 'block' : 'none'">
+        <form class="material-form">
+          <mat-form-field class="material-full-width">
+            <input matInput placeholder="Enter admin account address" [(ngModel)]="address" name="address">
+          </mat-form-field>
+          <div class="material-button-row">
+            <button mat-flat-button color="primary" (click)="submitAdminForm()" name="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

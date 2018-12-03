@@ -17,6 +17,7 @@ export class EntityListService {
     private connectService: ConnectService
   ) {
     this.entityListContract = this.contractService.accessContract(entityListContractAddress, entityListContractAbi);
+    console.log(this.entityListContract);
   }
 
   async getAdminList() {
@@ -26,15 +27,26 @@ export class EntityListService {
     for (let i = 0; i < adminLength; i++) {
       admins.push(await this.entityListContract.methods.admins(i).call());
     }
+    return admins;
   }
 
   async getProvidersList() {
     console.log(this.entityListContract);
     const providersLength = await this.entityListContract.methods.getProvidingAuthoritiesLength().call();
-    const providers = [];
+    console.log(providersLength);
+    let providers = [];
     for (let i = 0; i < providersLength; i++) {
       providers.push(await this.entityListContract.methods.providingAuthorities(i).call());
     }
+    console.log(providers);
+    providers = providers.map((obj) => {
+      return {
+        addr: obj.addr,
+        name: obj.name
+      };
+    });
+    console.log(providers);
+    return providers;
   }
 
   async addProvider(name: string, address: string) {
