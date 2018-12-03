@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { ContractService } from '../contract.service';
+import { IpfsService } from '../ipfs.service';
+import { ConnectService } from '../connect.service';
 
 @Component({
   selector: 'app-application-view',
@@ -11,30 +12,55 @@ import { ContractService } from '../contract.service';
 export class ApplicationViewComponent implements OnInit {
   transcriptAddress;
   transcriptContract;
+  buffer;
   // tslint:disable-next-line:max-line-length
   abi = [ { 'constant': true, 'inputs': [], 'name': 'name', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseName', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'id', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseCompletionYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseStartYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [ { 'name': '_owner', 'type': 'address' }, { 'name': '_provider', 'type': 'address' }, { 'name': '_name', 'type': 'string' }, { 'name': '_id', 'type': 'string' }, { 'name': '_courseName', 'type': 'string' }, { 'name': '_startYear', 'type': 'uint256' }, { 'name': '_completionYear', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHash', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptOwner', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 's', 'type': 'string' } ], 'name': 'setTranscriptHash', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
 
   constructor(
     private route: ActivatedRoute,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private ipfsService: IpfsService,
+    private connectService: ConnectService
   ) { }
 
   ngOnInit() {
-    this.transcriptAddress = this.route.paramMap.pipe(map(params => params.get('transcriptAddress') || 'None'));
-    if (this.transcriptAddress !== 'None') {
-      this.getTranscriptData();
-    }
+    this.route.params.subscribe(params => {
+      this.transcriptAddress = params.transcriptAddress;
+      console.log(this.transcriptAddress);
+      if (this.transcriptAddress !== 'None') {
+        this.getTranscriptData();
+      }
+    });
   }
 
   async getTranscriptData() {
     this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
-    console.log(await this.transcriptContract.getTranscriptHash().call());
-    console.log(await this.transcriptContract.getTranscriptOwner().call());
+    console.log(await this.transcriptContract.methods.getTranscriptHash().call());
+    console.log(await this.transcriptContract.methods.getTranscriptOwner().call());
   }
 
-  uploadTranscript() {
+  async convertFileToBuffer(event) {
+    const file = event.target.files[0];
+    let fileDataArray;
+    const fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(file);
+    fileReader.onloadend = async () => {
+      console.log(fileReader.result);
+      fileDataArray = fileReader.result;
+      const buffer = await Buffer.from(fileDataArray);
+      console.log(buffer);
+      this.buffer = buffer;
+    };
+  }
 
+  async uploadTranscript() {
+    console.log(this.buffer);
+    const hash = await this.ipfsService.store(this.buffer);
+    console.log('Storage done.');
+    const from = this.connectService.getAddress();
+    await this.transcriptContract.methods.setTranscriptHash(hash).send({from: from});
+    console.log(await this.transcriptContract.methods.getTranscriptHash().call());
   }
 
 }

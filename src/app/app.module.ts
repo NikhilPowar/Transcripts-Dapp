@@ -17,6 +17,7 @@ import { LoginPopupComponent } from './login/login-popup.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { ApplicationListComponent } from './application-list/application-list.component';
 import { ApplicationViewComponent } from './application-view/application-view.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
@@ -32,7 +33,8 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
     IncludesValuePipe,
     GreaterThanPipe,
     ApplicationListComponent,
-    ApplicationViewComponent
+    ApplicationViewComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
