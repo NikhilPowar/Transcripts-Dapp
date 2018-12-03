@@ -34,13 +34,14 @@ export class ApplicationListComponent implements OnInit {
     this.applications = [];
     addresses.forEach(async address => {
       const contract = this.contractService.accessContract(address, this.transcriptApplicationAbi);
+      // tslint:disable-next-line:prefer-const
       let application = [];
-      // TODO: Add application data to array
-      application['name'] = await contract.methods._name().call();
-      application['id'] = await contract._id().call();
-      application['course_name'] = await contract.methods._name().call();
-      application['course_start'] = await contract.methods._name().call();
-      application['course_end'] = await contract.methods._name().call();
+      application['address'] = address;
+      application['name'] = await contract.methods.name().call();
+      application['id'] = await contract.methods.id().call();
+      application['course_name'] = await contract.methods.courseName().call();
+      application['course_start'] = await contract.methods.courseStartYear().call();
+      application['course_end'] = await contract.methods.courseCompletionYear().call();
       this.applications.push(application);
     }, this);
     console.log(this.applications);
@@ -48,7 +49,7 @@ export class ApplicationListComponent implements OnInit {
 
   viewApplication(address: string) {
     console.log(address);
-    this.router.navigate(['application-list', address]);
+    this.router.navigate(['application-view', address]);
   }
 
 }

@@ -1,17 +1,22 @@
 <div class="center-outer">
   <div class="center-middle">
     <div class="center-inner">
+      <div class="page-header">
+        Application List
+      </div>
       <mat-card *ngFor="let application of applications" class="application-card">
         <mat-card-title>
           {{ application.name }}
         </mat-card-title>
         <mat-card-subtitle class="application-title">
           ID: {{ application.id }}
+          <br>
           Course: {{ application.course_name }}
-          Duration: {{ application.couse_start }} - {{ application.course_end }}
+          <br>
+          Duration: {{ application.course_start }} - {{ application.course_end }}
         </mat-card-subtitle>
         <mat-card-actions class="application-actions">
-          <button mat-button color="secondary" (click)="viewApplication(application)">View this application</button>
+          <button mat-button color="secondary" (click)="viewApplication(application.address)">View this application</button>
         </mat-card-actions>
       </mat-card>
     </div>

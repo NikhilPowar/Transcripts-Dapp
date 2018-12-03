@@ -10,7 +10,7 @@ body {
   max-width: 300px;
   width: 100%;
   color: black;
-  margin: 0 auto;
+  margin: 0 auto 1em;
 }
 
 .material-full-width {
@@ -36,4 +36,13 @@ body {
 
 .instructions {
   max-width: 100%;
+  font-size: 1em;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  margin: 1em 0;
+}
+
+.page-header {
+  font-size: 3em;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  margin: 1em 0;
 }

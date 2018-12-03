@@ -1,11 +1,18 @@
 To write contract:-
     Write contract code in .sol files and save in contracts folder
 
-To compile and deploy contracts:-
-    Start up Ganache if not already running
+To compile contracts:-
     Execute command: truffle compile
+
+To deploy contracts(Ganache):-
+    Start up Ganache if not already running
     Create migration script for all contracts and save in /migrations subdirectory
     Execute command: truffle deploy
+
+To deploy contracts on global networks:-
+    Either of the following:-
+        www.MyEtherWallet.com (for global singular contracts)
+        Deploy through web3js code (for dynamic contract deployment)
 
 To test contracts:-
     Write the .js test files and save them in the /test subdirectory
