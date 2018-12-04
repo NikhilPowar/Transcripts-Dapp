@@ -14,8 +14,8 @@
           <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto"
             [formControl]="college">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of options | includesValue:college.value" [value]="option">
-              {{option}}
+            <mat-option *ngFor="let provider of providers" [value]="provider.addr">
+              {{provider.name}}
             </mat-option>
           </mat-autocomplete>
           <mat-error *ngIf="college.invalid">{{getErrorMessage(college)}}</mat-error>

@@ -4,6 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { ContractService } from '../contract.service';
 import { ConnectService } from '../connect.service';
 import { TranscriptService } from '../transcript.service';
+import { EntityListService } from '../entity-list.service';
 
 export class ApplicationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -32,7 +33,7 @@ export class ApplicationFormComponent {
   private completionYear = new FormControl('', [Validators.required]);
 
   private yearRange: number[];
-  private options: string[] = ['VJTI', 'SPIT', 'DJ', 'Thakur'];
+  private providers: any[];
 
   matcher = new ApplicationErrorStateMatcher();
 
@@ -40,13 +41,19 @@ export class ApplicationFormComponent {
     private connectService: ConnectService,
     private contractService: ContractService,
     private transcriptService: TranscriptService,
+    private entityListService: EntityListService
   ) {
+    this.getCollegeList();
     const currentYear = (new Date()).getFullYear();
     let i: number;
     this.yearRange = [];
     for (i = currentYear - 20; i <= currentYear + 5; i++) {
       this.yearRange.push(i);
     }
+  }
+
+  async getCollegeList() {
+    this.providers = await this.entityListService.getProvidersList();
   }
 
   getErrorMessage(attribute: FormControl) {
