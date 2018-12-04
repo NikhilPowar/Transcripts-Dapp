@@ -3,22 +3,28 @@
     <div class="center-inner">
       <div class="page-header">Login</div>
       <form class="material-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
         <mat-form-field class="form-group material-full-width">
-          <input type="text" placeholder="Enter username here" matInput formControlName="username" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && loginForm?.username.errors }" />
-          <div *ngIf="submitted && loginForm?.username.errors" class="invalid-feedback">
-            <div *ngIf="loginForm.username.errors.required">Username is required</div>
-          </div>
+          <input matInput type="text" placeholder="Enter username here" [formControl]="username"/>
+          <mat-error *ngIf="username.invalid">{{getErrorMessage(username)}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Login as"></mat-select>
+
+        <mat-form-field class="form-group material-full-width">
+          <mat-select placeholder="Login as" [formControl]="loginType">
+            <mat-option value="student">Student</mat-option>
+            <mat-option value="college">College/University</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+          <mat-error *ngIf="loginType.invalid">{{getErrorMessage(loginType)}}</mat-error>
         </mat-form-field>
+
         <div class="material-button-row">
-          <button mat-flat-button color="primary" [disabled]="loading" name="submit">Login</button>
+          <button mat-flat-button color="primary" [disabled]="!loginForm.valid" name="submit">Login</button>
         </div>
+
       </form>
     </div>
   </div>
 </div>
 
-<app-login-popup [hidden]="!showPopup" [show]="showPopup" (showChange)="hidePopup()" [name]="usernameString"></app-login-popup>
+<app-login-popup [hidden]="!showPopup" [show]="showPopup" (showChange)="hidePopup()" [name]="popupInput"></app-login-popup>

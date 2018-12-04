@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ContractService } from '../contract.service';
 import { ConnectService } from '../connect.service';
@@ -30,6 +30,7 @@ export class ApplicationFormComponent {
   private course = new FormControl('', [Validators.required]);
   private startYear = new FormControl('', [Validators.required]);
   private completionYear = new FormControl('', [Validators.required]);
+  private applicationForm: FormGroup;
 
   private yearRange: number[];
   private options: string[] = ['VJTI', 'SPIT', 'DJ', 'Thakur'];
@@ -40,6 +41,7 @@ export class ApplicationFormComponent {
     private connectService: ConnectService,
     private contractService: ContractService,
     private transcriptService: TranscriptService,
+    private formBuilder: FormBuilder
   ) {
     const currentYear = (new Date()).getFullYear();
     let i: number;
@@ -47,6 +49,15 @@ export class ApplicationFormComponent {
     for (i = currentYear - 20; i <= currentYear + 5; i++) {
       this.yearRange.push(i);
     }
+
+    this.applicationForm = this.formBuilder.group({
+      'id': this.id,
+      'name': this.name,
+      'college': this.college,
+      'course': this.course,
+      'startYear': this.startYear,
+      'completionYear': this.completionYear
+    });
   }
 
   getErrorMessage(attribute: FormControl) {
@@ -64,8 +75,8 @@ export class ApplicationFormComponent {
     // TODO: Get address from this.college
     const transcriptContractAddress =
       await this.contractService.deployContract(transcriptApplicationABI, transcriptApplicationBytecode,
-        [idContractAddress, collegeAddress, this.name, this.id, this.course,
-          this.startYear, this.completionYear]);
+        [idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
+          this.startYear.value, this.completionYear.value]);
     console.log('Application submitted!');
     console.log('Transcript Contract Address:', transcriptContractAddress);
     const transcriptContract = this.contractService.accessContract(transcriptContractAddress, transcriptApplicationABI);

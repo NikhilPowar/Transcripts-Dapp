@@ -9,7 +9,7 @@
         NOTE: Application requires some ether (exact values depend on current gas prices). Please ensure your wallet
         has ether before proceeding.
       </div>
-      <form class="material-form">
+      <form class="material-form" [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
         <mat-form-field class="material-full-width">
           <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto"
             [formControl]="college">
@@ -53,7 +53,7 @@
         </mat-form-field>
 
         <div class="material-button-row">
-          <button mat-flat-button color="primary" (click)="submitApplication()">Apply</button>
+          <button mat-flat-button color="primary" [disabled]="!applicationForm.valid" name="submit">Apply</button>
         </div>
       </form>
     </div>

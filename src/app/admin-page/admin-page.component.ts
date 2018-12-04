@@ -21,7 +21,7 @@ export class AdminPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private entityListService: EntityListService
     ) {
-    this.providerForm = formBuilder.group({
+    this.providerForm = this.formBuilder.group({
       'name': this.collegeName,
       'address': this.collegeAddress
     });
@@ -36,7 +36,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   getErrorMessage(attribute: FormControl) {
-    return attribute.hasError('required') ? 'You must enter a value' :
+    return attribute.hasError('required') ? 'This field is required' :
         attribute.hasError('pattern') ? 'Incorrect address format' : '';
   }
 
