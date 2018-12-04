@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -48,6 +48,7 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
     MatButtonModule,
     MatCardModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

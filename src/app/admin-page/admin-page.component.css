@@ -1,0 +1,9 @@
+.college-card {
+  max-width: max-content;
+  min-width: 500px;
+  margin: 1em auto;
+}
+
+.college-actions {
+  margin: 1em;
+}

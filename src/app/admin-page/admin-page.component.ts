@@ -8,7 +8,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
-  providers;
+  private providers: Array<any>;
 
   private providerForm: FormGroup;
   private collegeName = new FormControl('', [Validators.required]);

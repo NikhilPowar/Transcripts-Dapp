@@ -58,3 +58,11 @@ body {
 .mat-tab-body {
   padding: 2em;
 }
+
+.center-spinner {
+  margin: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
