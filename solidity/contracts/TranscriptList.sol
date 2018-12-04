@@ -25,9 +25,11 @@ contract TranscriptList {
     function removeTranscript (address transcriptAddress)
         public
     {
-        for (uint i = 0; i < transcriptList[msg.sender].length; i++){
+        uint length = transcriptList[msg.sender].length;
+        for (uint i = 0; i < length; i++){
             if (transcriptAddress == transcriptList[msg.sender][i]) {
-                delete transcriptList[msg.sender][i];
+                transcriptList[msg.sender][i] = transcriptList[msg.sender][length-1];
+                transcriptList[msg.sender].length--;
                 return;
             }
         }

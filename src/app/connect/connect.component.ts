@@ -18,7 +18,8 @@ export class ConnectComponent implements OnInit {
 
   connect() {
     this.connectService.connect();
-    this.router.navigate(['admin-page']);
+    this.router.navigate(['login']);
+    // this.router.navigate(['application-list']);
   }
 
 }
