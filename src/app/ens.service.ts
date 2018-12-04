@@ -63,6 +63,23 @@ export class EnsService {
     console.log('Transaction done.');
   }
 
+  async registerSubdomainAlternate(appname: string, username: string, address: string) {
+    console.log(this.registrarContract);
+    console.log(ethers.utils.namehash(appname + '.test'));
+    console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
+    console.log(address);
+    const from = this.connectService.getAddress();
+    // tslint:disable-next-line:max-line-length
+    const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
+    const data = func.encodeABI();
+    const subdomainCreatorAddress = '';
+    // tslint:disable-next-line:max-line-length
+    const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+    const subdomainCreatorContract = this.contractService.accessContract(subdomainCreatorAddress, subdomainCreatorABI);
+    console.log(await subdomainCreatorContract.methods.register(data).send({from: from}));
+    console.log('Transaction done.');
+  }
+
   async createSubdomain(appname: string, username: string, address: string) {
     if (await this.checkSubdomain(appname, username) === true) {
       await this.registerSubdomain(appname, username, address);

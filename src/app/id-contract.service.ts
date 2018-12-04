@@ -22,6 +22,15 @@ export class IdContractService {
     console.log(to);
     console.log(value);
     console.log(data);
+    idContract.events.ExecutionRequested().on('data', (event) => {
+      console.log(event);
+    });
+    idContract.events.Approved().on('data', (event) => {
+      console.log(event);
+    });
+    idContract.events.Executed().on('data', (event) => {
+      console.log(event);
+    });
     await idContract.methods.execute(to, value, data).send({from: from});
   }
 }
