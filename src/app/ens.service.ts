@@ -72,7 +72,7 @@ export class EnsService {
     // tslint:disable-next-line:max-line-length
     const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
     const data = func.encodeABI();
-    const subdomainCreatorAddress = '';
+    const subdomainCreatorAddress = '0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1';
     // tslint:disable-next-line:max-line-length
     const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
     const subdomainCreatorContract = this.contractService.accessContract(subdomainCreatorAddress, subdomainCreatorABI);
