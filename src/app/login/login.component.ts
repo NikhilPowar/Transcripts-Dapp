@@ -38,6 +38,7 @@ export class LoginComponent {
     if (this.loginType.value === 'admin') {
       this.entityListService.getAdminList().then((admins) => {
         if (admins.includes(address)) {
+          this.connectService.setIDContractAddress(address);
           this.router.navigate(['admin-page']);
         } else {
           this.showAuthenticationError = true;
@@ -47,6 +48,7 @@ export class LoginComponent {
       this.entityListService.getProvidersList().then((providers) => {
         providers.forEach(provider => {
           if (provider['addr'] === address) {
+            this.connectService.setIDContractAddress(address);
             this.router.navigate(['application-list']);
           }
         });

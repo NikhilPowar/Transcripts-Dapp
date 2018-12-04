@@ -30,7 +30,8 @@ export class ApplicationListComponent implements OnInit {
     // const address = this.connectService.getIDContractAddress();
     // this.applications = await this.transcriptService.getTranscripts(address);
     let addresses = [];
-    addresses = await this.transcriptService.getTranscripts('0x5E4eE285830bAdcc57f056a03Ffbc1f2a1797E00');
+    const addr = this.connectService.getIDContractAddress();
+    addresses = await this.transcriptService.getTranscripts(addr);
     this.applications = [];
     addresses.forEach(async address => {
       const contract = this.contractService.accessContract(address, this.transcriptApplicationAbi);
