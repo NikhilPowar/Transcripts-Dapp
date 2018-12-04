@@ -5,9 +5,9 @@
       <form class="material-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="form-group material-full-width">
           <input type="text" placeholder="Enter username here" matInput formControlName="username" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && loginForm?.username.errors }" />
-          <div *ngIf="submitted && loginForm?.username.errors" class="invalid-feedback">
-            <div *ngIf="loginForm.username.errors.required">Username is required</div>
+            [ngClass]="{ 'is-invalid': submitted && loginForm?.value.username.errors }" />
+          <div *ngIf="submitted && loginForm?.value.username.errors" class="invalid-feedback">
+            <div *ngIf="loginForm.value.username.errors.required">Username is required</div>
           </div>
         </mat-form-field>
         <mat-form-field>

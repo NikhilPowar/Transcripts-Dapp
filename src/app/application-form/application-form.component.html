@@ -13,8 +13,8 @@
         <mat-form-field class="material-full-width">
           <input type="text" placeholder="Select your college/university" matInput [matAutocomplete]="auto"
             [formControl]="college">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let provider of providers" [value]="provider.addr">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCollege">
+            <mat-option *ngFor="let provider of providers" [value]="provider">
               {{provider.name}}
             </mat-option>
           </mat-autocomplete>
