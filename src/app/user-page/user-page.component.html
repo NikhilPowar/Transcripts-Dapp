@@ -1,0 +1,51 @@
+<div class="center-outer">
+  <div class="center-middle">
+    <div class="center-inner">
+      <div class="page-header">Welcome to Transcripts Dapp</div>
+
+      <mat-grid-list cols="2" rowHeight="3:1" gutterSize="1em">
+        <mat-grid-tile matRipple [routerLink]="'../application-list'">
+          <div class="grid-tile-content">
+            <div class="grid-tile-title">
+              View Transcript Applications
+            </div>
+            <div class="grid-tile-description">
+              View the status of previously applied transcript applications and access transcripts
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile matRipple [routerLink]="'../application'">
+          <div class="grid-tile-content">
+            <div class="grid-tile-title">
+              New Application
+            </div>
+            <div class="grid-tile-description">
+              Create a new application for a transcript
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <div class="instructions">
+        <h3>Instructions</h3>
+        <p>
+          To create a new transcript application :-
+        </p>
+        <ol>
+          <li>Click on "New Application" above to go to the application form</li>
+          <li>Fill in the details and submit the form</li>
+          <li>Make transaction when prompted to do so</li>
+        </ol>
+
+        <p>
+          To access submitted transcript applications :-
+        </p>
+        <ol>
+          <li>Click on "View Transcript Applications" above</li>
+          <li>Select desired application from the list of applications</li>
+          <li>If application is accepted, downloadable pdf file containing the transcript should appear</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

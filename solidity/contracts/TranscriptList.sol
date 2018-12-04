@@ -8,10 +8,11 @@ contract TranscriptList {
         public 
     { }
 
-    function addTranscript (address account, address transcriptAddress) 
+    function addTranscript (address account1, address account2, address transcriptAddress) 
         public 
     {
-        transcriptList[account].push(transcriptAddress);
+        transcriptList[account1].push(transcriptAddress);
+        transcriptList[account2].push(transcriptAddress);
     }
 
     function getTranscripts (address account)

@@ -79,7 +79,7 @@ export class LoginComponent {
   studentLogin() {
     this.loginService.login('transcripts', this.username.value).then((success) => {
       if (success) {
-        this.router.navigate(['application-list']);
+        this.router.navigate(['user-page']);
       } else {
         this.popupInput = this.username.value;
         this.showPopup = true;

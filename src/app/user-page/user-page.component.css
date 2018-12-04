@@ -1,0 +1,32 @@
+mat-grid-list {
+  width: 80%;
+  margin: auto;
+}
+
+mat-grid-tile {
+  background-color: #eeeeee;
+  box-shadow: 10px 10px 10px #bbbbbb;
+}
+
+mat-grid-tile:hover {
+  cursor: pointer;
+  background-color: #bbbbbb;
+}
+
+.grid-tile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-tile-title {
+  font-size: 2em;
+  width: 100%;
+}
+
+.grid-tile-description {
+  margin-top: 1.5em;
+  font-size: 1.2em;
+  width: 80%;
+}
