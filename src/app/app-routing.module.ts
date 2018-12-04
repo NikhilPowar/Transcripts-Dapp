@@ -7,6 +7,7 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { ApplicationListComponent } from './application-list/application-list.component';
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const appRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
   {
     path: 'application-view/:transcriptAddress',
     component: ApplicationViewComponent
+  },
+  {
+    path: 'user-page',
+    component: UserPageComponent
   },
   {
     path: 'admin-page',

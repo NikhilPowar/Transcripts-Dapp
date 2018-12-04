@@ -64,8 +64,8 @@ export class ApplicationFormComponent {
     // TODO: Get address from this.college
     const transcriptContractAddress =
       await this.contractService.deployContract(transcriptApplicationABI, transcriptApplicationBytecode,
-        [idContractAddress, collegeAddress, this.name, this.id, this.course,
-          this.startYear, this.completionYear]);
+        [idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
+          this.startYear.value, this.completionYear.value]);
     console.log('Application submitted!');
     console.log('Transcript Contract Address:', transcriptContractAddress);
     const transcriptContract = this.contractService.accessContract(transcriptContractAddress, transcriptApplicationABI);

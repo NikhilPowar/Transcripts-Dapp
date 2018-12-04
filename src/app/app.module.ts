@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule } from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule, MatRippleModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -49,6 +50,7 @@ import { UserPageComponent } from './user-page/user-page.component';
     MatAutocompleteModule,
     MatButtonModule,
     MatGridListModule,
+    MatRippleModule,
     MatCardModule,
     MatTabsModule,
     MatProgressSpinnerModule,
