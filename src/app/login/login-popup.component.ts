@@ -22,8 +22,8 @@ export class LoginPopupComponent {
   createAccount() {
     this.registerService.register('transcripts', this.name).then(() => {
       console.log('Registration successful');
+      this.router.navigate(['user-page']);
     });
-    this.router.navigate(['user-page']);
   }
 
   closePopup() {
