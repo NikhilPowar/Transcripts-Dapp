@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -22,6 +22,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
     GreaterThanPipe,
     ApplicationListComponent,
     ApplicationViewComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,7 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
     MatSelectModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatGridListModule,
     MatCardModule,
     MatTabsModule,
     MatProgressSpinnerModule,
