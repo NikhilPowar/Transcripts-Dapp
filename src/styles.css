@@ -63,6 +63,10 @@ body {
   margin: auto;
 }
 
+.error {
+  color: red;
+}
+
 [hidden] {
   display: none !important;
 }

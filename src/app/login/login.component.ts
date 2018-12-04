@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+import { EntityListService } from '../entity-list.service';
+import { ConnectService } from '../connect.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +17,13 @@ export class LoginComponent {
   private loginType = new FormControl('', [Validators.required]);
   private showPopup: boolean;
   private popupInput: string;
+  private showAuthenticationError: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
+    private connectService: ConnectService,
+    private entityListService: EntityListService,
     private router: Router
   ) {
     this.showPopup = false;
@@ -28,12 +33,50 @@ export class LoginComponent {
     });
   }
 
+  specialLogin() {
+    const address = this.connectService.getAddress();
+    if (this.loginType.value === 'admin') {
+      this.entityListService.getAdminList().then((admins) => {
+        if (admins.includes(address)) {
+          this.router.navigate(['admin-page']);
+        } else {
+          this.showAuthenticationError = true;
+        }
+      });
+    } else {
+      this.entityListService.getProvidersList().then((providers) => {
+        providers.forEach(provider => {
+          if (provider['addr'] === address) {
+            this.router.navigate(['application-list']);
+          }
+        });
+        this.showAuthenticationError = true;
+      });
+    }
+  }
+
+  loginTypeChanged() {
+    this.showAuthenticationError = false;
+    if (this.loginType.value !== 'student') {
+      this.username.disable();
+    } else {
+      this.username.enable();
+    }
+  }
+
   onSubmit() {
     this.showPopup = false;
     if (this.loginForm.invalid) {
       return;
     }
-    console.log(this.loginForm);
+    if (this.loginType.value === 'admin' || this.loginType.value === 'college') {
+      this.specialLogin();
+    } else {
+      this.studentLogin();
+    }
+  }
+
+  studentLogin() {
     this.loginService.login('transcripts', this.username.value).then((success) => {
       if (success) {
         this.router.navigate(['application-list']);
