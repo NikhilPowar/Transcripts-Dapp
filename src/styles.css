@@ -13,9 +13,17 @@ body {
   margin: 0 auto 1em;
 }
 
+.mat-form-field {
+  margin-top: 0.5em;
+}
+
 .material-full-width {
   width: 100%;
   color: black;
+}
+
+.material-button-row {
+  margin-top: 1em;
 }
 
 .center-outer {
@@ -45,4 +53,8 @@ body {
   font-size: 3em;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   margin: 1em 0;
+}
+
+.mat-tab-body {
+  padding: 2em;
 }

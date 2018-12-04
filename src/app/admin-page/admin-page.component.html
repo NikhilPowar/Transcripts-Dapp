@@ -1,44 +1,64 @@
 <div class="center-outer">
   <div class="center-middle">
-    <div class="list-group-item center-inner" *ngFor="let provider of providers">
-      {{provider.name}}
-      <br>
-      {{provider.addr}}
-      <br>
-      <div class="material-button-row center-inner">
-        <button mat-flat-button color="primary" (click)="removeProvider(provider.addr)">Remove</button>
-      </div>
-    </div>
+    <div class="center-inner">
+      <div class="page-header">Administrator Functions</div>
 
-    <div class="material-button-row center-inner">
-      <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new provider</button>
-    </div>
-    <div class="center-inner" [style.display]="providerForm? 'block' : 'none'">
-      <form class="material-form" [formGroup]="providerForm" (ngSubmit)="submitProviderForm()">
-        <mat-form-field class="material-full-width">
-          <input matInput placeholder="Enter college/university name" formControlName="name">
-        </mat-form-field>
-        <mat-form-field class="material-full-width">
-          <input matInput placeholder="Enter college/university account address" formControlName="address">
-        </mat-form-field>
-        <div class="material-button-row">
-          <button mat-flat-button color="primary" name="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="material-button-row center-inner">
-        <button mat-flat-button color="primary" (click)="providerForm = !providerForm" name="submit">Add new admin</button>
-      </div>
-      <div class="center-inner" [style.display]="adminForm? 'block' : 'none'">
-        <form class="material-form" [formGroup]="providerForm" (ngSubmit)="submitAdminForm()">
-          <mat-form-field class="material-full-width">
-            <input matInput placeholder="Enter admin account address" formControlName="address">
-          </mat-form-field>
+      <mat-tab-group mat-stretch-tabs class="contained-tab">
+        <mat-tab label="Registered Colleges/Universities">
+        <div class="list-group-item" *ngFor="let provider of providers">
+          {{provider.name}}
+          <br>
+          {{provider.addr}}
+          <br>
           <div class="material-button-row">
-            <button mat-flat-button color="primary" (click)="submitAdminForm()" name="submit">Submit</button>
+            <button mat-flat-button color="primary" (click)="removeProvider(provider.addr)">Remove</button>
           </div>
-        </form>
-      </div>
+        </div>
+        </mat-tab>
+
+
+        <mat-tab label="Add College/University">
+          <div class="instructions">
+            Enter details for new college/university account
+          </div>
+          <form class="material-form" [formGroup]="providerForm" (ngSubmit)="submitProviderForm()">
+
+            <mat-form-field class="material-full-width">
+              <input matInput type="text" placeholder="Enter college/university name" [formControl]="collegeName">
+              <mat-error *ngIf="collegeName.invalid">{{getErrorMessage(collegeName)}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="material-full-width">
+              <input matInput type="text" placeholder="Enter college/university account address" [formControl]="collegeAddress">
+              <mat-error *ngIf="collegeAddress.invalid">{{getErrorMessage(collegeAddress)}}</mat-error>
+            </mat-form-field>
+
+            <div class="material-button-row">
+              <button [disabled]="!providerForm.valid" mat-flat-button color="primary" name="submitProvider">Submit</button>
+            </div>
+
+          </form>
+        </mat-tab>
+
+
+        <mat-tab label="Add Administrator">
+          <div class="instructions">
+            Enter details for new administrator account
+          </div>
+          <form class="material-form" [formGroup]="adminForm" (ngSubmit)="submitAdminForm()">
+
+            <mat-form-field class="material-full-width">
+              <input matInput placeholder="Enter admin account address" formControlName="address">
+            </mat-form-field>
+
+            <div class="material-button-row">
+              <button [disabled]="!adminForm.valid" mat-flat-button color="primary" name="submit">Submit</button>
+            </div>
+
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
   </div>
 </div>

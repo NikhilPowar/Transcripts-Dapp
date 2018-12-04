@@ -6,6 +6,7 @@ import { MatInputModule, MatFormFieldModule, MatSelectModule } from '@angular/ma
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -46,6 +47,7 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
+    MatTabsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityListService } from '../entity-list.service';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-page',
@@ -8,15 +9,35 @@ import { EntityListService } from '../entity-list.service';
 })
 export class AdminPageComponent implements OnInit {
   providers;
-  providerForm = false;
-  adminForm = false;
+
+  private providerForm: FormGroup;
+  private collegeName = new FormControl('', [Validators.required]);
+  private collegeAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
+
+  private adminForm: FormGroup;
+  private adminAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
 
   constructor(
+    private formBuilder: FormBuilder,
     private entityListService: EntityListService
-  ) { }
+    ) {
+    this.providerForm = formBuilder.group({
+      'name': this.collegeName,
+      'address': this.collegeAddress
+    });
+
+    this.adminForm = formBuilder.group({
+      'address': this.adminAddress
+    });
+  }
 
   ngOnInit() {
     this.getProviderList();
+  }
+
+  getErrorMessage(attribute: FormControl) {
+    return attribute.hasError('required') ? 'You must enter a value' :
+        attribute.hasError('pattern') ? 'Incorrect address format' : '';
   }
 
   async getProviderList() {
@@ -29,8 +50,10 @@ export class AdminPageComponent implements OnInit {
   }
 
   submitProviderForm() {
-    // ToDo: Perform form validation
-    // this.addProvider(name, address);
+    if (this.providerForm.invalid) {
+      return;
+    }
+    this.addProvider(this.collegeName.value, this.collegeAddress.value);
   }
 
   async addAdmin(address: string) {
@@ -38,8 +61,10 @@ export class AdminPageComponent implements OnInit {
   }
 
   submitAdminForm() {
-    // ToDo: Perform form validation
-    // this.addAdmin(address);
+    if (this.adminForm.invalid) {
+      return;
+    }
+    this.addAdmin(this.adminAddress.value);
   }
 
   async removeProvider(address: string) {
