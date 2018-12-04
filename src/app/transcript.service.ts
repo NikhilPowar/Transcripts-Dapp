@@ -9,7 +9,7 @@ export class TranscriptService {
 
   // tslint:disable-next-line:max-line-length
   private transcriptListABI = [ { 'inputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'constant': false, 'inputs': [ { 'name': 'account', 'type': 'address' }, { 'name': 'transcriptAddress', 'type': 'address' } ], 'name': 'addTranscript', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': true, 'inputs': [ { 'name': 'account', 'type': 'address' } ], 'name': 'getTranscripts', 'outputs': [ { 'name': '', 'type': 'address[]' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'transcriptAddress', 'type': 'address' } ], 'name': 'removeTranscript', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
-  private transcriptListContractAddress = '0x58a399b03fcb86f0cbc9abb597abb989a3bfacad';
+  private transcriptListContractAddress = '0xB8269b1C96f8d9A662C5566b7C8095a61CC6Ae9c';
 
   constructor(
     private connectService: ConnectService,

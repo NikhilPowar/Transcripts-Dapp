@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 contract EntityList {
 
@@ -17,7 +17,7 @@ contract EntityList {
 
     function toString(address x) 
         private
-        returns (string) 
+        returns (string memory) 
     {
         bytes memory b = new bytes(20);
         for (uint i = 0; i < 20; i++) {
@@ -40,7 +40,7 @@ contract EntityList {
 
     function addAdmin (address addr)
         public
-        returns (string)
+        returns (string memory)
     {
         if(!validateAdmin(msg.sender)) {
             return "Error";
@@ -49,9 +49,9 @@ contract EntityList {
         return "Success";
     }
 
-    function addProvidingAuthority (string name, address addr)
+    function addProvidingAuthority (string memory name, address addr)
         public
-        returns (string)
+        returns (string memory)
     {
         if (!validateAdmin(msg.sender)) {
             return "Error";
@@ -62,7 +62,7 @@ contract EntityList {
 
     function removeProvidingAuthority (address addr)
         public
-        returns (string)
+        returns (string memory)
     {
         if (!validateAdmin(msg.sender)) {
             return "Error";
