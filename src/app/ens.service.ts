@@ -43,23 +43,11 @@ export class EnsService {
     // tslint:disable-next-line:max-line-length
     const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
     const data = func.encodeABI();
-    const web3 = this.connectService.getWeb3();
-    const gasEstimate = await func.estimateGas({from: '0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643'});
-    const tx = new Tx({
-      nonce: web3.utils.toHex(await web3.eth.getTransactionCount('0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643')),
-      data: data,
-      gas: gasEstimate,
-      to: this.registrarContract.address,
-      from: '0x8e18047d6D8c17BC48dFC8c22A49F59DBFc73643',
-      value: '0x00'
-    });
-    console.log(tx);
-    tx.sign(new Buffer('468e048a5af776c9a7690db90694fed44fd5c599118afb7c9e1313efeafc46a9', 'hex'));
-    console.log(tx);
-    const serializedTx = tx.serialize();
-    console.log('Sending signed transaction');
-    const result = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
-    console.log(result);
+    const subdomainCreatorAddress = '0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1';
+    // tslint:disable-next-line:max-line-length
+    const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+    const subdomainCreatorContract = this.contractService.accessContract(subdomainCreatorAddress, subdomainCreatorABI);
+    console.log(await subdomainCreatorContract.methods.register(data).send({from: from}));
     console.log('Transaction done.');
   }
 

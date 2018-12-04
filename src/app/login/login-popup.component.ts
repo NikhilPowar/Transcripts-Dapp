@@ -23,7 +23,7 @@ export class LoginPopupComponent {
     this.registerService.register('transcripts', this.name).then(() => {
       console.log('Registration successful');
     });
-    // TODO: Route to some page
+    this.router.navigate(['user-page']);
   }
 
   closePopup() {
