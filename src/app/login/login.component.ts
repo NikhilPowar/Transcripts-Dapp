@@ -39,6 +39,7 @@ export class LoginComponent {
       this.entityListService.getAdminList().then((admins) => {
         if (admins.includes(address)) {
           this.connectService.setIDContractAddress(address);
+          this.connectService.setRole('admin');
           this.router.navigate(['admin-page']);
         } else {
           this.showAuthenticationError = true;
@@ -49,6 +50,7 @@ export class LoginComponent {
         providers.forEach(provider => {
           if (provider['addr'] === address) {
             this.connectService.setIDContractAddress(address);
+            this.connectService.setRole('provider');
             this.router.navigate(['application-list']);
           }
         });
@@ -81,6 +83,7 @@ export class LoginComponent {
   studentLogin() {
     this.loginService.login('transcripts', this.username.value).then((success) => {
       if (success) {
+        this.connectService.setRole('student');
         this.router.navigate(['user-page']);
       } else {
         this.popupInput = this.username.value;

@@ -1,9 +1,86 @@
-<div *ngIf="transcriptAddress!=='None'">
-  
-</div>
-<input type="file" (change)="convertFileToBuffer($event)"/>
-<button (click)="uploadTranscript()">Upload transcript</button>
+<div class="center-outer">
+  <div class="center-middle">
+    <div class="center-inner">
+      <div class="page-header">Transcript Application Details</div>
 
-<div *ngIf="buffer">
-    <button (click)="downloadTranscript()">Download transcript</button>
+      <div class="transcript-data">
+        <div class="data-row">
+          <div class="field">
+            Student Name
+          </div>
+          <div class="value">
+            {{transcript['name']}}
+          </div>
+        </div>
+
+        <div class="data-row">
+          <div class="field">
+            Student ID
+          </div>
+          <div class="value">
+            {{transcript['id']}}
+          </div>
+        </div>
+
+        <div class="data-row">
+          <div class="field">
+            Course Name
+          </div>
+          <div class="value">
+            {{transcript['course_name']}}
+          </div>
+        </div>
+
+        <div class="data-row">
+          <div class="field">
+            Course Start Year
+          </div>
+          <div class="value">
+            {{transcript['course_start']}}
+          </div>
+        </div>
+
+        <div class="data-row">
+          <div class="field">
+            Course Complete Year
+          </div>
+          <div class="value">
+            {{transcript['course_end']}}
+          </div>
+        </div>
+
+        <div class="data-row">
+          <div class="field">
+            Student's ID Address
+          </div>
+          <div class="value">
+            {{transcript['owner']}}
+          </div>
+        </div>
+      </div>
+
+      <div [hidden]="loading">
+        <div *ngIf="role=='provider'" class="material-button-row">
+          <button mat-flat-button color="primary" (click)="fileInput.click()">
+            <span>Select Trancript File</span>
+            <input #fileInput type="file" (change)="convertFileToBuffer($event)" style="display: none" />
+          </button>
+
+          <button mat-flat-button color="primary" (click)="convertBufferToFile()" [disabled]="!buffer">Preview Transcript</button>
+          
+          <button mat-flat-button color="primary" (click)="uploadTranscript()" [disabled]="!buffer">Upload Transcript</button>
+        </div>
+
+        <div *ngIf="buffer && role=='student'" class="material-button-row">
+          <button mat-flat-button color="primary" (click)="convertBufferToFile()">Download Transcript</button>
+        </div>
+
+        <div *ngIf="!buffer && role=='student'" class="info">
+          This application is not yet approved. Check back later.
+        </div>
+      </div>
+
+      <mat-spinner [hidden]="!loading" class="center-spinner"></mat-spinner>
+    </div>
+  </div>
 </div>

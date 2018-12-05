@@ -6,19 +6,19 @@
       <mat-tab-group mat-stretch-tabs class="contained-tab">
         <mat-tab label="Registered Colleges/Universities">
           <mat-spinner [hidden]="providers" class="center-spinner"></mat-spinner>
-            <mat-card *ngFor="let provider of providers" class="college-card">
-              <mat-card-title>
-                {{provider.name}}
-              </mat-card-title>
-              <mat-card-subtitle>
-                Account Address: {{provider.addr}}
-              </mat-card-subtitle>
-              <mat-card-actions>
-                <button mat-flat-button color="primary" class="college-actions" (click)="removeProvider(provider.addr)">
-                  Remove
-                </button>
-              </mat-card-actions>
-            </mat-card>
+          <mat-card *ngFor="let provider of providers" class="college-card">
+            <mat-card-title>
+              {{provider.name}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Account Address: {{provider.addr}}
+            </mat-card-subtitle>
+            <mat-card-actions>
+              <button mat-flat-button color="primary" class="college-actions" (click)="removeProvider(provider.addr)">
+                Remove
+              </button>
+            </mat-card-actions>
+          </mat-card>
         </mat-tab>
 
 

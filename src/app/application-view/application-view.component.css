@@ -1,0 +1,30 @@
+.transcript-data {
+  width: 60%;
+  margin: auto;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.data-row {
+  width: 100%;
+  border-bottom: 1px solid #bbbbbb;
+  clear: both;
+  overflow: auto;
+}
+
+.field {
+  float: left;
+}
+
+.value {
+  float: right;
+}
+
+.info {
+  color: #ff0000;
+  font-size: 1.5em;
+}
+
+.material-button-row > * {
+  margin: 10px;
+}

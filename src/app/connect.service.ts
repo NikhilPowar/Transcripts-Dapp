@@ -13,6 +13,7 @@ export class ConnectService {
   private web3;
   private address;
   private wallet;
+  private role;
   private addressURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
   private data = {
     'token': '7b0673199d614dca9d76fdf81289515e'
@@ -98,5 +99,13 @@ export class ConnectService {
 
   public getIDContractAddress() {
     return this.idContractAddress;
+  }
+
+  public setRole(role: string) {
+    this.role = role;
+  }
+
+  public getRole() {
+    return this.role;
   }
 }
