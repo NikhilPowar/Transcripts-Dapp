@@ -3,3 +3,7 @@
 </div>
 <input type="file" (change)="convertFileToBuffer($event)"/>
 <button (click)="uploadTranscript()">Upload transcript</button>
+
+<div *ngIf="buffer">
+    <button (click)="downloadTranscript()">Download transcript</button>
+</div>

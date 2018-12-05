@@ -63,4 +63,13 @@ export class ApplicationViewComponent implements OnInit {
     console.log(await this.transcriptContract.methods.getTranscriptHash().call());
   }
 
+  async downloadTranscript() {
+    const hash = await this.transcriptContract.methods.getTranscriptHash().call();
+    console.log(hash);
+    this.buffer = this.ipfsService.retrieve(hash);
+    const file = new Blob([this.buffer], {type: 'application/pdf'});
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+  }
+
 }
