@@ -58,7 +58,7 @@ export class SharedViewComponent implements OnInit {
     this.buffer = await this.ipfsService.retrieve(hash);
   }
 
-  async convertBufferToFile(buffer: Buffer) {
+  async convertBufferToFile() {
     const file = new Blob([this.buffer], {type: 'application/pdf'});
     const fileURL = URL.createObjectURL(file);
     window.open(fileURL);
