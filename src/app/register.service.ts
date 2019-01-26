@@ -11,9 +11,7 @@ const bytecode = '0x608060405234801561001057600080fd5b50733d36c4e7a10a71250a52c5
 @Injectable()
 export class RegisterService {
   constructor(
-    private ensService: EnsService,
-    private contractService: ContractService,
-    private connectService: ConnectService
+    private contractService: ContractService
   ) { }
 
   async createIdContract() {
@@ -26,14 +24,10 @@ export class RegisterService {
     console.log(await contract.methods.getKeysByPurpose(1).call());
   }
 
-  async register(appname: string, username: string) {
+  async register() {
     console.log('In register service.');
     const idContractAddress = await this.createIdContract();
     console.log('Received contract: ' + idContractAddress);
     this.registerKey(idContractAddress);
-    if (await this.ensService.createSubdomain(appname, username, idContractAddress) === false) {
-      // Subdomain already exists.
-      // Ask user if they want to log in.
-    }
   }
 }
