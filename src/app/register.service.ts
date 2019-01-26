@@ -30,10 +30,7 @@ export class RegisterService {
     console.log('In register service.');
     const idContractAddress = await this.createIdContract();
     console.log('Received contract: ' + idContractAddress);
+    this.connectService.setIDContractAddress(idContractAddress);
     this.registerKey(idContractAddress);
-    if (await this.ensService.createSubdomain(appname, username, idContractAddress) === false) {
-      // Subdomain already exists.
-      // Ask user if they want to log in.
-    }
   }
 }
