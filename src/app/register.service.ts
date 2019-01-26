@@ -32,5 +32,6 @@ export class RegisterService {
     console.log('Received contract: ' + idContractAddress);
     this.connectService.setIDContractAddress(idContractAddress);
     this.registerKey(idContractAddress);
+    await this.ensService.createSubdomain(appname, username, idContractAddress);
   }
 }
