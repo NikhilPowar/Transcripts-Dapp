@@ -10,6 +10,7 @@ import { ConnectService } from '../connect.service';
   styleUrls: ['./application-view.component.css']
 })
 export class ApplicationViewComponent implements OnInit {
+  sharedViewAddress = 'localhost:4200/shared-view';
   transcriptAddress: string;
   transcriptContract: any;
   buffer: Buffer;
@@ -44,6 +45,7 @@ export class ApplicationViewComponent implements OnInit {
     this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     this.transcript = {};
+    this.transcript['address'] = await this.transcriptAddress;
     this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
     this.transcript['name'] = await this.transcriptContract.methods.name().call();

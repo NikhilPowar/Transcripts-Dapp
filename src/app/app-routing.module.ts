@@ -40,7 +40,7 @@ const appRoutes: Routes = [
     component: AdminPageComponent
   },
   {
-    path: 'shared-view',
+    path: 'shared-view/:transcriptAddress',
     component: SharedViewComponent
   },
   {

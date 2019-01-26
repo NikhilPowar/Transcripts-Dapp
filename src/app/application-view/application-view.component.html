@@ -57,6 +57,15 @@
             {{transcript['owner']}}
           </div>
         </div>
+
+        <div *ngIf="role=='student'" class="data-row">
+          <div class="field">
+            Shareable Link
+          </div>
+          <div class="value">
+            {{sharedViewAddress}}?transcriptAddress={{transcript['address']}}
+          </div>
+        </div>
       </div>
 
       <div [hidden]="loading">
