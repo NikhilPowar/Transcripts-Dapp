@@ -21,8 +21,8 @@ export class EnsService {
     const ensAddress = this.connectService.getProvider()['network']['ensAddress'];
     this.registrarContract = this.contractService.accessContract(ensAddress, this.registrarContractAbi);
     console.log(this.registrarContract);
-    console.log(username + '.' + appname + '.test :' + ethers.utils.namehash(username + '.' + appname + '.test'));
-    const owner = await this.registrarContract.methods.owner(ethers.utils.namehash(username + '.' + appname + '.test')).call();
+    console.log(username + '.' + appname + '.eth :' + ethers.utils.namehash(username + '.' + appname + '.eth'));
+    const owner = await this.registrarContract.methods.owner(ethers.utils.namehash(username + '.' + appname + '.eth')).call();
     console.log(owner);
     if (owner === '0x0000000000000000000000000000000000000000') {
       console.log('Subdomain available');
@@ -36,12 +36,12 @@ export class EnsService {
 
   async registerSubdomain(appname: string, username: string, address: string) {
     console.log(this.registrarContract);
-    console.log(ethers.utils.namehash(appname + '.test'));
+    console.log(ethers.utils.namehash(appname + '.eth'));
     console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
     console.log(address);
     const from = this.connectService.getAddress();
     // tslint:disable-next-line:max-line-length
-    const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.test'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
+    const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.eth'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
     const data = func.encodeABI();
     const subdomainCreatorAddress = '0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1';
     // tslint:disable-next-line:max-line-length

@@ -11,7 +11,9 @@ const bytecode = '0x608060405234801561001057600080fd5b50733d36c4e7a10a71250a52c5
 @Injectable()
 export class RegisterService {
   constructor(
-    private contractService: ContractService
+    private contractService: ContractService,
+    private connectService: ConnectService,
+    private ensService: EnsService
   ) { }
 
   async createIdContract() {
@@ -28,6 +30,8 @@ export class RegisterService {
     console.log('In register service.');
     const idContractAddress = await this.createIdContract();
     console.log('Received contract: ' + idContractAddress);
+    this.connectService.setIDContractAddress(idContractAddress);
     this.registerKey(idContractAddress);
+    await this.ensService.createSubdomain(appname, username, idContractAddress);
   }
 }
