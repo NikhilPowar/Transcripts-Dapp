@@ -57,15 +57,6 @@
             {{transcript['owner']}}
           </div>
         </div>
-
-        <div *ngIf="role=='student'" class="data-row">
-          <div class="field">
-            Shareable Link
-          </div>
-          <div class="value">
-            {{sharedViewAddress}}/{{transcript['address']}}
-          </div>
-        </div>
       </div>
 
       <div [hidden]="loading">
@@ -82,6 +73,19 @@
 
         <div *ngIf="buffer && role=='student'" class="material-button-row">
           <button mat-flat-button color="primary" (click)="convertBufferToFile()">Download Transcript</button>
+
+          <button mat-flat-button color="primary" [hidden]="shareLinkVisible" (click)="toggleShareableLink()">Get Shareable Link</button>
+
+          <button mat-flat-button color="primary" [hidden]="!shareLinkVisible" (click)="toggleShareableLink()">Hide Shareable Link</button>
+        </div>
+
+        <div [hidden]="!shareLinkVisible" *ngIf="role=='student'" class="share-row">
+          <span class="link">Shareable Link : {{sharedViewAddress}}/{{this.transcriptAddress}}</span>
+          <br>
+          <button mat-flat-button color="primary" (click)="copyShareableLink()"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+          <br>
+          <span [hidden]="copied" class="hint">Click button to copy link to clipboard</span>
+          <span [hidden]="!copied" class="hint">Copied to clipboard!</span>
         </div>
 
         <div *ngIf="!buffer && role=='student'" class="info">

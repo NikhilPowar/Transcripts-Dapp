@@ -11,6 +11,8 @@ import { ConnectService } from '../connect.service';
 })
 export class ApplicationViewComponent implements OnInit {
   sharedViewAddress = 'localhost:4200/shared-view';
+  shareLinkVisible = false;
+  copied = false;
   transcriptAddress: string;
   transcriptContract: any;
   buffer: Buffer;
@@ -45,7 +47,6 @@ export class ApplicationViewComponent implements OnInit {
     this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     this.transcript = {};
-    this.transcript['address'] = await this.transcriptAddress;
     this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
     this.transcript['name'] = await this.transcriptContract.methods.name().call();
@@ -93,4 +94,27 @@ export class ApplicationViewComponent implements OnInit {
     this.buffer = await this.ipfsService.retrieve(hash);
   }
 
+  toggleShareableLink() {
+    this.shareLinkVisible = !this.shareLinkVisible;
+    this.copied = false;
+  }
+
+  copyShareableLink() {
+    this.copyToClipboard(this.sharedViewAddress + '/' + this.transcriptAddress);
+    this.copied = true;
+  }
+
+  copyToClipboard(val: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
 }

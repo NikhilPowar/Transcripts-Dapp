@@ -26,7 +26,7 @@ export class RegisterService {
     console.log(await contract.methods.getKeysByPurpose(1).call());
   }
 
-  async register() {
+  async register(appname: string , username: string) {
     console.log('In register service.');
     const idContractAddress = await this.createIdContract();
     console.log('Received contract: ' + idContractAddress);
