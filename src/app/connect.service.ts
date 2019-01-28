@@ -14,8 +14,8 @@ export class ConnectService {
   private address;
   private wallet;
   private role;
-  private addressURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
-  private data = {
+  private blockcypherURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
+  private blockcypherData = {
     'token': '7b0673199d614dca9d76fdf81289515e'
   };
   private httpOptions = {
@@ -34,8 +34,8 @@ export class ConnectService {
     private http: HttpClient
   ) { }
 
-  generateKey() {
-    this.http.post(this.addressURL, this.data, this.httpOptions).subscribe(
+  async generateAccount() {
+    this.http.post(this.blockcypherURL, this.blockcypherData, this.httpOptions).subscribe(
       obj => {
         this.account = {
           'privateKey': obj['private'],
@@ -43,6 +43,10 @@ export class ConnectService {
           'address': obj['address']
         };
         console.log(this.account);
+        this.address = this.account.address;
+        console.log(this.address);
+        this.wallet = this.address.wallet;
+        console.log(this.wallet);
       },
       err => console.log(err)
     );
@@ -50,23 +54,22 @@ export class ConnectService {
 
   async connect() {
     // Perform login operations
-    if (window['ethereum']) {
-      this.web3 = new Web3(window['ethereum']);
-      await window['ethereum'].enable();
-    } else if (window['web3']) {
-      this.web3 = new Web3(window['web3']);
-    } else {
-      console.log('Web3 not found. Stopping...');
+    this.web3 = new Web3('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f');
+    if (!this.web3) {
+      if (window['ethereum']) {
+        this.web3 = new Web3(window['ethereum']);
+        await window['ethereum'].enable();
+      } else if (window['web3']) {
+        this.web3 = new Web3(window['web3']);
+      } else {
+        console.log('Web3 not found. Stopping...');
+      }
     }
     console.log(this.web3);
     this.provider = await new ethers.providers.Web3Provider(this.web3.currentProvider);
     console.log(this.provider);
-    this.address = (await this.web3.eth.getAccounts())[0];
-    console.log(this.address);
-    this.generateKey();
-    console.log(this.web3.eth.accounts.wallet);
-    this.wallet = this.web3.eth.accounts.wallet;
-    console.log(this.wallet);
+    // this.address = (await this.web3.eth.getAccounts())[0];
+    this.generateAccount();
   }
 
   public getProvider() {
