@@ -45,8 +45,6 @@ export class ConnectService {
         console.log(this.account);
         this.address = this.account.address;
         console.log(this.address);
-        this.wallet = this.address.wallet;
-        console.log(this.wallet);
       },
       err => console.log(err)
     );
@@ -82,10 +80,6 @@ export class ConnectService {
 
   public getAddress() {
     return this.address;
-  }
-
-  public getWallet() {
-    return this.wallet;
   }
 
   public getAccount() {

@@ -26,11 +26,4 @@ export class ContractService {
     console.log(result.contractAddress);
     return result.contractAddress;
   }
-
-  accessContract(contractAddress: string, abi: any) {
-    const web3 = this.connectService.getWeb3();
-    const contract = new web3.eth.Contract(abi, contractAddress);
-    console.log(contract);
-    return contract;
-  }
 }
