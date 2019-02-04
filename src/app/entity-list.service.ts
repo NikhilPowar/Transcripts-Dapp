@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ContractService } from './contract.service';
 import { ConnectService } from './connect.service';
+import { BlockchainService } from './blockchain.service';
 
 const entityListContractAddress = '0x9AD9Da14d8ff7aC38D6E5333041425c02392A16e';
 // tslint:disable-next-line:max-line-length
@@ -13,10 +13,10 @@ export class EntityListService {
   private entityListContract;
 
   constructor(
-    private contractService: ContractService,
-    private connectService: ConnectService
+    private connectService: ConnectService,
+    private blockchainService: BlockchainService
   ) {
-    this.entityListContract = this.contractService.accessContract(entityListContractAddress, entityListContractAbi);
+    this.entityListContract = this.blockchainService.viewContract(entityListContractAddress, entityListContractAbi);
     console.log(this.entityListContract);
   }
 

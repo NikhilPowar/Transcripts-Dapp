@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContractService } from './contract.service';
+import { BlockchainService } from './blockchain.service';
 import { ConnectService } from './connect.service';
 
 // tslint:disable-next-line:max-line-length
@@ -11,12 +11,12 @@ const idContractAbi = [ { 'inputs': [], 'payable': false, 'stateMutability': 'no
 export class IdContractService {
 
   constructor(
-    private contractService: ContractService,
+    private blockchainService: BlockchainService,
     private connectService: ConnectService
   ) { }
 
   async sendThroughIDContract(address: string, to: string, value: number, data: string) {
-    const idContract = this.contractService.accessContract(address, idContractAbi);
+    const idContract = this.blockchainService.viewContract(address, idContractAbi);
     const from = this.connectService.getAddress();
     console.log(address);
     console.log(to);

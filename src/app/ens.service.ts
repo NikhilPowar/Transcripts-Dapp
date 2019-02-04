@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
 const Tx = require('ethereumjs-tx');
-import { ContractService } from './contract.service';
+import { BlockchainService } from './blockchain.service';
 import { ConnectService } from './connect.service';
 
 @Injectable({
@@ -14,12 +14,12 @@ export class EnsService {
 
   constructor(
     private connectService: ConnectService,
-    private contractService: ContractService
+    private blockchainService: BlockchainService
   ) { }
 
   async checkSubdomain(appname: string, username: string) {
     const ensAddress = this.connectService.getProvider()['network']['ensAddress'];
-    this.registrarContract = this.contractService.accessContract(ensAddress, this.registrarContractAbi);
+    this.registrarContract = this.blockchainService.viewContract(ensAddress, this.registrarContractAbi);
     console.log(this.registrarContract);
     console.log(username + '.' + appname + '.eth :' + ethers.utils.namehash(username + '.' + appname + '.eth'));
     const owner = await this.registrarContract.methods.owner(ethers.utils.namehash(username + '.' + appname + '.eth')).call();
@@ -46,7 +46,7 @@ export class EnsService {
     const subdomainCreatorAddress = '0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1';
     // tslint:disable-next-line:max-line-length
     const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
-    const subdomainCreatorContract = this.contractService.accessContract(subdomainCreatorAddress, subdomainCreatorABI);
+    const subdomainCreatorContract = this.blockchainService.viewContract(subdomainCreatorAddress, subdomainCreatorABI);
     console.log(await subdomainCreatorContract.methods.register(data).send({from: from}));
     console.log('Transaction done.');
   }

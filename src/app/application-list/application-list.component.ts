@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranscriptService } from '../transcript.service';
 import { ConnectService } from '../connect.service';
-import { ContractService } from '../contract.service';
+import { BlockchainService } from '../blockchain.service';
 
 @Component({
   selector: 'app-application-list',
@@ -17,7 +17,7 @@ export class ApplicationListComponent implements OnInit {
   constructor(
     private transcriptService: TranscriptService,
     private connectService: ConnectService,
-    private contractService: ContractService,
+    private blockchainService: BlockchainService,
     private router: Router
   ) { }
 
@@ -34,7 +34,7 @@ export class ApplicationListComponent implements OnInit {
     addresses = await this.transcriptService.getTranscripts(addr);
     this.applications = [];
     addresses.forEach(async address => {
-      const contract = this.contractService.accessContract(address, this.transcriptApplicationAbi);
+      const contract = this.blockchainService.viewContract(address, this.transcriptApplicationAbi);
       // tslint:disable-next-line:prefer-const
       let application = [];
       application['address'] = address;

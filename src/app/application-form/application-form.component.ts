@@ -5,6 +5,7 @@ import { ContractService } from '../contract.service';
 import { ConnectService } from '../connect.service';
 import { TranscriptService } from '../transcript.service';
 import { EntityListService } from '../entity-list.service';
+import { BlockchainService } from '../blockchain.service';
 
 export class ApplicationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -41,7 +42,8 @@ export class ApplicationFormComponent {
     private contractService: ContractService,
     private transcriptService: TranscriptService,
     private formBuilder: FormBuilder,
-    private entityListService: EntityListService
+    private entityListService: EntityListService,
+    private blockchainService: BlockchainService
   ) {
     this.getCollegeList();
     const currentYear = (new Date()).getFullYear();
@@ -89,7 +91,7 @@ export class ApplicationFormComponent {
           this.startYear.value, this.completionYear.value]);
     console.log('Application submitted!');
     console.log('Transcript Contract Address:', transcriptContractAddress);
-    const transcriptContract = this.contractService.accessContract(transcriptContractAddress, transcriptApplicationABI);
+    const transcriptContract = this.blockchainService.viewContract(transcriptContractAddress, transcriptApplicationABI);
     console.log(await transcriptContract.methods.getTranscriptOwner().call());
     console.log(await transcriptContract.methods.getTranscriptHash().call());
     await this.transcriptService.addApplication(idContractAddress, collegeAddress, transcriptContractAddress);

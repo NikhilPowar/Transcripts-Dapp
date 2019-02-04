@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContractService } from '../contract.service';
 import { IpfsService } from '../ipfs.service';
 import { ConnectService } from '../connect.service';
+import { BlockchainService } from '../blockchain.service';
 
 @Component({
   selector: 'app-application-view',
@@ -21,7 +21,7 @@ export class ApplicationViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private contractService: ContractService,
+    private blockchainService: BlockchainService,
     private ipfsService: IpfsService,
     private connectService: ConnectService
   ) { }
@@ -41,7 +41,7 @@ export class ApplicationViewComponent implements OnInit {
   }
 
   async getTranscriptData() {
-    this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
+    this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     this.transcript = {};
     this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();

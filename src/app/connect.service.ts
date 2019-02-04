@@ -52,7 +52,8 @@ export class ConnectService {
 
   async connect() {
     // Perform login operations
-    this.web3 = new Web3('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f');
+    // this.web3 = new Web3('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f');
+    this.web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f'));
     if (!this.web3) {
       if (window['ethereum']) {
         this.web3 = new Web3(window['ethereum']);

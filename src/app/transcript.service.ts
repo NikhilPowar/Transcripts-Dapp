@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConnectService } from './connect.service';
-import { ContractService } from './contract.service';
+import { BlockchainService } from './blockchain.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +13,19 @@ export class TranscriptService {
 
   constructor(
     private connectService: ConnectService,
-    private contractService: ContractService
+    private blockchainService: BlockchainService
   ) { }
 
   async addApplication(idAddress: string, collegeAddress: string, transcriptContractAddress: string) {
     const from = this.connectService.getAddress();
-    const transcriptListContract = this.contractService.accessContract(this.transcriptListContractAddress, this.transcriptListABI);
+    const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
     await transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress).send({from: from});
     console.log(await transcriptListContract.methods.getTranscripts(idAddress).call());
     console.log(await transcriptListContract.methods.getTranscripts(collegeAddress).call());
   }
 
   async getTranscripts(address: string) {
-    const transcriptListContract = this.contractService.accessContract(this.transcriptListContractAddress, this.transcriptListABI);
+    const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
     const transcripts = await transcriptListContract.methods.getTranscripts(address).call();
     console.log(transcripts);
     return transcripts;
