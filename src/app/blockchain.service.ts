@@ -13,7 +13,7 @@ export class BlockchainService {
   ) { }
 
   calculateGas(data: string) {
-    return 21000 + (68 * data.length);
+    return 21000 + (68 * (data.length - 2) / 2);
   }
 
   buildTransactionUrl(address: string, data: any, gas: number): string {
@@ -44,7 +44,9 @@ export class BlockchainService {
 
   async updateContract(address: string, txnData: any) {
     console.log(txnData);
-    const gas = 21000 + (68 * (txnData._method.inputs.toString().length));
+    const rawTxn = txnData.encodeABI();
+    console.log(rawTxn);
+    const gas = this.calculateGas(rawTxn);
     console.log(gas);
     const url = this.buildTransactionUrl(address, txnData, gas);
     console.log(url);
