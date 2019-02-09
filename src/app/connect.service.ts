@@ -12,7 +12,7 @@ export class ConnectService {
   private provider;
   private web3;
   private address;
-  private wallet;
+  private wsw3;
   private role;
   private blockcypherURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
   private blockcypherData = {
@@ -52,7 +52,6 @@ export class ConnectService {
 
   async connect() {
     // Perform login operations
-    // this.web3 = new Web3('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f');
     this.web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f'));
     if (!this.web3) {
       if (window['ethereum']) {
@@ -67,7 +66,8 @@ export class ConnectService {
     console.log(this.web3);
     this.provider = await new ethers.providers.Web3Provider(this.web3.currentProvider);
     console.log(this.provider);
-    // this.address = (await this.web3.eth.getAccounts())[0];
+    this.wsw3 = new Web3('wss://ropsten.infura.io/ws');
+    console.log(this.wsw3);
     this.generateAccount();
   }
 
@@ -77,6 +77,10 @@ export class ConnectService {
 
   public getWeb3() {
     return this.web3;
+  }
+
+  public getWSW3() {
+    return this.wsw3;
   }
 
   public getAddress() {

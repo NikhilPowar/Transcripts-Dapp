@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ConnectService } from './connect.service';
-import { Web3Provider } from 'ethers/providers';
 
 const QRCode = require('qrcode');
 
@@ -36,7 +35,7 @@ export class BlockchainService {
   }
 
   viewContract(address: string, abi: object) {
-    const web3 = this.connectService.getWeb3();
+    const web3 = this.connectService.getWSW3();
     const contract = new web3.eth.Contract(abi, address);
     console.log(contract);
     return contract;
@@ -57,5 +56,11 @@ export class BlockchainService {
 
   async createContract() {
     const web3 = this.connectService.getWeb3();
+  }
+
+  async getTransaction(txHash) {
+    const web3 = this.connectService.getWSW3();
+    const tx = web3.eth.getTransaction(txHash);
+    return await tx;
   }
 }

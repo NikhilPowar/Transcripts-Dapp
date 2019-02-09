@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ConnectService } from './connect.service';
 import { BlockchainService } from './blockchain.service';
+import { IdContractService } from './id-contract.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,14 @@ export class TranscriptService {
   private transcriptListContractAddress = '0x98ff6234b8b3614cD35d4CE161006398641C7DAB';
 
   constructor(
-    private connectService: ConnectService,
-    private blockchainService: BlockchainService
+    private blockchainService: BlockchainService,
+    private idContractSservice: IdContractService
   ) { }
 
   async addApplication(idAddress: string, collegeAddress: string, transcriptContractAddress: string) {
-    const from = this.connectService.getAddress();
     const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
-    await transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress).send({from: from});
+    // tslint:disable-next-line:max-line-length
+    await this.idContractSservice.sendThroughIDContract(idAddress, this.transcriptListContractAddress, 0, transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress));
     console.log(await transcriptListContract.methods.getTranscripts(idAddress).call());
     console.log(await transcriptListContract.methods.getTranscripts(collegeAddress).call());
   }
