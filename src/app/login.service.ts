@@ -18,14 +18,17 @@ export class LoginService {
     const key = this.connectService.getPublicKey32Bytes();
     let tx;
     await this.blockchainService.updateContract(address, idContract.methods.addKey(key, 4, 1));
-    await idContract.once('KeyAdded', {}, async (error, event) => {
-      console.log(error);
+    await idContract.events.KeyAdded({
+      filter: {
+        key: key
+      }
+    }).on('data', async (event) => {
       console.log(event);
       console.log(event['transactionHash']);
       tx = await this.blockchainService.getTransaction(event['transactionHash']);
       console.log(tx);
       console.log('Transaction done');
-    }).toPromise();
+    });
     idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
     idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
   }
