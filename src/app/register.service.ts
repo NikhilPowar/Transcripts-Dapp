@@ -20,7 +20,7 @@ export class RegisterService {
 
   async createIdContract() {
     // Key Holder Library address = 0x3d36c4e7a10a71250a52c50735aec69b7f6230c3
-    return await this.contractService.deployContract(abi, bytecode, []);
+    return await this.blockchainService.createContract('identity');
   }
 
   async registerKey(address: string) {
@@ -31,9 +31,9 @@ export class RegisterService {
   async register(appname: string, username: string) {
     console.log('In register service.');
     const idContractAddress = await this.createIdContract();
-    console.log('Received contract: ' + idContractAddress);
-    this.connectService.setIDContractAddress(idContractAddress);
-    this.registerKey(idContractAddress);
-    await this.ensService.createSubdomain(appname, username, idContractAddress);
+    // console.log('Received contract: ' + idContractAddress);
+    // this.connectService.setIDContractAddress(idContractAddress);
+    // this.registerKey(idContractAddress);
+    // await this.ensService.createSubdomain(appname, username, idContractAddress);
   }
 }

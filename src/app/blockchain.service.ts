@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ConnectService } from './connect.service';
-import { Web3Provider } from 'ethers/providers';
 
 const QRCode = require('qrcode');
 
@@ -16,7 +15,7 @@ export class BlockchainService {
     return 21000 + (68 * (data.length - 2) / 2);
   }
 
-  buildTransactionUrl(address: string, data: any, gas: number): string {
+  getTransactionUrl(address: string, data: any, gas: number): string {
     let request = 'ethereum:';
     request += address;
     request += '/';
@@ -48,14 +47,36 @@ export class BlockchainService {
     console.log(rawTxn);
     const gas = this.calculateGas(rawTxn);
     console.log(gas);
-    const url = this.buildTransactionUrl(address, txnData, gas);
+    const url = this.getTransactionUrl(address, txnData, gas);
     console.log(url);
     QRCode.toCanvas(url).then(qr => {
       document.getElementById('qr').appendChild(qr);
     });
   }
 
-  async createContract() {
-    const web3 = this.connectService.getWeb3();
+  async createContract(name: string, args?: any[]) {
+    // ContractFactory address: 0x03af9b1553a7075663bfe641d5cfe3c453ff5a4d
+    const address = '0x03af9b1553a7075663bfe641d5cfe3c453ff5a4d';
+    // tslint:disable-next-line:max-line-length
+    const abi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' } ], 'name': 'IdentityContractCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'string' }, { 'indexed': false, 'name': 'id', 'type': 'string' }, { 'indexed': false, 'name': 'courseName', 'type': 'string' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'TranscriptApplicationContractCreated', 'type': 'event' }, { 'constant': false, 'inputs': [], 'name': 'createIdentityContract', 'outputs': [ { 'name': 'idContractAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'owner', 'type': 'address' }, { 'name': 'provider', 'type': 'address' }, { 'name': 'name', 'type': 'string' }, { 'name': 'id', 'type': 'string' }, { 'name': 'courseName', 'type': 'string' }, { 'name': 'startYear', 'type': 'uint256' }, { 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'createTranscriptApplicationContract', 'outputs': [ { 'name': 'transcriptApplicationAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+
+    const contractFactory = this.viewContract(address, abi);
+
+    let data: any;
+    if (name === 'identity') {
+      data = await contractFactory.methods.createIdentityContract();
+    } else if (name === 'transcriptApplication') {
+      data = await contractFactory.methods.createTranscriptApplicationContract(
+        args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+    }
+    console.log(data);
+
+    const gas = this.calculateGas(data);
+    console.log(gas);
+    const url = this.getTransactionUrl(address, data, 1500000);
+    console.log(url);
+    QRCode.toCanvas(url).then(qr => {
+      document.getElementById('qr').appendChild(qr);
+    });
   }
 }
