@@ -2,7 +2,7 @@
   <div class="center-middle">
     <div class="center-inner">
       <div class="page-header">Welcome to Transcripts Dapp</div>
-
+      <button mat-flat-button color="warn" [routerLink]="'../connect'" onclick="Logout()">Logout</button>
       <mat-grid-list cols="2" rowHeight="3:1" gutterSize="1em">
         <mat-grid-tile matRipple [routerLink]="'../application-list'">
           <div class="grid-tile-content">

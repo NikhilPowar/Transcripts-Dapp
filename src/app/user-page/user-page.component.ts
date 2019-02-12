@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConnectService } from '../connect.service';
 
 @Component({
   selector: 'app-user-page',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private connectService: ConnectService, ) { }
 
   ngOnInit() {
   }
 
+  Logout() {
+    this.connectService.setIDContractAddress('');
+    this.connectService.setRole('');
+  }
 }

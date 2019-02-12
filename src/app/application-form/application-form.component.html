@@ -47,7 +47,8 @@
         <mat-form-field class="material-full-width">
           <mat-select placeholder="Select Completion Year" [formControl]="completionYear">
             <mat-option>--- Select Year ---</mat-option>
-            <mat-option *ngFor="let year of yearRange | greaterThan:startYear.value+1" [value]="year">{{ year }}</mat-option>
+            <mat-option *ngFor="let year of yearRange | greaterThan:startYear.value+1" [value]="year">{{ year }}
+            </mat-option>
           </mat-select>
           <mat-error *ngIf="completionYear.invalid">{{getErrorMessage(completionYear)}}</mat-error>
         </mat-form-field>

@@ -18,6 +18,7 @@ export class LoginComponent {
   private showPopup: boolean;
   private popupInput: string;
   private showAuthenticationError: boolean;
+  private is_loaded = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +26,7 @@ export class LoginComponent {
     private connectService: ConnectService,
     private entityListService: EntityListService,
     private router: Router
+
   ) {
     this.showPopup = false;
     this.loginForm = this.formBuilder.group({
@@ -34,12 +36,14 @@ export class LoginComponent {
   }
 
   specialLogin() {
+    this.is_loaded = true;
     const address = this.connectService.getAddress();
     if (this.loginType.value === 'admin') {
       this.entityListService.getAdminList().then((admins) => {
         if (admins.includes(address)) {
           this.connectService.setIDContractAddress(address);
           this.connectService.setRole('admin');
+          this.is_loaded = false;
           this.router.navigate(['admin-page']);
         } else {
           this.showAuthenticationError = true;
@@ -51,6 +55,7 @@ export class LoginComponent {
           if (provider['addr'] === address) {
             this.connectService.setIDContractAddress(address);
             this.connectService.setRole('provider');
+            this.is_loaded = false;
             this.router.navigate(['application-list']);
           }
         });
@@ -81,9 +86,12 @@ export class LoginComponent {
   }
 
   studentLogin() {
+    this.is_loaded = true;
+
     this.loginService.login('transcripts', this.username.value).then((success) => {
       if (success) {
         this.connectService.setRole('student');
+        this.is_loaded = false;
         this.router.navigate(['user-page']);
       } else {
         this.popupInput = this.username.value;
@@ -94,7 +102,7 @@ export class LoginComponent {
 
   getErrorMessage(attribute: FormControl) {
     return attribute.hasError('required') ? 'This field is required' :
-        attribute.hasError('pattern') ? 'Name can only contain letters' : '';
+      attribute.hasError('pattern') ? 'Name can only contain letters' : '';
   }
 
   hidePopup() {
