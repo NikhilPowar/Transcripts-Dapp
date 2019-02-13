@@ -56,6 +56,14 @@
         <div class="material-button-row">
           <button mat-flat-button color="primary" [disabled]="!applicationForm.valid" name="submit">Apply</button>
         </div>
+        <div *ngIf="is_completed">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="is_success">
+          Your Application is being Successfully Submited.
+        </div>
+
+
       </form>
     </div>
   </div>
