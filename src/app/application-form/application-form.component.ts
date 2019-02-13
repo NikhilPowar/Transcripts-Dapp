@@ -5,6 +5,7 @@ import { ContractService } from '../contract.service';
 import { ConnectService } from '../connect.service';
 import { TranscriptService } from '../transcript.service';
 import { EntityListService } from '../entity-list.service';
+import { AlertsService } from '../../../node_modules/angular-alert-module';
 
 export class ApplicationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -37,6 +38,7 @@ export class ApplicationFormComponent {
   matcher = new ApplicationErrorStateMatcher();
 
   constructor(
+    private alerts: AlertsService,
     private connectService: ConnectService,
     private contractService: ContractService,
     private transcriptService: TranscriptService,
@@ -93,5 +95,6 @@ export class ApplicationFormComponent {
     console.log(await transcriptContract.methods.getTranscriptOwner().call());
     console.log(await transcriptContract.methods.getTranscriptHash().call());
     await this.transcriptService.addApplication(idContractAddress, collegeAddress, transcriptContractAddress);
+    this.alerts.setMessage("Success","success");
   }
 }

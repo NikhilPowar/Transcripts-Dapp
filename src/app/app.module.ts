@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
-
+import {AlertsModule} from 'angular-alert-module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ConnectComponent } from './connect/connect.component';
@@ -56,7 +56,8 @@ import { UserPageComponent } from './user-page/user-page.component';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AlertsModule.forRoot()
   ],
   providers: [
   ],
