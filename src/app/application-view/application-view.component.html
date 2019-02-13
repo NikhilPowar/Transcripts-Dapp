@@ -66,9 +66,11 @@
             <input #fileInput type="file" (change)="convertFileToBuffer($event)" style="display: none" />
           </button>
 
-          <button mat-flat-button color="primary" (click)="convertBufferToFile()" [disabled]="!buffer">Preview Transcript</button>
-          
-          <button mat-flat-button color="primary" (click)="uploadTranscript()" [disabled]="!buffer">Upload Transcript</button>
+          <button mat-flat-button color="primary" (click)="convertBufferToFile()" [disabled]="!buffer">Preview
+            Transcript</button>
+
+          <button mat-flat-button color="primary" (click)="uploadTranscript()" [disabled]="!buffer">Upload
+            Transcript</button>
         </div>
 
         <div *ngIf="buffer && role=='student'" class="material-button-row">
@@ -80,6 +82,11 @@
         </div>
       </div>
 
+      <mat-spinner [hidden]="is_uploading" class="center-spinner"></mat-spinner>
+
+      <div class="alert alert-success" role="alert" *ngIf="is_uploaded" style="display:inline-block">
+        Transcript Uploaded Successfully.
+      </div>
       <mat-spinner [hidden]="!loading" class="center-spinner"></mat-spinner>
     </div>
   </div>

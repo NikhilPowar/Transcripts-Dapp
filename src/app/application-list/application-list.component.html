@@ -4,6 +4,9 @@
       <div class="page-header">
         Application List
       </div>
+      <div *ngIf="is_loaded">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
       <mat-card *ngFor="let application of applications" class="application-card">
         <mat-card-title>
           {{ application.name }}
@@ -16,7 +19,8 @@
           Duration: {{ application.course_start }} - {{ application.course_end }}
         </mat-card-subtitle>
         <mat-card-actions>
-          <button mat-flat-button color="primary" class="application-actions" (click)="viewApplication(application.address)">View this application</button>
+          <button mat-flat-button color="primary" class="application-actions"
+            (click)="viewApplication(application.address)">View this application</button>
         </mat-card-actions>
       </mat-card>
     </div>
