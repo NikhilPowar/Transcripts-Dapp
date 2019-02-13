@@ -8,15 +8,18 @@ import { ApplicationListComponent } from './application-list/application-list.co
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import {AuthGuard} from './auth.guard';
 
 const appRoutes: Routes = [
   {
     path: 'connect',
-    component: ConnectComponent
+    component: ConnectComponent,
+    
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    
   },
   {
     path: 'application',
@@ -32,7 +35,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'user-page',
-    component: UserPageComponent
+    component: UserPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin-page',
@@ -41,7 +45,8 @@ const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'connect',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

@@ -20,7 +20,7 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { ApplicationListComponent } from './application-list/application-list.component';
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-
+import {AuthGuard} from './auth.guard';
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
 import { UserPageComponent } from './user-page/user-page.component';
@@ -60,6 +60,7 @@ import { UserPageComponent } from './user-page/user-page.component';
     AlertsModule.forRoot()
   ],
   providers: [
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

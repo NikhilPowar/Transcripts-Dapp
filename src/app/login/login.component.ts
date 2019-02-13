@@ -18,6 +18,7 @@ export class LoginComponent {
   private showPopup: boolean;
   private popupInput: string;
   private showAuthenticationError: boolean;
+ // private studentLoginSuccess:boolean;
 
   constructor(
     private formBuilder: FormBuilder,

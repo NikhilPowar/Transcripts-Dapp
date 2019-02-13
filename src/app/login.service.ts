@@ -36,6 +36,8 @@ export class LoginService {
     // Domain exists. Connect to domain
     this.connectService.setIDContractAddress(idContractAddress);
     await this.registerKey(idContractAddress);
+    localStorage.setItem("LoggedInUser", username);
+    //in logout ensure nullify of local storage
     return true;
   }
 }
