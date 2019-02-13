@@ -28,9 +28,9 @@ export class LoginService {
       tx = await this.blockchainService.getTransaction(event['transactionHash']);
       console.log(tx);
       console.log('Transaction done');
+      idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
+      idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
     });
-    idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
-    idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
   }
 
   async login(appname: string, username: string): Promise<boolean> {
