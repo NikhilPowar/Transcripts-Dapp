@@ -23,11 +23,13 @@ const appRoutes: Routes = [
   },
   {
     path: 'application',
-    component: ApplicationFormComponent
+    component: ApplicationFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'application-list',
-    component: ApplicationListComponent
+    component: ApplicationListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'application-view/:transcriptAddress',
