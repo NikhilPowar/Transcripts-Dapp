@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IpfsService } from '../ipfs.service';
-import { ContractService } from '../contract.service';
+import { BlockchainService } from '../blockchain.service';
 import { ActivatedRoute } from '@angular/router';
+import { ConnectService } from '../connect.service';
 
 @Component({
   selector: 'app-shared-view',
@@ -19,8 +20,9 @@ export class SharedViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private connectService: ConnectService,
     private ipfsService: IpfsService,
-    private contractService: ContractService
+    private blockchainService: BlockchainService
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,10 @@ export class SharedViewComponent implements OnInit {
   }
 
   async getTranscriptData() {
-    this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
+    if (!this.connectService.getWSW3()) {
+      await this.connectService.connect();
+    }
+    this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     this.transcript = {};
     this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();
