@@ -35,7 +35,7 @@ export class BlockchainService {
   }
 
   viewContract(address: string, abi: object) {
-    const web3 = this.connectService.getWeb3();
+    const web3 = this.connectService.getWSW3();
     const contract = new web3.eth.Contract(abi, address);
     console.log(contract);
     return contract;
@@ -54,11 +54,11 @@ export class BlockchainService {
     });
   }
 
-  async createContract(name: string, args?: any[]) {
-    // ContractFactory address: 0x03af9b1553a7075663bfe641d5cfe3c453ff5a4d
-    const address = '0x03af9b1553a7075663bfe641d5cfe3c453ff5a4d';
+  async createContract(name: string, args?: any[]): Promise<any> {
+    // ContractFactory address: 0x0428453a175Ce1cf440847659384B517065173c8
+    const address = '0x0428453a175Ce1cf440847659384B517065173c8';
     // tslint:disable-next-line:max-line-length
-    const abi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' } ], 'name': 'IdentityContractCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'string' }, { 'indexed': false, 'name': 'id', 'type': 'string' }, { 'indexed': false, 'name': 'courseName', 'type': 'string' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'TranscriptApplicationContractCreated', 'type': 'event' }, { 'constant': false, 'inputs': [], 'name': 'createIdentityContract', 'outputs': [ { 'name': 'idContractAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'owner', 'type': 'address' }, { 'name': 'provider', 'type': 'address' }, { 'name': 'name', 'type': 'string' }, { 'name': 'id', 'type': 'string' }, { 'name': 'courseName', 'type': 'string' }, { 'name': 'startYear', 'type': 'uint256' }, { 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'createTranscriptApplicationContract', 'outputs': [ { 'name': 'transcriptApplicationAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+    const abi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'idContractAddress', 'type': 'address' } ], 'name': 'IdentityContractCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'string' }, { 'indexed': false, 'name': 'id', 'type': 'string' }, { 'indexed': false, 'name': 'courseName', 'type': 'string' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'applicationAddress', 'type': 'address' } ], 'name': 'TranscriptApplicationContractCreated', 'type': 'event' }, { 'constant': false, 'inputs': [], 'name': 'createIdentityContract', 'outputs': [ { 'name': 'idContractAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'owner', 'type': 'address' }, { 'name': 'provider', 'type': 'address' }, { 'name': 'name', 'type': 'string' }, { 'name': 'id', 'type': 'string' }, { 'name': 'courseName', 'type': 'string' }, { 'name': 'startYear', 'type': 'uint256' }, { 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'createTranscriptApplicationContract', 'outputs': [ { 'name': 'transcriptApplicationAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
 
     const contractFactory = this.viewContract(address, abi);
 
@@ -78,5 +78,6 @@ export class BlockchainService {
     QRCode.toCanvas(url).then(qr => {
       document.getElementById('qr').appendChild(qr);
     });
+    return contractFactory;
   }
 }

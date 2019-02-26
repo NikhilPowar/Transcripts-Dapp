@@ -80,8 +80,7 @@ export class ApplicationViewComponent implements OnInit {
     console.log(this.buffer);
     const hash = await this.ipfsService.store(this.buffer);
     console.log('Storage done.');
-    const from = this.connectService.getAddress();
-    await this.transcriptContract.methods.setTranscriptHash(hash).send({from: from});
+    await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hash));
     console.log(await this.transcriptContract.methods.getTranscriptHash().call());
   }
 

@@ -5,7 +5,8 @@ import "./TranscriptApplication.sol";
 
 contract ContractFactory {
     event IdentityContractCreated(
-        address creator
+        address creator,
+        address idContractAddress
     );
 
     event TranscriptApplicationContractCreated(
@@ -16,15 +17,16 @@ contract ContractFactory {
         string id,
         string courseName,
         uint startYear,
-        uint completionYear
+        uint completionYear,
+        address applicationAddress
     );
 
     function createIdentityContract()
     public
     returns (address idContractAddress)
     {
-        idContractAddress = address(new KeyHolder());
-        emit IdentityContractCreated(msg.sender);
+        idContractAddress = address(new KeyHolder(msg.sender));
+        emit IdentityContractCreated(msg.sender, idContractAddress);
         return idContractAddress;
     }
 
@@ -40,7 +42,7 @@ contract ContractFactory {
     returns (address transcriptApplicationAddress)
     {
         transcriptApplicationAddress = address(new TranscriptApplication(owner, provider, name, id, courseName, startYear, completionYear));
-        emit TranscriptApplicationContractCreated(msg.sender, owner, provider, name, id, courseName, startYear, completionYear);
+        emit TranscriptApplicationContractCreated(msg.sender, owner, provider, name, id, courseName, startYear, completionYear, transcriptApplicationAddress);
         return transcriptApplicationAddress;
     }
 }

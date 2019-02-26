@@ -29,10 +29,10 @@ library KeyHolderLibrary {
         bool executed;
     }
 
-    function init(KeyHolderData storage _keyHolderData)
+    function init(KeyHolderData storage _keyHolderData, address owner)
         public
     {
-        bytes32 _key = keccak256(abi.encodePacked(msg.sender));
+        bytes32 _key = keccak256(abi.encodePacked(owner));
         _keyHolderData.keys[_key].key = _key;
         _keyHolderData.keys[_key].purposes.push(1);
         _keyHolderData.keys[_key].keyType = 1;

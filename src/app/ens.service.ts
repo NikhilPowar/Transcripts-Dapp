@@ -39,7 +39,6 @@ export class EnsService {
     console.log(ethers.utils.namehash(appname + '.eth'));
     console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
     console.log(address);
-    const from = this.connectService.getAddress();
     // tslint:disable-next-line:max-line-length
     const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.eth'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
     const data = func.encodeABI();
@@ -47,7 +46,7 @@ export class EnsService {
     // tslint:disable-next-line:max-line-length
     const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
     const subdomainCreatorContract = this.blockchainService.viewContract(subdomainCreatorAddress, subdomainCreatorABI);
-    console.log(await subdomainCreatorContract.methods.register(data).send({from: from}));
+    this.blockchainService.updateContract(subdomainCreatorAddress, subdomainCreatorContract.methods.register(data));
     console.log('Transaction done.');
   }
 

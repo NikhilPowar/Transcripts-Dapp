@@ -11,6 +11,7 @@ export class ConnectService {
   private idContractAddress;
   private provider;
   private web3;
+  private wsw3;
   private address;
   private wallet;
   private role;
@@ -67,7 +68,7 @@ export class ConnectService {
     console.log(this.web3);
     this.provider = await new ethers.providers.Web3Provider(this.web3.currentProvider);
     console.log(this.provider);
-    // this.address = (await this.web3.eth.getAccounts())[0];
+    this.wsw3 = new Web3('wss://ropsten.infura.io/ws');
     this.generateAccount();
   }
 
@@ -77,6 +78,10 @@ export class ConnectService {
 
   public getWeb3() {
     return this.web3;
+  }
+
+  public getWSW3() {
+    return this.wsw3;
   }
 
   public getAddress() {
