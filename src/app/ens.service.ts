@@ -39,15 +39,19 @@ export class EnsService {
     console.log(ethers.utils.namehash(appname + '.eth'));
     console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
     console.log(address);
+    // Old subdomain creator: 0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1
+    const subdomainCreatorAddress = '0x55E75af1364f16b17f951AfF6d3049e0Ed89d14e';
     // tslint:disable-next-line:max-line-length
-    const func = this.registrarContract.methods.setSubnodeOwner(ethers.utils.namehash(appname + '.eth'), ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)), address);
-    const data = func.encodeABI();
-    const subdomainCreatorAddress = '0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1';
-    // tslint:disable-next-line:max-line-length
-    const subdomainCreatorABI = [ { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'data', 'type': 'bytes' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+    const subdomainCreatorABI = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'appname', 'type': 'bytes32' }, { 'indexed': false, 'name': 'username', 'type': 'bytes32' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'data', 'type': 'bytes' } ], 'name': 'SubdomainCreated', 'type': 'event' }, { 'constant': false, 'inputs': [ { 'name': 'appname', 'type': 'bytes32' }, { 'name': 'username', 'type': 'bytes32' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'appname', 'type': 'bytes32' }, { 'name': 'username', 'type': 'bytes32' }, { 'name': 'userAddress', 'type': 'address' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
     const subdomainCreatorContract = this.blockchainService.viewContract(subdomainCreatorAddress, subdomainCreatorABI);
-    this.blockchainService.updateContract(subdomainCreatorAddress, subdomainCreatorContract.methods.register(data));
-    console.log('Transaction done.');
+
+    const appNameHash = ethers.utils.namehash(appname + '.eth');
+    const userNameHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username));
+    // tslint:disable-next-line:max-line-length
+    this.blockchainService.updateContract(subdomainCreatorAddress, subdomainCreatorContract.methods.register(appNameHash, userNameHash));
+    await subdomainCreatorContract.events.SubdomainCreated().on('data', async (event) => {
+      console.log(event);
+    });
   }
 
   async createSubdomain(appname: string, username: string, address: string) {
