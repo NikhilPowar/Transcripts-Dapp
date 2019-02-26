@@ -8,6 +8,7 @@ import { ApplicationListComponent } from './application-list/application-list.co
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { SharedViewComponent } from './shared-view/shared-view.component';
 
 const appRoutes: Routes = [
   {
@@ -37,6 +38,10 @@ const appRoutes: Routes = [
   {
     path: 'admin-page',
     component: AdminPageComponent
+  },
+  {
+    path: 'shared-view/:transcriptAddress',
+    component: SharedViewComponent
   },
   {
     path: '',

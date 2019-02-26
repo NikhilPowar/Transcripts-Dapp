@@ -1,22 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { IpfsService } from '../ipfs.service';
-import { ConnectService } from '../connect.service';
-import { BlockchainService } from '../blockchain.service';
+import { ContractService } from '../contract.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-application-view',
-  templateUrl: './application-view.component.html',
-  styleUrls: ['./application-view.component.css']
+  selector: 'app-shared-view',
+  templateUrl: './shared-view.component.html',
+  styleUrls: ['./shared-view.component.css']
 })
-export class ApplicationViewComponent implements OnInit {
-  sharedViewAddress = 'localhost:4200/shared-view';
-  shareLinkVisible = false;
-  copied = false;
+export class SharedViewComponent implements OnInit {
   transcriptAddress: string;
   transcriptContract: any;
   buffer: Buffer;
-  role: string;
   transcript: any;
   loading: boolean;
   // tslint:disable-next-line:max-line-length
@@ -24,9 +19,8 @@ export class ApplicationViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private blockchainService: BlockchainService,
     private ipfsService: IpfsService,
-    private connectService: ConnectService
+    private contractService: ContractService
   ) { }
 
   ngOnInit() {
@@ -40,11 +34,10 @@ export class ApplicationViewComponent implements OnInit {
         });
       }
     });
-    this.role = this.connectService.getRole();
   }
 
   async getTranscriptData() {
-    this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
+    this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     this.transcript = {};
     this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();
@@ -59,61 +52,15 @@ export class ApplicationViewComponent implements OnInit {
     }
   }
 
-  async convertFileToBuffer(event) {
-    const file = event.target.files[0];
-    let fileDataArray;
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-    fileReader.onloadend = async () => {
-      console.log(fileReader.result);
-      fileDataArray = fileReader.result;
-      const buffer = await Buffer.from(fileDataArray);
-      console.log(buffer);
-      this.buffer = buffer;
-    };
-  }
-
-  async convertBufferToFile() {
-    const file = new Blob([this.buffer], {type: 'application/pdf'});
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  }
-
-  async uploadTranscript() {
-    console.log(this.buffer);
-    const hash = await this.ipfsService.store(this.buffer);
-    console.log('Storage done.');
-    await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hash));
-    console.log(await this.transcriptContract.methods.getTranscriptHash().call());
-  }
-
   async downloadTranscript() {
     const hash = this.transcript['hash'];
     console.log(hash);
     this.buffer = await this.ipfsService.retrieve(hash);
   }
 
-  toggleShareableLink() {
-    this.shareLinkVisible = !this.shareLinkVisible;
-    this.copied = false;
-  }
-
-  copyShareableLink() {
-    this.copyToClipboard(this.sharedViewAddress + '/' + this.transcriptAddress);
-    this.copied = true;
-  }
-
-  copyToClipboard(val: string) {
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+  async convertBufferToFile() {
+    const file = new Blob([this.buffer], {type: 'application/pdf'});
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
   }
 }

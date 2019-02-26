@@ -24,6 +24,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
 import { UserPageComponent } from './user-page/user-page.component';
+import { SharedViewComponent } from './shared-view/shared-view.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserPageComponent } from './user-page/user-page.component';
     ApplicationListComponent,
     ApplicationViewComponent,
     AdminPageComponent,
-    UserPageComponent
+    UserPageComponent,
+    SharedViewComponent
   ],
   imports: [
     BrowserModule,

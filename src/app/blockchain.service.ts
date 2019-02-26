@@ -54,8 +54,10 @@ export class BlockchainService {
     });
   }
 
-  async createContract() {
+  async createContract(abi: any, bytecode: string, args: any[]) {
     const web3 = this.connectService.getWeb3();
+    const contractAddress = '';
+    return contractAddress;
   }
 
   async getTransaction(txHash) {
