@@ -40,7 +40,7 @@ export class EnsService {
     console.log(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username)));
     console.log(address);
     // Old subdomain creator: 0x62e956E4fD6221c6455Ed415A214a3b8bbc90da1
-    const subdomainCreatorAddress = '0x55E75af1364f16b17f951AfF6d3049e0Ed89d14e';
+    const subdomainCreatorAddress = '0xc7d2b6a00d972534957bcb301BDbE7370E68d43e';
     // tslint:disable-next-line:max-line-length
     const subdomainCreatorABI = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'appname', 'type': 'bytes32' }, { 'indexed': false, 'name': 'username', 'type': 'bytes32' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'data', 'type': 'bytes' } ], 'name': 'SubdomainCreated', 'type': 'event' }, { 'constant': false, 'inputs': [ { 'name': 'appname', 'type': 'bytes32' }, { 'name': 'username', 'type': 'bytes32' } ], 'name': 'register', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'appname', 'type': 'bytes32' }, { 'name': 'username', 'type': 'bytes32' }, { 'name': 'userAddress', 'type': 'address' } ], 'name': 'adminRegister', 'outputs': [ { 'name': '', 'type': 'bool' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
     const subdomainCreatorContract = this.blockchainService.viewContract(subdomainCreatorAddress, subdomainCreatorABI);

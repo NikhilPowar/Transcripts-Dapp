@@ -25,7 +25,7 @@ contract SubdomainCreator {
         address registrar = 0x112234455C3a32FD11230C42E7Bccd4A84e02010;
         bool success;
         bytes memory dummy_data;
-        (success, dummy_data) = registrar.call(abi.encode(bytes4(keccak256("setSubnodeOwner(string,string,address)")), appname, username, msg.sender));
+        (success, dummy_data) = registrar.call(abi.encodeWithSignature("setSubnodeOwner(bytes32,bytes32,address)", appname, username, msg.sender));
         if(success) {
             emit SubdomainCreated(appname, username, msg.sender, dummy_data);
         }
@@ -42,7 +42,7 @@ contract SubdomainCreator {
         bool success;
         address registrar = 0x112234455C3a32FD11230C42E7Bccd4A84e02010;
         bytes memory dummy_data;
-        (success, dummy_data) = registrar.call(abi.encode(bytes4(keccak256("setSubnodeOwner(string,string,address)")), appname, username, userAddress));
+        (success, dummy_data) = registrar.call(abi.encodeWithSignature("setSubnodeOwner(bytes32,bytes32,address)", appname, username, userAddress));
         if(success) {
             emit SubdomainCreated(appname, username, userAddress, dummy_data);
         }
