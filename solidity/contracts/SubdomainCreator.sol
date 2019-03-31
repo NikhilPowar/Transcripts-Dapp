@@ -18,16 +18,16 @@ contract SubdomainCreator {
         bytes data
     );
 
-    function register (bytes32 appname, bytes32 username)
+    function register (bytes32 appname, bytes32 username, address idContract)
 		public
         returns (bool)
 	{
         address registrar = 0x112234455C3a32FD11230C42E7Bccd4A84e02010;
         bool success;
         bytes memory dummy_data;
-        (success, dummy_data) = registrar.call(abi.encodeWithSignature("setSubnodeOwner(bytes32,bytes32,address)", appname, username, msg.sender));
+        (success, dummy_data) = registrar.call(abi.encodeWithSignature("setSubnodeOwner(bytes32,bytes32,address)", appname, username, idContract));
         if(success) {
-            emit SubdomainCreated(appname, username, msg.sender, dummy_data);
+            emit SubdomainCreated(appname, username, idContract, dummy_data);
         }
         return success;
     }

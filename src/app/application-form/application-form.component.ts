@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { ContractService } from '../contract.service';
 import { ConnectService } from '../connect.service';
 import { TranscriptService } from '../transcript.service';
 import { EntityListService } from '../entity-list.service';
@@ -39,7 +38,6 @@ export class ApplicationFormComponent {
 
   constructor(
     private connectService: ConnectService,
-    private contractService: ContractService,
     private transcriptService: TranscriptService,
     private formBuilder: FormBuilder,
     private entityListService: EntityListService,
@@ -86,9 +84,9 @@ export class ApplicationFormComponent {
     // TODO: Get address from this.college
     const collegeAddress = this.college.value.addr;
     const transcriptContractAddress =
-      await this.contractService.deployContract(transcriptApplicationABI, transcriptApplicationBytecode,
+      await this.blockchainService.createContract('transcript',
         [idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
-          this.startYear.value, this.completionYear.value]);
+        this.startYear.value, this.completionYear.value]);
     console.log('Application submitted!');
     console.log('Transcript Contract Address:', transcriptContractAddress);
     const transcriptContract = this.blockchainService.viewContract(transcriptContractAddress, transcriptApplicationABI);
