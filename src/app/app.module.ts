@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:max-line-length
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule, MatRippleModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule, MatRippleModule, MatDialogModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +24,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
 import { UserPageComponent } from './user-page/user-page.component';
+import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserPageComponent } from './user-page/user-page.component';
     ApplicationListComponent,
     ApplicationViewComponent,
     AdminPageComponent,
-    UserPageComponent
+    UserPageComponent,
+    ModalDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { UserPageComponent } from './user-page/user-page.component';
     MatSelectModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatDialogModule,
     MatGridListModule,
     MatRippleModule,
     MatCardModule,
@@ -60,6 +63,11 @@ import { UserPageComponent } from './user-page/user-page.component';
   ],
   providers: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ],
+  entryComponents: [
+    ModalDialogComponent
+  ]
 })
 export class AppModule { }

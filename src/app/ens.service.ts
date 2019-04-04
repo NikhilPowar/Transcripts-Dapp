@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
-const Tx = require('ethereumjs-tx');
 import { BlockchainService } from './blockchain.service';
 import { ConnectService } from './connect.service';
 

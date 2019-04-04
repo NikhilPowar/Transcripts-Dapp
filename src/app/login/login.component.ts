@@ -4,6 +4,7 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { EntityListService } from '../entity-list.service';
 import { ConnectService } from '../connect.service';
+import { ModalDialogService } from '../modal-dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent {
     private loginService: LoginService,
     private connectService: ConnectService,
     private entityListService: EntityListService,
-    private router: Router
+    private router: Router,
+    private modalDialogService: ModalDialogService
   ) {
     this.showPopup = false;
     this.loginForm = this.formBuilder.group({
@@ -81,13 +83,18 @@ export class LoginComponent {
   }
 
   studentLogin() {
-    this.loginService.login('transcripts', this.username.value).then((success) => {
-      if (success) {
+    this.modalDialogService.openDialog('Verify Login', 'Scan the code using the wallet used for account creation.');
+    this.loginService.login('transcripts', this.username.value).then((response) => {
+      if (response === 'success') {
         this.connectService.setRole('student');
         this.router.navigate(['user-page']);
-      } else {
+      } else if (response === 'non-existent domain') {
         this.popupInput = this.username.value;
         this.showPopup = true;
+      } else {
+        alert('The login attempt timed out.');
+        this.modalDialogService.closeDialog();
+        return;
       }
     });
   }

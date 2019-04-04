@@ -13,27 +13,36 @@ export class LoginService {
     private blockchainService: BlockchainService
   ) { }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async registerKey(address: string) {
     const idContract = this.blockchainService.viewContract(address, idContractAbi);
     const key = this.connectService.getPublicKey32Bytes();
     await this.blockchainService.updateContract(address, idContract.methods.addKey(key, 4, 1));
-    console.log('Transaction done');
-    idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
-    idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
+    idContract.events.KeyAdded().on('data', (event) => {
+      console.log(event);
+      console.log('Transaction done');
+      idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
+      idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
+      return 'success';
+    });
+    await this.delay(300000);
+    return 'failure';
   }
 
-  async login(appname: string, username: string): Promise<boolean> {
+  async login(appname: string, username: string): Promise<string> {
     console.log('In login service.');
     const idContractAddress = await this.ensService.getSubdomainOwner(appname, username);
     console.log('ID Contract Address: ', idContractAddress);
     if (idContractAddress === false) {
       // Domain doesn't exist
       console.log('Domain doesn\'t exist');
-      return false;
+      return 'non-existent domain';
     }
     // Domain exists. Connect to domain
     this.connectService.setIDContractAddress(idContractAddress);
-    await this.registerKey(idContractAddress);
-    return true;
+    return await this.registerKey(idContractAddress);
   }
 }
