@@ -83,7 +83,7 @@ export class LoginComponent {
   }
 
   studentLogin() {
-    this.modalDialogService.openDialog('Verify Login', 'Scan the code using the wallet used for account creation.');
+    this.modalDialogService.openDialog('Verify Login', 'Scan the QR code using the wallet used for account creation.');
     this.loginService.login('transcripts', this.username.value).then((response) => {
       if (response === 'success') {
         this.connectService.setRole('student');

@@ -21,6 +21,10 @@ export class RegisterService {
     return await this.blockchainService.createContract('identity');
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async registerKey(address: string, appname: string, username: string) {
     const contract = await this.blockchainService.viewContract(address, abi);
     const key = this.connectService.getPublicKey32Bytes();
@@ -30,7 +34,10 @@ export class RegisterService {
       console.log(event['transactionHash']);
       await this.ensService.createSubdomain(appname, username, address);
       console.log('Key Registered');
+      return 'success';
     });
+    await this.delay(300000);
+    return 'failure';
   }
 
   async register(appname: string, username: string) {
@@ -43,7 +50,9 @@ export class RegisterService {
       console.log('Transaction done');
       const idContractAddress = event.returnValues.idContractAddress;
       console.log(idContractAddress);
-      this.registerKey(idContractAddress, appname, username);
+      return await this.registerKey(idContractAddress, appname, username);
     });
+    await this.delay(600000);
+    return 'failure';
   }
 }
