@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityListService } from '../entity-list.service';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { ModalDialogService } from '../modal-dialog.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -19,8 +20,9 @@ export class AdminPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private entityListService: EntityListService
-    ) {
+    private entityListService: EntityListService,
+    private modalDialogService: ModalDialogService
+  ) {
     this.providerForm = this.formBuilder.group({
       'name': this.collegeName,
       'address': this.collegeAddress
@@ -46,6 +48,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   async addProvider(name: string, address: string) {
+    this.modalDialogService.openDialog('Add Institute', 'Scan the QR code with your admin wallet.');
     await this.entityListService.addProvider(name, address);
   }
 
@@ -57,6 +60,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   async addAdmin(address: string) {
+    this.modalDialogService.openDialog('Add Admin', 'Scan the QR code with your admin wallet.');
     await this.entityListService.addAdmin(address);
   }
 
@@ -68,6 +72,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   async removeProvider(address: string) {
+    this.modalDialogService.openDialog('Remove Institute', 'Scan the QR code with your admin wallet.');
     await this.entityListService.removeProvider(address);
   }
 

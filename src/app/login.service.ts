@@ -13,26 +13,14 @@ export class LoginService {
     private blockchainService: BlockchainService
   ) { }
 
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-
   async registerKey(address: string) {
     const idContract = this.blockchainService.viewContract(address, idContractAbi);
     const key = this.connectService.getPublicKey32Bytes();
     await this.blockchainService.updateContract(address, idContract.methods.addKey(key, 4, 1));
-    idContract.events.KeyAdded().on('data', (event) => {
-      console.log(event);
-      console.log('Transaction done');
-      idContract.methods.getKeysByPurpose(4).call().then(succ => console.log(succ), err => console.log(err));
-      idContract.methods.getKeysByPurpose(1).call().then(succ => console.log(succ), err => console.log(err));
-      return 'success';
-    });
-    await this.delay(300000);
-    return 'failure';
+    return idContract.events.KeyAdded();
   }
 
-  async login(appname: string, username: string): Promise<string> {
+  async login(appname: string, username: string): Promise<any> {
     console.log('In login service.');
     const idContractAddress = await this.ensService.getSubdomainOwner(appname, username);
     console.log('ID Contract Address: ', idContractAddress);

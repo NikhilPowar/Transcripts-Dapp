@@ -15,10 +15,6 @@ export class IdContractService {
     private connectService: ConnectService
   ) { }
 
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-
   async sendThroughIDContract(address: string, to: string, value: number, data: string) {
     const idContract = this.blockchainService.viewContract(address, idContractAbi);
     console.log(address);
@@ -36,7 +32,6 @@ export class IdContractService {
       return 'success';
     });
     await this.blockchainService.updateContract(address, idContract.methods.execute(to, value, data));
-    this.delay(300000);
-    return 'false';
+    return idContract.events.Executed();
   }
 }

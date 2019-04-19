@@ -52,19 +52,22 @@ export class EntityListService {
   async addProvider(name: string, address: string) {
     console.log(this.entityListContract);
     const from = this.connectService.getAddress();
-    console.log(await this.entityListContract.methods.addProvidingAuthority(name, address).send({from: from}));
+    return await this.blockchainService.updateContract(entityListContractAddress,
+      this.entityListContract.methods.addProvidingAuthority(name, address));
   }
 
   async addAdmin(address: string) {
     console.log(this.entityListContract);
     const from = this.connectService.getAddress();
-    console.log(await this.entityListContract.methods.addAdmin(address).send({from: from}));
+    return await this.blockchainService.updateContract(entityListContractAddress,
+      this.entityListContract.methods.addAdmin(address));
   }
 
   async removeProvider(address: string) {
     console.log(this.entityListContract);
     const from = this.connectService.getAddress();
-    console.log(await this.entityListContract.methods.removeProvidingAuthority(address).send({from: from}));
+    return await this.blockchainService.updateContract(entityListContractAddress,
+      this.entityListContract.methods.removeProvidingAuthority(address).send({from: from}));
   }
 
 }

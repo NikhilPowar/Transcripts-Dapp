@@ -82,20 +82,29 @@ export class LoginComponent {
     }
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   studentLogin() {
     this.modalDialogService.openDialog('Verify Login', 'Scan the QR code using the wallet used for account creation.');
-    this.loginService.login('transcripts', this.username.value).then((response) => {
-      if (response === 'success') {
-        this.connectService.setRole('student');
-        this.router.navigate(['user-page']);
-      } else if (response === 'non-existent domain') {
+    this.loginService.login('transcripts', this.username.value).then((result) => {
+      if (result === 'non-existent domain') {
+        this.modalDialogService.closeDialog();
         this.popupInput = this.username.value;
         this.showPopup = true;
-      } else {
-        alert('The login attempt timed out.');
-        this.modalDialogService.closeDialog();
         return;
       }
+      result.on('data', (response) => {
+        this.modalDialogService.closeDialog();
+        this.connectService.setRole('student');
+        this.router.navigate(['user-page']);
+      });
+    });
+    this.delay(300000).then(() => {
+      alert('The login attempt timed out.');
+      this.modalDialogService.closeDialog();
+      return;
     });
   }
 

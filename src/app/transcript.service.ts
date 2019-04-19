@@ -23,22 +23,13 @@ export class TranscriptService {
     private connectService: ConnectService
   ) { }
 
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-
   async addApplication(idAddress: string, collegeAddress: string, transcriptContractAddress: string) {
     const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
     // await this.blockchainService.updateContract(this.transcriptListContractAddress,
     //   transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress));
     const idContractAddress = this.connectService.getIDContractAddress();
-    const response = await this.idContractService.sendThroughIDContract(idContractAddress, this.transcriptListContractAddress, 0,
+    return await this.idContractService.sendThroughIDContract(idContractAddress, this.transcriptListContractAddress, 0,
       transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress));
-    if (response === 'false') {
-      return 'false';
-    }
-    console.log(await transcriptListContract.methods.getTranscripts(idAddress).call());
-    console.log(await transcriptListContract.methods.getTranscripts(collegeAddress).call());
   }
 
   async getTranscripts(address: string) {
@@ -50,20 +41,8 @@ export class TranscriptService {
 
   async createApplication(idContractAddress, collegeAddress, name, id, course, startYear, completionYear) {
     const contractFactory =
-      await this.blockchainService.createContract('transcript',
+      await this.blockchainService.createContract('transcriptApplication',
         [idContractAddress, collegeAddress, name, id, course, startYear, completionYear]);
-    contractFactory.events.TranscriptApplicationContractCreated().on('data', async (event) => {
-      console.log(event);
-      console.log('Application submitted!');
-      const transcriptContractAddress = event.applicationAddress;
-      console.log('Transcript Contract Address:', transcriptContractAddress);
-      const transcriptContract = this.blockchainService.viewContract(transcriptContractAddress, transcriptApplicationABI);
-      console.log(await transcriptContract.methods.getTranscriptOwner().call());
-      console.log(await transcriptContract.methods.getTranscriptHash().call());
-      await this.addApplication(idContractAddress, collegeAddress, transcriptContractAddress);
-      return 'success';
-    });
-    this.delay(600000);
-    return 'false';
+    return contractFactory.events.TranscriptApplicationContractCreated();
   }
 }

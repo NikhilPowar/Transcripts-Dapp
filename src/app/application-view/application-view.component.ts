@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IpfsService } from '../ipfs.service';
 import { ConnectService } from '../connect.service';
 import { BlockchainService } from '../blockchain.service';
+import { ModalDialogService } from '../modal-dialog.service';
 
 @Component({
   selector: 'app-application-view',
@@ -23,7 +24,8 @@ export class ApplicationViewComponent implements OnInit {
     private route: ActivatedRoute,
     private blockchainService: BlockchainService,
     private ipfsService: IpfsService,
-    private connectService: ConnectService
+    private connectService: ConnectService,
+    private modalDialogService: ModalDialogService
   ) { }
 
   ngOnInit() {
@@ -80,6 +82,7 @@ export class ApplicationViewComponent implements OnInit {
     console.log(this.buffer);
     const hash = await this.ipfsService.store(this.buffer);
     console.log('Storage done.');
+    this.modalDialogService.openDialog('Register', 'Scan the QR code with the same mobile wallet.');
     await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hash));
     console.log(await this.transcriptContract.methods.getTranscriptHash().call());
   }

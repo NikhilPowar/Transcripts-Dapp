@@ -6,6 +6,7 @@ import { TranscriptService } from '../transcript.service';
 import { EntityListService } from '../entity-list.service';
 import { BlockchainService } from '../blockchain.service';
 import { ModalDialogService } from '../modal-dialog.service';
+import { Router } from '@angular/router';
 
 export class ApplicationErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -39,7 +40,8 @@ export class ApplicationFormComponent {
     private formBuilder: FormBuilder,
     private entityListService: EntityListService,
     private blockchainService: BlockchainService,
-    private modalDialogService: ModalDialogService
+    private modalDialogService: ModalDialogService,
+    private router: Router
   ) {
     this.getCollegeList();
     const currentYear = (new Date()).getFullYear();
@@ -77,14 +79,41 @@ export class ApplicationFormComponent {
     }
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async submitApplication() {
     const idContractAddress = this.connectService.getIDContractAddress();
     const collegeAddress = this.college.value.addr;
-    // ToDo: get reference of the contract factory
-    // listen for application creation
-    // put success code in listener, else timeout
     this.modalDialogService.openDialog('Create application', 'Scan the QR code using the wallet used for account creation.');
     this.transcriptService.createApplication(idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
-      this.startYear.value, this.completionYear.value);
+      this.startYear.value, this.completionYear.value).then((event) => {
+      event.on('data', (response) => {
+        this.modalDialogService.closeDialog();
+        console.log(response);
+        console.log('Application submitted!');
+        const transcriptContractAddress = response.returnValues.applicationAddress;
+        console.log('Transcript Contract Address:', transcriptContractAddress);
+        this.modalDialogService.openDialog('Submit Application', 'Scan the QR code using the wallet used for account creation.');
+        this.transcriptService.addApplication(idContractAddress, collegeAddress, transcriptContractAddress).then((event2) => {
+          event2.on('data', (response2) => {
+            this.modalDialogService.closeDialog();
+            console.log(response2);
+            this.router.navigate(['user-page']);
+          });
+        });
+        this.delay(300000).then(() => {
+          this.modalDialogService.closeDialog();
+          alert('The application attempt timed out.');
+          return;
+        });
+      });
+    });
+    this.delay(600000).then(() => {
+      this.modalDialogService.closeDialog();
+      alert('The application attempt timed out.');
+      return;
+    });
   }
 }

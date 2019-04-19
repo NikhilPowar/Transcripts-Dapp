@@ -10,6 +10,8 @@ const bytecode = '0x608060405234801561001057600080fd5b50604051602080610dc2833981
 
 @Injectable()
 export class RegisterService {
+  idContractAddress: string;
+
   constructor(
     private ensService: EnsService,
     private blockchainService: BlockchainService,
@@ -25,34 +27,14 @@ export class RegisterService {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async registerKey(address: string, appname: string, username: string) {
-    const contract = await this.blockchainService.viewContract(address, abi);
-    const key = this.connectService.getPublicKey32Bytes();
-    await this.blockchainService.updateContract(address, contract.methods.addKey(key, 4, 1));
-    await contract.events.KeyAdded({filter: {key: key}}).on('data', async (event) => {
-      console.log(event);
-      console.log(event['transactionHash']);
-      await this.ensService.createSubdomain(appname, username, address);
-      console.log('Key Registered');
-      return 'success';
-    });
-    await this.delay(300000);
-    return 'failure';
+  async createSubdomain(address: string, appname: string, username: string) {
+    return await this.ensService.createSubdomain(appname, username, address);
   }
 
   async register(appname: string, username: string) {
     console.log('In register service.');
     const factoryContract = await this.createIdContract();
     console.log(factoryContract);
-    await factoryContract.events.IdentityContractCreated().on('data', async (event) => {
-      console.log(event);
-      console.log(event['transactionHash']);
-      console.log('Transaction done');
-      const idContractAddress = event.returnValues.idContractAddress;
-      console.log(idContractAddress);
-      return await this.registerKey(idContractAddress, appname, username);
-    });
-    await this.delay(600000);
-    return 'failure';
+    return factoryContract.events.IdentityContractCreated();
   }
 }

@@ -25,5 +25,13 @@ export class ModalDialogService {
 
   closeDialog () {
     this.dialogRef.close();
+    this.destroyDialog();
+  }
+
+  private destroyDialog() {
+    if (this.dialogRef) {
+      this.dialogRef.componentInstance.close();
+      this.dialogRef = null;
+    }
   }
 }
