@@ -33,6 +33,7 @@ export class TranscriptService {
   }
 
   async getTranscripts(address: string) {
+    console.log('Fetching transcripts for ' + address);
     const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
     const transcripts = await transcriptListContract.methods.getTranscripts(address).call();
     console.log(transcripts);

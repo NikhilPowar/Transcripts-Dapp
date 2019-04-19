@@ -12,6 +12,7 @@ export class ModalDialogService {
   ) { }
 
   openDialog (title: string, desc: string) {
+    console.log('In modal dialog service.');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -25,13 +26,6 @@ export class ModalDialogService {
 
   closeDialog () {
     this.dialogRef.close();
-    this.destroyDialog();
-  }
-
-  private destroyDialog() {
-    if (this.dialogRef) {
-      this.dialogRef.componentInstance.close();
-      this.dialogRef = null;
-    }
+    this.dialogRef._containerInstance.dispose();
   }
 }

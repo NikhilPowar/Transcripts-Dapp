@@ -87,23 +87,28 @@ export class LoginComponent {
   }
 
   studentLogin() {
+    let success = false;
     this.modalDialogService.openDialog('Verify Login', 'Scan the QR code using the wallet used for account creation.');
     this.loginService.login('transcripts', this.username.value).then((result) => {
       if (result === 'non-existent domain') {
         this.modalDialogService.closeDialog();
         this.popupInput = this.username.value;
         this.showPopup = true;
+        success = true;
         return;
       }
       result.on('data', (response) => {
         this.modalDialogService.closeDialog();
         this.connectService.setRole('student');
+        success = true;
         this.router.navigate(['user-page']);
       });
     });
     this.delay(300000).then(() => {
-      alert('The login attempt timed out.');
-      this.modalDialogService.closeDialog();
+      if (!success) {
+        alert('The login attempt timed out.');
+        this.modalDialogService.closeDialog();
+      }
       return;
     });
   }
