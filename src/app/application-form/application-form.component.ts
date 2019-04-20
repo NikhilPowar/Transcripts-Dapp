@@ -86,6 +86,7 @@ export class ApplicationFormComponent {
   async submitApplication() {
     const idContractAddress = this.connectService.getIDContractAddress();
     const collegeAddress = this.college.value.addr;
+    let success = false;
     this.modalDialogService.openDialog('Create application', 'Scan the QR code using the wallet used for account creation.');
     this.transcriptService.createApplication(idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
       this.startYear.value, this.completionYear.value).then((event) => {
@@ -100,19 +101,24 @@ export class ApplicationFormComponent {
           event2.on('data', (response2) => {
             this.modalDialogService.closeDialog();
             console.log(response2);
+            success = true;
             this.router.navigate(['user-page']);
           });
         });
         this.delay(300000).then(() => {
-          this.modalDialogService.closeDialog();
-          alert('The application attempt timed out.');
+          if (!success) {
+            this.modalDialogService.closeDialog();
+            alert('The application attempt timed out.');
+          }
           return;
         });
       });
     });
     this.delay(600000).then(() => {
-      this.modalDialogService.closeDialog();
-      alert('The application attempt timed out.');
+      if (!success) {
+        this.modalDialogService.closeDialog();
+        alert('The application attempt timed out.');
+      }
       return;
     });
   }
