@@ -2,18 +2,18 @@ pragma solidity ^0.5.0;
 
 contract TranscriptApplication {
     address transcriptOwner;    // Student who applied for the transcript
-    string transcriptHash;      // IPFS hash of the transcript document
+    bytes32 transcriptHash;      // IPFS hash of the transcript document
     address providingAuthority; // Authority who provides the transcript hash
 
     // Student Details
-    string public name;
-    string public id;
-    string public courseName;
+    bytes32 public name;
+    bytes32 public id;
+    bytes32 public courseName;
     uint public courseStartYear;
     uint public courseCompletionYear;
 
-    constructor (address _owner, address _provider, string memory _name, string memory _id, 
-                 string memory _courseName, uint _startYear, uint _completionYear) 
+    constructor (address _owner, address _provider, bytes32 _name, bytes32 _id, 
+                 bytes32 _courseName, uint _startYear, uint _completionYear) 
         public 
     {
         transcriptHash = "Not set";
@@ -29,7 +29,7 @@ contract TranscriptApplication {
     function getTranscriptHash () 
         public 
         view 
-        returns (string memory) 
+        returns (bytes32) 
     {
         return transcriptHash;
     }
@@ -42,9 +42,9 @@ contract TranscriptApplication {
         return transcriptOwner;
     }
 
-    function setTranscriptHash (string memory s) 
+    function setTranscriptHash (bytes32 s) 
         public 
-        returns (string memory)
+        returns (bytes32)
     {
         // Only designated address can set the hash
         if(msg.sender != providingAuthority) {
