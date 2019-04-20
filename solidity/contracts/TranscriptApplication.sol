@@ -12,6 +12,21 @@ contract TranscriptApplication {
     uint public courseStartYear;
     uint public courseCompletionYear;
 
+    event TranscriptApplicationCreated (
+        address owner,
+        address provider,
+        bytes32 name,
+        bytes32 id,
+        bytes32 courseName,
+        uint startYear,
+        uint completionYear
+    );
+
+    event TranscriptHashSet (
+        address collegeAddress,
+        bytes32 transcriptHash
+    );
+
     constructor (address _owner, address _provider, bytes32 _name, bytes32 _id, 
                  bytes32 _courseName, uint _startYear, uint _completionYear) 
         public 
@@ -24,6 +39,7 @@ contract TranscriptApplication {
         courseName = _courseName;
         courseStartYear = _startYear;
         courseCompletionYear = _completionYear;
+        emit TranscriptApplicationCreated(_owner, _provider, _name, _id, _courseName, _startYear, _completionYear);
     }
 
     function getTranscriptHash () 
@@ -51,6 +67,7 @@ contract TranscriptApplication {
             return "Error";
         }
         transcriptHash = s;
+        emit TranscriptHashSet (msg.sender, s);
         return "Success";
     }
 }

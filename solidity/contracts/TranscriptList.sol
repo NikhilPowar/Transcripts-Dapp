@@ -2,17 +2,29 @@ pragma solidity ^0.5.0;
 
 contract TranscriptList {
 
-    mapping(address => address[]) transcriptList;
+    mapping (address => address[]) transcriptList;
+
+    event TranscriptAdded (
+        address student,
+        address college,
+        address transcriptAddress
+    );
+
+    event TranscriptRemoved (
+        address userAddress,
+        address transcriptAddress
+    );
 
     constructor () 
         public 
     { }
 
-    function addTranscript (address account1, address account2, address transcriptAddress) 
+    function addTranscript (address student, address college, address transcriptAddress) 
         public 
     {
-        transcriptList[account1].push(transcriptAddress);
-        transcriptList[account2].push(transcriptAddress);
+        transcriptList[student].push(transcriptAddress);
+        transcriptList[college].push(transcriptAddress);
+        emit TranscriptAdded(student, college, transcriptAddress);
     }
 
     function getTranscripts (address account)
@@ -23,14 +35,15 @@ contract TranscriptList {
         return transcriptList[account];
     }
 
-    function removeTranscript (address transcriptAddress)
+    function removeTranscript (address senderAddress, address transcriptAddress)
         public
     {
-        uint length = transcriptList[msg.sender].length;
+        uint length = transcriptList[senderAddress].length;
         for (uint i = 0; i < length; i++){
-            if (transcriptAddress == transcriptList[msg.sender][i]) {
-                transcriptList[msg.sender][i] = transcriptList[msg.sender][length-1];
-                transcriptList[msg.sender].length--;
+            if (transcriptAddress == transcriptList[senderAddress][i]) {
+                transcriptList[senderAddress][i] = transcriptList[senderAddress][length-1];
+                transcriptList[senderAddress].length--;
+                emit TranscriptRemoved(senderAddress, transcriptAddress);
                 return;
             }
         }
