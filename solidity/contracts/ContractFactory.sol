@@ -13,9 +13,9 @@ contract ContractFactory {
         address creator,
         address owner,
         address provider,
-        string name,
-        string id,
-        string courseName,
+        bytes32 name,
+        bytes32 id,
+        bytes32 courseName,
         uint startYear,
         uint completionYear,
         address applicationAddress
@@ -33,9 +33,9 @@ contract ContractFactory {
     function createTranscriptApplicationContract(
         address owner, 
         address provider, 
-        string memory name, 
-        string memory id, 
-        string memory courseName, 
+        bytes32 name, 
+        bytes32 id, 
+        bytes32 courseName, 
         uint startYear, 
         uint completionYear)
     public

@@ -83,12 +83,30 @@ export class ApplicationFormComponent {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
+  pad(s: string, size: number): string {
+    while (s.length < size) {
+      s = s + '0';
+    }
+    return s;
+  }
+
+  stringToBytes32(input: string): string {
+    return this.pad(this.connectService.getWSW3().utils.fromAscii(input), 66);
+  }
+
   async submitApplication() {
+    // Convert string to bytes32
+    const nameBytes = this.stringToBytes32(this.name.value);
+    const idBytes = this.stringToBytes32(this.id.value);
+    const courseBytes = this.stringToBytes32(this.course.value);
+    console.log(nameBytes);
+    console.log(idBytes);
+    console.log(courseBytes);
     const idContractAddress = this.connectService.getIDContractAddress();
     const collegeAddress = this.college.value.addr;
     this.modalDialogService.openDialog('Create application', 'Scan the QR code using the wallet used for account creation.');
-    this.transcriptService.createApplication(idContractAddress, collegeAddress, this.name.value, this.id.value, this.course.value,
-      this.startYear.value, this.completionYear.value).then((event) => {
+    this.transcriptService.createApplication(idContractAddress, collegeAddress, nameBytes, idBytes, courseBytes,
+        this.startYear.value, this.completionYear.value).then((event) => {
       event.on('data', (response) => {
         this.modalDialogService.closeDialog();
         console.log(response);

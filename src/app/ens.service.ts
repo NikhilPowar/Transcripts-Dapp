@@ -46,6 +46,7 @@ export class EnsService {
 
     const appNameHash = ethers.utils.namehash(appname + '.eth');
     const userNameHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(username));
+    console.log(appNameHash, userNameHash);
     // tslint:disable-next-line:max-line-length
     this.blockchainService.updateContract(subdomainCreatorAddress, subdomainCreatorContract.methods.register(appNameHash, userNameHash, address));
     return subdomainCreatorContract.events.SubdomainCreated();
