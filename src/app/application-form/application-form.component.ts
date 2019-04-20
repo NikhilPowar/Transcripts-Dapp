@@ -110,25 +110,25 @@ export class ApplicationFormComponent {
         this.startYear.value, this.completionYear.value).then((event) => {
       event.on('data', (response) => {
         this.modalDialogService.closeDialog();
-        console.log(response);
-        console.log('Application submitted!');
-        const transcriptContractAddress = response.returnValues.applicationAddress;
-        console.log('Transcript Contract Address:', transcriptContractAddress);
-        this.modalDialogService.openDialog('Submit Application', 'Scan the QR code using the wallet used for account creation.');
-        this.transcriptService.addApplication(idContractAddress, collegeAddress, transcriptContractAddress).then((event2) => {
-          event2.on('data', (response2) => {
-            this.modalDialogService.closeDialog();
-            console.log(response2);
-            success = true;
-            this.router.navigate(['user-page']);
+        this.delay(1000).then(() => {
+          console.log(response);
+          console.log('Application submitted!');
+          const transcriptContractAddress = response.returnValues.applicationAddress;
+          console.log('Transcript Contract Address:', transcriptContractAddress);
+          this.modalDialogService.openDialog('Submit Application', 'Scan the QR code using the wallet used for account creation.');
+          this.transcriptService.addApplication(idContractAddress, collegeAddress, transcriptContractAddress).then((event2) => {
+            event2.on('data', (response2) => {
+              this.modalDialogService.closeDialog();
+              console.log(response2);
+              success = true;
+              this.router.navigate(['user-page']);
+            });
           });
-        });
-        this.delay(300000).then(() => {
-          if (!success) {
+          this.delay(300000).then(() => {
             this.modalDialogService.closeDialog();
             alert('The application attempt timed out.');
-          }
-          return;
+            return;
+          });
         });
       });
     });
