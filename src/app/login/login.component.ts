@@ -35,30 +35,55 @@ export class LoginComponent {
     });
   }
 
+  getRandomInteger() {
+    const max = Number.MAX_SAFE_INTEGER;
+    return Math.floor(Math.random() * (max + 1));
+  }
+
   specialLogin() {
-    const address = this.connectService.getAddress();
-    if (this.loginType.value === 'admin') {
-      this.entityListService.getAdminList().then((admins) => {
-        if (admins.includes(address)) {
-          this.connectService.setIDContractAddress(address);
-          this.connectService.setRole('admin');
-          this.router.navigate(['admin-page']);
-        } else {
-          this.showAuthenticationError = true;
+    // ToDo: get a random nonce for verification
+    const nonce = 0;
+    let success = false;
+    this.modalDialogService.openDialog('Login', 'Scan the QR code using the wallet used for your account.');
+    this.loginService.loginSpecial(nonce).then(event => {
+      event.on('data', response => {
+        this.modalDialogService.closeDialog();
+        const address = response.returnValues.sender;
+        const receivedNonce = response.returnValues.nonce;
+        if (nonce === receivedNonce) {
+          if (this.loginType.value === 'admin') {
+            this.entityListService.getAdminList().then((admins) => {
+              if (admins.includes(address)) {
+                success = true;
+                this.connectService.setIDContractAddress(address);
+                this.connectService.setRole('admin');
+                this.router.navigate(['admin-page']);
+              } else {
+                this.showAuthenticationError = true;
+              }
+            });
+          } else {
+            this.entityListService.getProvidersList().then((providers) => {
+              providers.forEach(provider => {
+                if (provider['addr'] === address) {
+                  success = true;
+                  this.connectService.setIDContractAddress(address);
+                  this.connectService.setRole('provider');
+                  this.router.navigate(['application-list']);
+                }
+              });
+              this.showAuthenticationError = true;
+            });
+          }
         }
       });
-    } else {
-      this.entityListService.getProvidersList().then((providers) => {
-        providers.forEach(provider => {
-          if (provider['addr'] === address) {
-            this.connectService.setIDContractAddress(address);
-            this.connectService.setRole('provider');
-            this.router.navigate(['application-list']);
-          }
-        });
-        this.showAuthenticationError = true;
-      });
-    }
+    });
+    this.delay(300000).then(() => {
+      if (!success) {
+        this.modalDialogService.closeDialog();
+        alert('The registration attempt timed out.');
+      }
+    });
   }
 
   loginTypeChanged() {

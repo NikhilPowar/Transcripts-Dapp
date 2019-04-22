@@ -33,4 +33,13 @@ export class LoginService {
     this.connectService.setIDContractAddress(idContractAddress);
     return await this.registerKey(idContractAddress);
   }
+
+  async loginSpecial(nonce: number) {
+    const verifierContractAddress = '0x060522f49d078436c7d427a35420869ba469129b';
+    // tslint:disable-next-line:max-line-length
+    const verifierContractAbi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'sender', 'type': 'address' }, { 'indexed': false, 'name': 'nonce', 'type': 'uint256' } ], 'name': 'SignedMessage', 'type': 'event' }, { 'constant': false, 'inputs': [ { 'name': 'nonce', 'type': 'uint256' } ], 'name': 'signMessage', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+    const verifierContract = this.blockchainService.viewContract(verifierContractAddress, verifierContractAbi);
+    this.blockchainService.updateContract(verifierContractAddress, verifierContract.methods.signMessage(nonce));
+    return verifierContract.events.SignedMessage();
+  }
 }
