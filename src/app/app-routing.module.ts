@@ -8,6 +8,9 @@ import { ApplicationListComponent } from './application-list/application-list.co
 import { ApplicationViewComponent } from './application-view/application-view.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { Web3ConnectedGuard } from './web3-connected.guard';
+import { LoggedInGuard } from './logged-in.guard';
+import { AdministratorGuard } from './administrator.guard';
 
 const appRoutes: Routes = [
   {
@@ -16,27 +19,33 @@ const appRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [Web3ConnectedGuard]
   },
   {
     path: 'application',
-    component: ApplicationFormComponent
+    component: ApplicationFormComponent,
+    canActivate: [Web3ConnectedGuard, LoggedInGuard]
   },
   {
     path: 'application-list',
-    component: ApplicationListComponent
+    component: ApplicationListComponent,
+    canActivate: [Web3ConnectedGuard, LoggedInGuard]
   },
   {
     path: 'application-view/:transcriptAddress',
-    component: ApplicationViewComponent
+    component: ApplicationViewComponent,
+    canActivate: [Web3ConnectedGuard, LoggedInGuard]
   },
   {
     path: 'user-page',
-    component: UserPageComponent
+    component: UserPageComponent,
+    canActivate: [Web3ConnectedGuard, LoggedInGuard]
   },
   {
     path: 'admin-page',
-    component: AdminPageComponent
+    component: AdminPageComponent,
+    canActivate: [Web3ConnectedGuard, LoggedInGuard, AdministratorGuard]
   },
   {
     path: '',

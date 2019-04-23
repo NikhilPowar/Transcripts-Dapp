@@ -33,7 +33,11 @@ export class ConnectService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.idContractAddress = null;
+    this.web3 = null;
+    this.wsw3 = null;
+  }
 
   async generateAccount() {
     this.http.post(this.blockcypherURL, this.blockcypherData, this.httpOptions).subscribe(
