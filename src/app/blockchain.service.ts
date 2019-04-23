@@ -56,12 +56,11 @@ export class BlockchainService {
 
   async createContract(name: string, args?: any[]): Promise<any> {
     // KeyHolderLibrary address: 0xb40ED801354B527732187a3a6b4E32e32f38ebBE
-    // ContractFactory address: 0x0600719a3a76457b77ae0d7de1c1b4301afb8b0f
-    const address = '0x0600719a3a76457b77ae0d7de1c1b4301afb8b0f';
+    // ContractFactory address: 0x98394c13eb5fc3d741d5d4ab93100e7618c83202
+    const address = '0x98394c13eb5fc3d741d5d4ab93100e7618c83202';
     // ContractFactory ABI
     // tslint:disable-next-line:max-line-length
     const abi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'idContractAddress', 'type': 'address' } ], 'name': 'IdentityContractCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'creator', 'type': 'address' }, { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'bytes32' }, { 'indexed': false, 'name': 'id', 'type': 'bytes32' }, { 'indexed': false, 'name': 'courseName', 'type': 'bytes32' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'applicationAddress', 'type': 'address' } ], 'name': 'TranscriptApplicationContractCreated', 'type': 'event' }, { 'constant': false, 'inputs': [], 'name': 'createIdentityContract', 'outputs': [ { 'name': 'idContractAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'owner', 'type': 'address' }, { 'name': 'provider', 'type': 'address' }, { 'name': 'name', 'type': 'bytes32' }, { 'name': 'id', 'type': 'bytes32' }, { 'name': 'courseName', 'type': 'bytes32' }, { 'name': 'startYear', 'type': 'uint256' }, { 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'createTranscriptApplicationContract', 'outputs': [ { 'name': 'transcriptApplicationAddress', 'type': 'address' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
-
     const contractFactory = this.viewContract(address, abi);
 
     let data: any;

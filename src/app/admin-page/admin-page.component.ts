@@ -37,6 +37,10 @@ export class AdminPageComponent implements OnInit {
     this.getProviderList();
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   getErrorMessage(attribute: FormControl) {
     return attribute.hasError('required') ? 'This field is required' :
         attribute.hasError('pattern') ? 'Incorrect address format' : '';
@@ -48,8 +52,22 @@ export class AdminPageComponent implements OnInit {
   }
 
   async addProvider(name: string, address: string) {
+    let success = false;
     this.modalDialogService.openDialog('Add Institute', 'Scan the QR code with your admin wallet.');
-    await this.entityListService.addProvider(name, address);
+    await this.entityListService.addProvider(name, address).then(event => {
+      event.on('data', response => {
+        this.modalDialogService.closeDialog();
+        console.log(response);
+        success = true;
+        this.getProviderList();
+      });
+    });
+    this.delay(300000).then(() => {
+      if (!success) {
+        this.modalDialogService.closeDialog();
+        alert('The addition attempt timed out.');
+      }
+    });
   }
 
   submitProviderForm() {
@@ -60,8 +78,21 @@ export class AdminPageComponent implements OnInit {
   }
 
   async addAdmin(address: string) {
+    let success = false;
     this.modalDialogService.openDialog('Add Admin', 'Scan the QR code with your admin wallet.');
-    await this.entityListService.addAdmin(address);
+    await this.entityListService.addAdmin(address).then(event => {
+      event.on('data', response => {
+        this.modalDialogService.closeDialog();
+        console.log(response);
+        success = true;
+      });
+    });
+    this.delay(300000).then(() => {
+      if (!success) {
+        this.modalDialogService.closeDialog();
+        alert('The login attempt timed out.');
+      }
+    });
   }
 
   submitAdminForm() {
@@ -72,8 +103,22 @@ export class AdminPageComponent implements OnInit {
   }
 
   async removeProvider(address: string) {
+    let success = false;
     this.modalDialogService.openDialog('Remove Institute', 'Scan the QR code with your admin wallet.');
-    await this.entityListService.removeProvider(address);
+    this.entityListService.removeProvider(address).then(event => {
+      event.on('data', response => {
+        this.modalDialogService.closeDialog();
+        console.log(response);
+        success = true;
+        this.getProviderList();
+      });
+    });
+    this.delay(300000).then(() => {
+      if (!success) {
+        this.modalDialogService.closeDialog();
+        alert('The removal attempt timed out.');
+      }
+    });
   }
 
 }

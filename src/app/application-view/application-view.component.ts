@@ -4,6 +4,7 @@ import { IpfsService } from '../ipfs.service';
 import { ConnectService } from '../connect.service';
 import { BlockchainService } from '../blockchain.service';
 import { ModalDialogService } from '../modal-dialog.service';
+const bs58 = require('bs58');
 
 @Component({
   selector: 'app-application-view',
@@ -42,12 +43,22 @@ export class ApplicationViewComponent implements OnInit {
     this.role = this.connectService.getRole();
   }
 
+// ToDo: Transform all ipfs hash operations according to new contract
+
+  fromBase58(x: string) {
+    return bs58.encode(x);
+  }
+
+  toBase58(x) {
+    return bs58.decode(x);
+  }
+
   async getTranscriptData() {
     this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
     const web3 = this.connectService.getWSW3();
     this.transcript = {};
-    this.transcript['hash'] = web3.utils.toAscii(await this.transcriptContract.methods.getTranscriptHash().call());
+    this.transcript['hash'] = web3.utils.toAscii(await this.transcriptContract.methods.getTranscriptHashValue().call());
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
     this.transcript['name'] = web3.utils.toAscii(await this.transcriptContract.methods.name().call());
     this.transcript['id'] = web3.utils.toAscii(await this.transcriptContract.methods.id().call());
@@ -82,10 +93,14 @@ export class ApplicationViewComponent implements OnInit {
   async uploadTranscript() {
     console.log(this.buffer);
     const hash = await this.ipfsService.store(this.buffer);
+    console.log(hash);
     console.log('Storage done.');
+    const hashBytes = this.fromBase58(hash);
+    console.log(hashBytes);
     this.modalDialogService.openDialog('Register', 'Scan the QR code with the same mobile wallet.');
-    await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hash));
-    console.log(await this.transcriptContract.methods.getTranscriptHash().call());
+    // tslint:disable-next-line:max-line-length
+    // await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hashValue, hashFunc, hashSize));
+    // console.log(await this.transcriptContract.methods.getTranscriptHash().call());
   }
 
   async downloadTranscript() {

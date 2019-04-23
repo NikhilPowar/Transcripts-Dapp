@@ -3,11 +3,32 @@ pragma solidity ^0.5.0;
 contract EntityList {
 
     struct ProvidingAuthority {
-        string name;
+        bytes32 name;
         address addr;
     }
     address[] public admins;
     ProvidingAuthority[] public providingAuthorities;
+
+    event ProviderAdded (
+        address addr,
+        bytes32 name,
+        address sender
+    );
+
+    event ProviderRemoved (
+        address addr,
+        address sender
+    );
+
+    event AdminAdded (
+        address addr,
+        address sender
+    );
+
+    event AdminRemoved (
+        address addr,
+        address sender
+    );
 
     constructor ()
         public
@@ -15,19 +36,9 @@ contract EntityList {
         admins.push(msg.sender);
     }
 
-    function toString(address x) 
-        private
-        returns (string memory) 
-    {
-        bytes memory b = new bytes(20);
-        for (uint i = 0; i < 20; i++) {
-            b[i] = byte(uint8(uint(x) / (2**(8*(19 - i)))));
-        }
-        return string(b);
-    }
-
     function validateAdmin(address addr)
         private
+        view
         returns (bool)
     {
         for (uint i = 0; i < admins.length; i++) {
@@ -40,29 +51,48 @@ contract EntityList {
 
     function addAdmin (address addr)
         public
-        returns (string memory)
+        returns (bytes32)
     {
         if(!validateAdmin(msg.sender)) {
             return "Error";
         }
         admins.push(addr);
+        emit AdminAdded(addr, msg.sender);
         return "Success";
     }
 
-    function addProvidingAuthority (string memory name, address addr)
+    function removeAdmin (address addr) 
         public
-        returns (string memory)
+        returns (bytes32) 
+    {
+        if(!validateAdmin(msg.sender)) {
+            return "Error";
+        }
+        for (uint i = 0; i < admins.length; i++) {
+            if (admins[i] == addr) {
+                delete admins[i];
+                emit AdminRemoved(addr, msg.sender);
+                return "Success";
+            }
+        }
+        return "Error";
+    }
+
+    function addProvidingAuthority (bytes32 name, address addr)
+        public
+        returns (bytes32)
     {
         if (!validateAdmin(msg.sender)) {
             return "Error";
         }
         providingAuthorities.push(ProvidingAuthority(name, addr));
+        emit ProviderAdded(addr, name, msg.sender);
         return "Success";
     }
 
     function removeProvidingAuthority (address addr)
         public
-        returns (string memory)
+        returns (bytes32)
     {
         if (!validateAdmin(msg.sender)) {
             return "Error";
@@ -70,6 +100,7 @@ contract EntityList {
         for (uint i = 0; i < providingAuthorities.length; i++) {
             if (providingAuthorities[i].addr == addr) {
                 delete providingAuthorities[i];
+                emit ProviderRemoved(addr, msg.sender);
                 return "Success";
             }
         }

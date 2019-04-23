@@ -125,8 +125,10 @@ export class ApplicationFormComponent {
             });
           });
           this.delay(300000).then(() => {
-            this.modalDialogService.closeDialog();
-            alert('The application attempt timed out.');
+            if (!success) {
+              this.modalDialogService.closeDialog();
+              alert('The application attempt timed out.');
+            }
             return;
           });
         });

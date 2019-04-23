@@ -2,7 +2,12 @@ pragma solidity ^0.5.0;
 
 contract TranscriptApplication {
     address transcriptOwner;    // Student who applied for the transcript
-    bytes32 transcriptHash;      // IPFS hash of the transcript document
+    struct TranscriptHash {     // IPFS hash of the transcript document
+        bytes32 _hash;
+        uint8 _hash_function;
+        uint8 _size;
+    }
+    TranscriptHash transcriptHash;
     address providingAuthority; // Authority who provides the transcript hash
 
     // Student Details
@@ -24,14 +29,18 @@ contract TranscriptApplication {
 
     event TranscriptHashSet (
         address collegeAddress,
-        bytes32 transcriptHash
+        bytes32 transcriptHashValue,
+        uint8 transcriptHashFunction,
+        uint8 transcriptHashSize
     );
 
     constructor (address _owner, address _provider, bytes32 _name, bytes32 _id, 
                  bytes32 _courseName, uint _startYear, uint _completionYear) 
         public 
     {
-        transcriptHash = "Not set";
+        transcriptHash._hash = "Not set";
+        transcriptHash._hash_function = 0;
+        transcriptHash._size = 0;
         transcriptOwner = _owner;
         providingAuthority = _provider;
         name = _name;
@@ -42,12 +51,28 @@ contract TranscriptApplication {
         emit TranscriptApplicationCreated(_owner, _provider, _name, _id, _courseName, _startYear, _completionYear);
     }
 
-    function getTranscriptHash () 
+    function getTranscriptHashValue () 
         public 
         view 
         returns (bytes32) 
     {
-        return transcriptHash;
+        return transcriptHash._hash;
+    }
+
+    function getTranscriptHashFunction ()
+        public
+        view
+        returns (uint8)
+    {
+        return transcriptHash._hash_function;
+    }
+
+    function getTranscriptHashSize ()
+        public
+        view
+        returns (uint8)
+    {
+        return transcriptHash._size;
     }
 
     function getTranscriptOwner () 
@@ -58,7 +83,7 @@ contract TranscriptApplication {
         return transcriptOwner;
     }
 
-    function setTranscriptHash (bytes32 s) 
+    function setTranscriptHash (bytes32 hashValue, uint8 func, uint8 size) 
         public 
         returns (bytes32)
     {
@@ -66,8 +91,10 @@ contract TranscriptApplication {
         if(msg.sender != providingAuthority) {
             return "Error";
         }
-        transcriptHash = s;
-        emit TranscriptHashSet (msg.sender, s);
+        transcriptHash._hash = hashValue;
+        transcriptHash._hash_function = func;
+        transcriptHash._size = size;
+        emit TranscriptHashSet (msg.sender, hashValue, func, size);
         return "Success";
     }
 }

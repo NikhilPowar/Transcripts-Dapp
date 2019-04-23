@@ -41,18 +41,20 @@ export class LoginComponent {
   }
 
   specialLogin() {
-    // ToDo: get a random nonce for verification
-    const nonce = 0;
+    const nonce = this.getRandomInteger();
     let success = false;
     this.modalDialogService.openDialog('Login', 'Scan the QR code using the wallet used for your account.');
     this.loginService.loginSpecial(nonce).then(event => {
       event.on('data', response => {
+        console.log(response);
         this.modalDialogService.closeDialog();
         const address = response.returnValues.sender;
         const receivedNonce = response.returnValues.nonce;
-        if (nonce === receivedNonce) {
+        console.log(receivedNonce);
+        if (nonce.toString() === receivedNonce) {
           if (this.loginType.value === 'admin') {
             this.entityListService.getAdminList().then((admins) => {
+              console.log(admins);
               if (admins.includes(address)) {
                 success = true;
                 this.connectService.setIDContractAddress(address);
@@ -64,6 +66,7 @@ export class LoginComponent {
             });
           } else {
             this.entityListService.getProvidersList().then((providers) => {
+              console.log(providers);
               providers.forEach(provider => {
                 if (provider['addr'] === address) {
                   success = true;
@@ -81,7 +84,7 @@ export class LoginComponent {
     this.delay(300000).then(() => {
       if (!success) {
         this.modalDialogService.closeDialog();
-        alert('The registration attempt timed out.');
+        alert('The login attempt timed out.');
       }
     });
   }
