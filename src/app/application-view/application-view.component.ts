@@ -19,7 +19,7 @@ export class ApplicationViewComponent implements OnInit {
   transcript: any;
   loading: boolean;
   // tslint:disable-next-line:max-line-length
-  abi = [ { 'constant': true, 'inputs': [], 'name': 'name', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseName', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'id', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseCompletionYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseStartYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [ { 'name': '_owner', 'type': 'address' }, { 'name': '_provider', 'type': 'address' }, { 'name': '_name', 'type': 'bytes32' }, { 'name': '_id', 'type': 'bytes32' }, { 'name': '_courseName', 'type': 'bytes32' }, { 'name': '_startYear', 'type': 'uint256' }, { 'name': '_completionYear', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'bytes32' }, { 'indexed': false, 'name': 'id', 'type': 'bytes32' }, { 'indexed': false, 'name': 'courseName', 'type': 'bytes32' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'TranscriptApplicationCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'collegeAddress', 'type': 'address' }, { 'indexed': false, 'name': 'transcriptHash', 'type': 'bytes32' } ], 'name': 'TranscriptHashSet', 'type': 'event' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHash', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptOwner', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 's', 'type': 'bytes32' } ], 'name': 'setTranscriptHash', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+  abi = [ { 'constant': true, 'inputs': [], 'name': 'name', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseName', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'id', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseCompletionYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseStartYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [ { 'name': '_owner', 'type': 'address' }, { 'name': '_provider', 'type': 'address' }, { 'name': '_name', 'type': 'bytes32' }, { 'name': '_id', 'type': 'bytes32' }, { 'name': '_courseName', 'type': 'bytes32' }, { 'name': '_startYear', 'type': 'uint256' }, { 'name': '_completionYear', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'bytes32' }, { 'indexed': false, 'name': 'id', 'type': 'bytes32' }, { 'indexed': false, 'name': 'courseName', 'type': 'bytes32' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'TranscriptApplicationCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'collegeAddress', 'type': 'address' }, { 'indexed': false, 'name': 'transcriptHashValue', 'type': 'bytes32' }, { 'indexed': false, 'name': 'transcriptHashFunction', 'type': 'uint8' }, { 'indexed': false, 'name': 'transcriptHashSize', 'type': 'uint8' } ], 'name': 'TranscriptHashSet', 'type': 'event' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashValue', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashFunction', 'outputs': [ { 'name': '', 'type': 'uint8' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashSize', 'outputs': [ { 'name': '', 'type': 'uint8' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptOwner', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'hashValue', 'type': 'bytes32' }, { 'name': 'func', 'type': 'uint8' }, { 'name': 'size', 'type': 'uint8' } ], 'name': 'setTranscriptHash', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
 
   constructor(
     private route: ActivatedRoute,
@@ -46,11 +46,25 @@ export class ApplicationViewComponent implements OnInit {
 // ToDo: Transform all ipfs hash operations according to new contract
 
   fromBase58(x: string) {
-    return bs58.encode(x);
+    return bs58.decode(x);
   }
 
   toBase58(x) {
-    return bs58.decode(x);
+    return bs58.encode(x);
+  }
+
+  async getTranscriptHash () {
+    try {
+      const hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
+      const hashFunc = (await this.transcriptContract.methods.getTranscriptHashFunction().call()).toString('hex');
+      const hashSize = (await this.transcriptContract.methods.getTranscriptHashSize().call()).toString('hex');
+      const hash = hashFunc + hashSize + hashValue;
+      console.log(hash);
+      const bytes = Buffer.from(hash, 'hex');
+      return this.toBase58(bytes);
+    } catch {
+      return '';
+    } finally { }
   }
 
   async getTranscriptData() {
@@ -58,16 +72,16 @@ export class ApplicationViewComponent implements OnInit {
     console.log(this.transcriptContract);
     const web3 = this.connectService.getWSW3();
     this.transcript = {};
-    this.transcript['hash'] = web3.utils.toAscii(await this.transcriptContract.methods.getTranscriptHashValue().call());
+    this.transcript['hash'] = await this.getTranscriptHash();
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
     this.transcript['name'] = web3.utils.toAscii(await this.transcriptContract.methods.name().call());
     this.transcript['id'] = web3.utils.toAscii(await this.transcriptContract.methods.id().call());
     this.transcript['course_name'] = web3.utils.toAscii(await this.transcriptContract.methods.courseName().call());
     this.transcript['course_start'] = await this.transcriptContract.methods.courseStartYear().call();
     this.transcript['course_end'] = await this.transcriptContract.methods.courseCompletionYear().call();
-    if (!this.transcript['hash'].startsWith('Not set')) {
-      await this.downloadTranscript();
-    }
+    // if (!this.transcript['hash'].startsWith('Not set')) {
+    //   await this.downloadTranscript();
+    // }
   }
 
   async convertFileToBuffer(event) {
@@ -97,10 +111,21 @@ export class ApplicationViewComponent implements OnInit {
     console.log('Storage done.');
     const hashBytes = this.fromBase58(hash);
     console.log(hashBytes);
+    const hashFunc = hashBytes[0];
+    console.log(hashFunc);
+    const hashSize = hashBytes[1];
+    console.log(hashSize);
+    // tslint:disable-next-line:no-construct
+    const hashValue = new String('0x' + Buffer.from(hashBytes.slice(2, hashBytes.length)).toString('hex'));
+    console.log(hashValue);
     this.modalDialogService.openDialog('Register', 'Scan the QR code with the same mobile wallet.');
     // tslint:disable-next-line:max-line-length
-    // await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hashValue, hashFunc, hashSize));
-    // console.log(await this.transcriptContract.methods.getTranscriptHash().call());
+    await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hashValue.valueOf(), hashFunc, hashSize));
+    this.transcriptContract.events.TranscriptHashSet().on('data', response => {
+      this.modalDialogService.closeDialog();
+      console.log(response);
+      this.getTranscriptHash();
+    });
   }
 
   async downloadTranscript() {
