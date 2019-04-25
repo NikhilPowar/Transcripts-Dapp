@@ -1,0 +1,44 @@
+.transcript-data {
+  width: 60%;
+  margin: auto;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.data-row {
+  width: 100%;
+  border-bottom: 1px solid #bbbbbb;
+  clear: both;
+  overflow: auto;
+}
+
+.field {
+  float: left;
+}
+
+.value {
+  float: right;
+}
+
+.share-row {
+  margin: auto;
+  margin-top: 10px;
+  overflow: auto;
+}
+
+.share-row > * {
+  margin-bottom: 5px;
+}
+
+.hint {
+  color: #999999;
+}
+
+.info {
+  color: #ff0000;
+  font-size: 1.5em;
+}
+
+.material-button-row > * {
+  margin: 10px;
+}
