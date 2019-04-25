@@ -25,6 +25,7 @@ import { IncludesValuePipe } from './pipes/includes-value.pipe';
 import { GreaterThanPipe } from './pipes/greater-than.pipe';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
+import { SharedViewComponent } from './shared-view/shared-view.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
     ApplicationViewComponent,
     AdminPageComponent,
     UserPageComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    SharedViewComponent
   ],
   imports: [
     BrowserModule,

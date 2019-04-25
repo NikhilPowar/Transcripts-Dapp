@@ -11,6 +11,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { Web3ConnectedGuard } from './web3-connected.guard';
 import { LoggedInGuard } from './logged-in.guard';
 import { AdministratorGuard } from './administrator.guard';
+import { SharedViewComponent } from './shared-view/shared-view.component';
 
 const appRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
     path: 'admin-page',
     component: AdminPageComponent,
     canActivate: [Web3ConnectedGuard, LoggedInGuard, AdministratorGuard]
+  },
+  {
+    path: 'shared-view/:transcriptAddress',
+    component: SharedViewComponent
   },
   {
     path: '',

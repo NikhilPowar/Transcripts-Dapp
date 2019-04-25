@@ -31,7 +31,7 @@ export class RegisterService {
     return await this.ensService.createSubdomain(appname, username, address);
   }
 
-  async register(appname: string, username: string) {
+  async register(appname: string , username: string) {
     console.log('In register service.');
     const factoryContract = await this.createIdContract();
     console.log(factoryContract);

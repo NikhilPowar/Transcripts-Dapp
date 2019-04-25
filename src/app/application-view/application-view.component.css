@@ -20,6 +20,20 @@
   float: right;
 }
 
+.share-row {
+  margin: auto;
+  margin-top: 10px;
+  overflow: auto;
+}
+
+.share-row > * {
+  margin-bottom: 5px;
+}
+
+.hint {
+  color: #999999;
+}
+
 .info {
   color: #ff0000;
   font-size: 1.5em;
