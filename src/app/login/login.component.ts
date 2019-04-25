@@ -126,7 +126,7 @@ export class LoginComponent {
         success = true;
         return;
       }
-      result.once('KeyAdded', {}, (error, response) => {
+      result.on('data', (response) => {
         this.modalDialogService.closeDialog();
         this.connectService.setRole('student');
         success = true;

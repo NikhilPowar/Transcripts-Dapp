@@ -29,9 +29,9 @@ export class SharedViewComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const web3 = this.connectService.getWSW3();
+    const web3 = this.connectService.getWeb3();
     if (web3 == null) {
-      await this.connectService.connect();
+      await this.connectService.connect('MOBILE_WALLET');
     }
     this.route.params.subscribe(params => {
       this.transcriptAddress = params.transcriptAddress;
