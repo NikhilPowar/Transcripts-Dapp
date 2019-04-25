@@ -73,6 +73,8 @@ export class ConnectService {
       } else {
         console.log('Web3 not found. Stopping...');
       }
+      this.address = (await this.web3.eth.getAccounts())[0];
+      console.log(this.address);
     } else {
       console.log('Illegal parameter to connect function');
       return;

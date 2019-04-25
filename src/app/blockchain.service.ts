@@ -43,15 +43,21 @@ export class BlockchainService {
 
   async updateContract(address: string, txnData: any) {
     console.log(txnData);
-    const rawTxn = txnData.encodeABI();
-    console.log(rawTxn);
-    const gas = this.calculateGas(rawTxn);
-    console.log(gas);
-    const url = this.getTransactionUrl(address, txnData, gas);
-    console.log(url);
-    QRCode.toCanvas(url).then(qr => {
-      document.getElementById('qr').appendChild(qr);
-    });
+    const walletType = this.connectService.getWalletType();
+    if (walletType === ConnectService.MOBILE_WALLET) {
+      const rawTxn = txnData.encodeABI();
+      console.log(rawTxn);
+      const gas = this.calculateGas(rawTxn);
+      console.log(gas);
+      const url = this.getTransactionUrl(address, txnData, gas);
+      console.log(url);
+      QRCode.toCanvas(url).then(qr => {
+        document.getElementById('qr').appendChild(qr);
+      });
+    } else {
+      const from = this.connectService.getAddress();
+      txnData.send({from: from});
+    }
   }
 
   async createContract(name: string, args?: any[]): Promise<any> {
@@ -72,13 +78,19 @@ export class BlockchainService {
     }
     console.log(data);
 
-    const gas = this.calculateGas(data);
-    console.log(gas);
-    const url = this.getTransactionUrl(address, data, 1500000);
-    console.log(url);
-    QRCode.toCanvas(url).then(qr => {
-      document.getElementById('qr').appendChild(qr);
-    });
+    const walletType = this.connectService.getWalletType();
+    if (walletType === ConnectService.MOBILE_WALLET) {
+      const gas = this.calculateGas(data);
+      console.log(gas);
+      const url = this.getTransactionUrl(address, data, 1500000);
+      console.log(url);
+      QRCode.toCanvas(url).then(qr => {
+        document.getElementById('qr').appendChild(qr);
+      });
+    } else {
+      const from = this.connectService.getAddress();
+      data.send({from: from});
+    }
     return contractFactory;
   }
 }
