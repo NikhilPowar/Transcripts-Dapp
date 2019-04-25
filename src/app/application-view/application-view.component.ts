@@ -63,6 +63,7 @@ export class ApplicationViewComponent implements OnInit {
       const hash = hashFunc + hashSize + hashValue;
       console.log(hash);
       const bytes = Buffer.from(hash, 'hex');
+      console.log(this.toBase58(bytes));
       return this.toBase58(bytes);
     } catch {
       return '';
@@ -81,7 +82,7 @@ export class ApplicationViewComponent implements OnInit {
     this.transcript['course_name'] = web3.utils.toAscii(await this.transcriptContract.methods.courseName().call());
     this.transcript['course_start'] = await this.transcriptContract.methods.courseStartYear().call();
     this.transcript['course_end'] = await this.transcriptContract.methods.courseCompletionYear().call();
-    if (this.transcript['hash'] !== '') {
+    if (this.transcript['hash'] !== '16HBNVc468g8XdS6Wjry9PBCk9WeSyjWpMc2igFoEk3Lb') {
       await this.downloadTranscript();
     }
   }

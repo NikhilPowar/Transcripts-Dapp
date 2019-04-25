@@ -18,7 +18,7 @@ export class SharedViewComponent implements OnInit {
   transcript: any;
   loading: boolean;
   // tslint:disable-next-line:max-line-length
-  abi = [ { 'constant': true, 'inputs': [], 'name': 'name', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseName', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'id', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseCompletionYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseStartYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [ { 'name': '_owner', 'type': 'address' }, { 'name': '_provider', 'type': 'address' }, { 'name': '_name', 'type': 'string' }, { 'name': '_id', 'type': 'string' }, { 'name': '_courseName', 'type': 'string' }, { 'name': '_startYear', 'type': 'uint256' }, { 'name': '_completionYear', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHash', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptOwner', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 's', 'type': 'string' } ], 'name': 'setTranscriptHash', 'outputs': [ { 'name': '', 'type': 'string' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
+  abi = [ { 'constant': true, 'inputs': [], 'name': 'name', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseName', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'id', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseCompletionYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'courseStartYear', 'outputs': [ { 'name': '', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [ { 'name': '_owner', 'type': 'address' }, { 'name': '_provider', 'type': 'address' }, { 'name': '_name', 'type': 'bytes32' }, { 'name': '_id', 'type': 'bytes32' }, { 'name': '_courseName', 'type': 'bytes32' }, { 'name': '_startYear', 'type': 'uint256' }, { 'name': '_completionYear', 'type': 'uint256' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'owner', 'type': 'address' }, { 'indexed': false, 'name': 'provider', 'type': 'address' }, { 'indexed': false, 'name': 'name', 'type': 'bytes32' }, { 'indexed': false, 'name': 'id', 'type': 'bytes32' }, { 'indexed': false, 'name': 'courseName', 'type': 'bytes32' }, { 'indexed': false, 'name': 'startYear', 'type': 'uint256' }, { 'indexed': false, 'name': 'completionYear', 'type': 'uint256' } ], 'name': 'TranscriptApplicationCreated', 'type': 'event' }, { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'collegeAddress', 'type': 'address' }, { 'indexed': false, 'name': 'transcriptHashValue', 'type': 'bytes32' }, { 'indexed': false, 'name': 'transcriptHashFunction', 'type': 'uint8' }, { 'indexed': false, 'name': 'transcriptHashSize', 'type': 'uint8' } ], 'name': 'TranscriptHashSet', 'type': 'event' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashValue', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashFunction', 'outputs': [ { 'name': '', 'type': 'uint8' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptHashSize', 'outputs': [ { 'name': '', 'type': 'uint8' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getTranscriptOwner', 'outputs': [ { 'name': '', 'type': 'address' } ], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [ { 'name': 'hashValue', 'type': 'bytes32' }, { 'name': 'func', 'type': 'uint8' }, { 'name': 'size', 'type': 'uint8' } ], 'name': 'setTranscriptHash', 'outputs': [ { 'name': '', 'type': 'bytes32' } ], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +28,11 @@ export class SharedViewComponent implements OnInit {
     private modalDialogService: ModalDialogService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const web3 = this.connectService.getWSW3();
+    if (web3 == null) {
+      await this.connectService.connect();
+    }
     this.route.params.subscribe(params => {
       this.transcriptAddress = params.transcriptAddress;
       console.log(this.transcriptAddress);
@@ -50,18 +54,14 @@ export class SharedViewComponent implements OnInit {
   }
 
   async getTranscriptHash () {
-    try {
-      let hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
-      hashValue = hashValue.slice(2, hashValue.length);
-      const hashFunc = (parseInt(await this.transcriptContract.methods.getTranscriptHashFunction().call(), 10)).toString(16);
-      const hashSize = (parseInt(await this.transcriptContract.methods.getTranscriptHashSize().call(), 10)).toString(16);
-      const hash = hashFunc + hashSize + hashValue;
-      console.log(hash);
-      const bytes = Buffer.from(hash, 'hex');
-      return this.toBase58(bytes);
-    } catch {
-      return '';
-    } finally { }
+    let hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
+    hashValue = hashValue.slice(2, hashValue.length);
+    const hashFunc = (parseInt(await this.transcriptContract.methods.getTranscriptHashFunction().call(), 10)).toString(16);
+    const hashSize = (parseInt(await this.transcriptContract.methods.getTranscriptHashSize().call(), 10)).toString(16);
+    const hash = hashFunc + hashSize + hashValue;
+    console.log(hash);
+    const bytes = Buffer.from(hash, 'hex');
+    return this.toBase58(bytes);
   }
 
   async getTranscriptData() {
@@ -76,7 +76,7 @@ export class SharedViewComponent implements OnInit {
     this.transcript['course_name'] = web3.utils.toAscii(await this.transcriptContract.methods.courseName().call());
     this.transcript['course_start'] = await this.transcriptContract.methods.courseStartYear().call();
     this.transcript['course_end'] = await this.transcriptContract.methods.courseCompletionYear().call();
-    if (this.transcript['hash'] !== '') {
+    if (this.transcript['hash'] !== '16HBNVc468g8XdS6Wjry9PBCk9WeSyjWpMc2igFoEk3Lb') {
       await this.downloadTranscript();
     }
   }
