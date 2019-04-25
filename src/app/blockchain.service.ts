@@ -35,7 +35,7 @@ export class BlockchainService {
   }
 
   viewContract(address: string, abi: object) {
-    const web3 = this.connectService.getWSW3();
+    const web3 = this.connectService.getWeb3();
     const contract = new web3.eth.Contract(abi, address);
     console.log(contract);
     return contract;

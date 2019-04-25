@@ -91,7 +91,7 @@ export class ApplicationFormComponent {
   }
 
   stringToBytes32(input: string): string {
-    return this.pad(this.connectService.getWSW3().utils.fromAscii(input), 66);
+    return this.pad(this.connectService.getWeb3().utils.fromAscii(input), 66);
   }
 
   async submitApplication() {

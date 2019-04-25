@@ -8,12 +8,14 @@ const Web3 = require('web3');
   providedIn: 'root'
 })
 export class ConnectService {
+  public static MOBILE_WALLET = 0;
+  public static METAMASK = 1;
+
   private idContractAddress;
   private provider;
   private web3;
-  private wsw3;
+  private walletType;
   private address;
-  private wallet;
   private role;
   private blockcypherURL = 'https://api.blockcypher.com/v1/eth/main/addrs';
   private blockcypherData = {
@@ -36,7 +38,7 @@ export class ConnectService {
   ) {
     this.idContractAddress = null;
     this.web3 = null;
-    this.wsw3 = null;
+    this.walletType = null;
   }
 
   async generateAccount() {
@@ -55,11 +57,14 @@ export class ConnectService {
     );
   }
 
-  async connect() {
+  async connect(walletType: number) {
     // Perform login operations
-    // this.web3 = new Web3('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f');
-    this.web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/14badb95635442999d7a5c2bec8aa00f'));
-    if (!this.web3) {
+    if (walletType === ConnectService.MOBILE_WALLET) {
+      this.web3 = new Web3('wss://ropsten.infura.io/ws');
+      if (!this.web3) {
+        console.log('Could not connect to infura. Check internet connectivity');
+      }
+    } else if (walletType === ConnectService.METAMASK) {
       if (window['ethereum']) {
         this.web3 = new Web3(window['ethereum']);
         await window['ethereum'].enable();
@@ -68,11 +73,14 @@ export class ConnectService {
       } else {
         console.log('Web3 not found. Stopping...');
       }
+    } else {
+      console.log('Illegal parameter to connect function');
+      return;
     }
+    this.walletType = walletType;
     console.log(this.web3);
     this.provider = await new ethers.providers.Web3Provider(this.web3.currentProvider);
     console.log(this.provider);
-    this.wsw3 = new Web3('wss://ropsten.infura.io/ws');
     this.generateAccount();
   }
 
@@ -82,10 +90,6 @@ export class ConnectService {
 
   public getWeb3() {
     return this.web3;
-  }
-
-  public getWSW3() {
-    return this.wsw3;
   }
 
   public getAddress() {
@@ -114,5 +118,9 @@ export class ConnectService {
 
   public getRole() {
     return this.role;
+  }
+
+  public getWalletType() {
+    return this.walletType;
   }
 }

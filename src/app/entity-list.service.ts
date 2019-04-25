@@ -31,7 +31,7 @@ export class EntityListService {
   }
 
   stringToBytes32(input: string): string {
-    return this.pad(this.connectService.getWSW3().utils.fromAscii(input), 66);
+    return this.pad(this.connectService.getWeb3().utils.fromAscii(input), 66);
   }
 
   async getAdminList() {
@@ -53,7 +53,7 @@ export class EntityListService {
       providers.push(await this.entityListContract.methods.providingAuthorities(i).call());
     }
     console.log(providers);
-    const web3 = this.connectService.getWSW3();
+    const web3 = this.connectService.getWeb3();
     providers = providers.map((obj) => {
       return {
         addr: obj.addr,

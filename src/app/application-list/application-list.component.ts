@@ -32,7 +32,7 @@ export class ApplicationListComponent implements OnInit {
     this.applications = [];
     addresses.forEach(async address => {
       const contract = this.blockchainService.viewContract(address, this.transcriptApplicationAbi);
-      const web3 = this.connectService.getWSW3();
+      const web3 = this.connectService.getWeb3();
       // tslint:disable-next-line:prefer-const
       let application = [];
       application['address'] = address;

@@ -67,7 +67,7 @@ export class SharedViewComponent implements OnInit {
   async getTranscriptData() {
     this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
-    const web3 = this.connectService.getWSW3();
+    const web3 = this.connectService.getWeb3();
     this.transcript = {};
     this.transcript['hash'] = await this.getTranscriptHash();
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
