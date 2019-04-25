@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConnectService } from '../connect.service';
 
@@ -11,19 +11,20 @@ export class ConnectComponent implements OnInit {
 
   constructor(
     private connectService: ConnectService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) { }
 
   ngOnInit() { }
 
   connectMobileWallet() {
     this.connectService.connect('MOBILE_WALLET');
-    this.router.navigate(['login']);
+    this.zone.run(() => this.router.navigate(['login'])).then();
   }
 
   connectMetamask() {
     this.connectService.connect('METAMASK');
-    this.router.navigate(['login']);
+    this.zone.run(() => this.router.navigate(['login'])).then();
   }
 
 }

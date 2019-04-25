@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranscriptService } from '../transcript.service';
 import { ConnectService } from '../connect.service';
@@ -18,7 +18,8 @@ export class ApplicationListComponent implements OnInit {
     private transcriptService: TranscriptService,
     private connectService: ConnectService,
     private blockchainService: BlockchainService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -48,7 +49,7 @@ export class ApplicationListComponent implements OnInit {
 
   viewApplication(address: string) {
     console.log(address);
-    this.router.navigate(['application-view', address]);
+    this.zone.run(() => this.router.navigate(['application-view', address])).then();
   }
 
 }

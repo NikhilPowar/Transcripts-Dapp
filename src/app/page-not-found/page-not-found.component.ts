@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-not-found',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private zone: NgZone,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
+  public navigate(commands: any[]): void {
+    this.zone.run(() => this.router.navigate(commands)).then();
+  }
 }

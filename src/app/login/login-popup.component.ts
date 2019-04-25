@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { RegisterService } from '../register.service';
 import { Router } from '@angular/router';
 import { ModalDialogService } from '../modal-dialog.service';
@@ -20,7 +20,8 @@ export class LoginPopupComponent {
     private registerService: RegisterService,
     private router: Router,
     private modalDialogService: ModalDialogService,
-    private connectService: ConnectService
+    private connectService: ConnectService,
+    private zone: NgZone
   ) { }
 
   delay(ms: number) {
@@ -49,7 +50,7 @@ export class LoginPopupComponent {
               console.log('Registration successful');
               this.connectService.setIDContractAddress(idContractAddress);
               success = true;
-              this.router.navigate(['user-page']);
+              this.zone.run(() => this.router.navigate(['user-page'])).then();
             });
           });
           this.delay(300000).then(() => {

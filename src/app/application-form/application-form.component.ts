@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ConnectService } from '../connect.service';
@@ -41,7 +41,8 @@ export class ApplicationFormComponent {
     private entityListService: EntityListService,
     private blockchainService: BlockchainService,
     private modalDialogService: ModalDialogService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) {
     this.getCollegeList();
     const currentYear = (new Date()).getFullYear();
@@ -121,7 +122,7 @@ export class ApplicationFormComponent {
               this.modalDialogService.closeDialog();
               console.log(response2);
               success = true;
-              this.router.navigate(['user-page']);
+              this.zone.run(() => this.router.navigate(['user-page'])).then();
             });
           });
           this.delay(300000).then(() => {

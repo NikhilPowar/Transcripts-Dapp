@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
@@ -26,7 +26,8 @@ export class LoginComponent {
     private connectService: ConnectService,
     private entityListService: EntityListService,
     private router: Router,
-    private modalDialogService: ModalDialogService
+    private modalDialogService: ModalDialogService,
+    private zone: NgZone
   ) {
     this.showPopup = false;
     this.loginForm = this.formBuilder.group({
@@ -59,7 +60,7 @@ export class LoginComponent {
                 success = true;
                 this.connectService.setIDContractAddress(address);
                 this.connectService.setRole('admin');
-                this.router.navigate(['admin-page']);
+                this.zone.run(() => this.router.navigate(['admin-page'])).then();
               } else {
                 this.showAuthenticationError = true;
               }
@@ -72,7 +73,7 @@ export class LoginComponent {
                   success = true;
                   this.connectService.setIDContractAddress(address);
                   this.connectService.setRole('provider');
-                  this.router.navigate(['application-list']);
+                  this.zone.run(() => this.router.navigate(['application-list'])).then();
                 }
               });
               this.showAuthenticationError = true;
@@ -129,7 +130,7 @@ export class LoginComponent {
         this.modalDialogService.closeDialog();
         this.connectService.setRole('student');
         success = true;
-        this.router.navigate(['user-page']);
+        this.zone.run(() => this.router.navigate(['user-page'])).then();
       });
     });
     this.delay(300000).then(() => {

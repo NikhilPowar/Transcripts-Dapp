@@ -4,7 +4,7 @@
       <div class="page-header">Welcome to Transcripts Dapp</div>
 
       <mat-grid-list cols="2" rowHeight="3:1" gutterSize="1em">
-        <mat-grid-tile matRipple [routerLink]="'../application-list'">
+        <mat-grid-tile matRipple (click)="navigate(['../application-list'])">
           <div class="grid-tile-content">
             <div class="grid-tile-title">
               View Transcript Applications
@@ -14,7 +14,7 @@
             </div>
           </div>
         </mat-grid-tile>
-        <mat-grid-tile matRipple (click)="['../application']">
+        <mat-grid-tile matRipple (click)="navigate(['../application'])">
           <div class="grid-tile-content">
             <div class="grid-tile-title">
               New Application
