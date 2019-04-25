@@ -17,12 +17,12 @@ export class ConnectComponent implements OnInit {
   ngOnInit() { }
 
   connectMobileWallet() {
-    this.connectService.connect(ConnectService.MOBILE_WALLET);
+    this.connectService.connect('MOBILE_WALLET');
     this.router.navigate(['login']);
   }
 
   connectMetamask() {
-    this.connectService.connect(ConnectService.METAMASK);
+    this.connectService.connect('METAMASK');
     this.router.navigate(['login']);
   }
 

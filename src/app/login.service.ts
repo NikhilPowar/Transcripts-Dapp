@@ -17,7 +17,7 @@ export class LoginService {
     const idContract = this.blockchainService.viewContract(address, idContractAbi);
     const key = this.connectService.getPublicKey32Bytes();
     await this.blockchainService.updateContract(address, idContract.methods.addKey(key, 4, 1));
-    return idContract.events.KeyAdded();
+    return idContract;
   }
 
   async login(appname: string, username: string): Promise<any> {

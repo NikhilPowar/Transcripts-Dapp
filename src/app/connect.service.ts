@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ethers } from 'ethers';
+import { StringifyOptions } from 'querystring';
 const Web3 = require('web3');
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnectService {
-  public static MOBILE_WALLET = 0;
-  public static METAMASK = 1;
-
   private idContractAddress;
   private provider;
   private web3;
@@ -55,14 +53,14 @@ export class ConnectService {
     );
   }
 
-  async connect(walletType: number) {
+  async connect(walletType: string) {
     // Perform login operations
-    if (walletType === ConnectService.MOBILE_WALLET) {
+    if (walletType === 'MOBILE_WALLET') {
       this.web3 = new Web3('wss://ropsten.infura.io/ws');
       if (!this.web3) {
         console.log('Could not connect to infura. Check internet connectivity');
       }
-    } else if (walletType === ConnectService.METAMASK) {
+    } else if (walletType === 'METAMASK') {
       if (window['ethereum']) {
         this.web3 = new Web3(window['ethereum']);
         await window['ethereum'].enable();

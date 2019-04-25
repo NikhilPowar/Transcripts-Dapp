@@ -15,7 +15,7 @@ export class ModalDialogService {
 
   openDialog (title: string, desc: string) {
     console.log('In modal dialog service.');
-    if (this.connectService.getWalletType() === ConnectService.METAMASK) {
+    if (this.connectService.getWalletType() === 'METAMASK') {
       return;
     }
     const dialogConfig = new MatDialogConfig();
@@ -30,7 +30,7 @@ export class ModalDialogService {
   }
 
   closeDialog () {
-    if (this.connectService.getWalletType() === ConnectService.METAMASK) {
+    if (this.connectService.getWalletType() === 'METAMASK') {
       return;
     }
     this.dialogRef.close();

@@ -44,7 +44,7 @@ export class BlockchainService {
   async updateContract(address: string, txnData: any) {
     console.log(txnData);
     const walletType = this.connectService.getWalletType();
-    if (walletType === ConnectService.MOBILE_WALLET) {
+    if (walletType === 'MOBILE_WALLET') {
       const rawTxn = txnData.encodeABI();
       console.log(rawTxn);
       const gas = this.calculateGas(rawTxn);
@@ -56,7 +56,7 @@ export class BlockchainService {
       });
     } else {
       const from = this.connectService.getAddress();
-      txnData.send({from: from});
+      txnData.send({from: from}).then();
     }
   }
 
@@ -79,7 +79,7 @@ export class BlockchainService {
     console.log(data);
 
     const walletType = this.connectService.getWalletType();
-    if (walletType === ConnectService.MOBILE_WALLET) {
+    if (walletType === 'MOBILE_WALLET') {
       const gas = this.calculateGas(data);
       console.log(gas);
       const url = this.getTransactionUrl(address, data, 1500000);
@@ -89,7 +89,7 @@ export class BlockchainService {
       });
     } else {
       const from = this.connectService.getAddress();
-      data.send({from: from});
+      data.send({from: from}).then();
     }
     return contractFactory;
   }
