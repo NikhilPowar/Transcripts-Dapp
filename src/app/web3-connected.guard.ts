@@ -12,7 +12,8 @@ export class Web3ConnectedGuard implements CanActivate {
 
   canActivate() {
     console.log('Web3 guard active');
-    if (this.connectService.getWeb3() == null && this.connectService.getWeb3() == null) {
+    if (this.connectService.getWeb3() == null) {
+      console.log('web3 guard failed');
       return false;
     } else {
       return true;

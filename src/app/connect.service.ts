@@ -50,8 +50,6 @@ export class ConnectService {
           'address': obj['address']
         };
         console.log(this.account);
-        this.address = this.account.address;
-        console.log(this.address);
       },
       err => console.log(err)
     );

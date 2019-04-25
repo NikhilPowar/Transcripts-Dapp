@@ -13,6 +13,7 @@ export class LoggedInGuard implements CanActivate {
   canActivate() {
     console.log('Log-in guard active');
     if (this.connectService.getIDContractAddress() == null) {
+      console.log('login guard failed');
       return false;
     } else {
       return true;
