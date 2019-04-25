@@ -46,8 +46,6 @@ export class ApplicationViewComponent implements OnInit {
     this.role = this.connectService.getRole();
   }
 
-// ToDo: Transform all ipfs hash operations according to new contract
-
   fromBase58(x: string) {
     return bs58.decode(x);
   }

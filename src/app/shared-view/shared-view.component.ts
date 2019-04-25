@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IpfsService } from '../ipfs.service';
-import { ContractService } from '../contract.service';
 import { ActivatedRoute } from '@angular/router';
+import { ConnectService } from '../connect.service';
+import { BlockchainService } from '../blockchain.service';
+import { ModalDialogService } from '../modal-dialog.service';
+const bs58 = require('bs58');
 
 @Component({
   selector: 'app-shared-view',
@@ -20,7 +23,9 @@ export class SharedViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipfsService: IpfsService,
-    private contractService: ContractService
+    private blockchainService: BlockchainService,
+    private connectService: ConnectService,
+    private modalDialogService: ModalDialogService
   ) { }
 
   ngOnInit() {
@@ -36,20 +41,64 @@ export class SharedViewComponent implements OnInit {
     });
   }
 
+  fromBase58(x: string) {
+    return bs58.decode(x);
+  }
+
+  toBase58(x) {
+    return bs58.encode(x);
+  }
+
+  async getTranscriptHash () {
+    try {
+      let hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
+      hashValue = hashValue.slice(2, hashValue.length);
+      const hashFunc = (parseInt(await this.transcriptContract.methods.getTranscriptHashFunction().call(), 10)).toString(16);
+      const hashSize = (parseInt(await this.transcriptContract.methods.getTranscriptHashSize().call(), 10)).toString(16);
+      const hash = hashFunc + hashSize + hashValue;
+      console.log(hash);
+      const bytes = Buffer.from(hash, 'hex');
+      return this.toBase58(bytes);
+    } catch {
+      return '';
+    } finally { }
+  }
+
   async getTranscriptData() {
-    this.transcriptContract = this.contractService.accessContract(this.transcriptAddress, this.abi);
+    this.transcriptContract = this.blockchainService.viewContract(this.transcriptAddress, this.abi);
     console.log(this.transcriptContract);
+    const web3 = this.connectService.getWSW3();
     this.transcript = {};
-    this.transcript['hash'] = await this.transcriptContract.methods.getTranscriptHash().call();
+    this.transcript['hash'] = await this.getTranscriptHash();
     this.transcript['owner'] = await this.transcriptContract.methods.getTranscriptOwner().call();
-    this.transcript['name'] = await this.transcriptContract.methods.name().call();
-    this.transcript['id'] = await this.transcriptContract.methods.id().call();
-    this.transcript['course_name'] = await this.transcriptContract.methods.courseName().call();
+    this.transcript['name'] = web3.utils.toAscii(await this.transcriptContract.methods.name().call());
+    this.transcript['id'] = web3.utils.toAscii(await this.transcriptContract.methods.id().call());
+    this.transcript['course_name'] = web3.utils.toAscii(await this.transcriptContract.methods.courseName().call());
     this.transcript['course_start'] = await this.transcriptContract.methods.courseStartYear().call();
     this.transcript['course_end'] = await this.transcriptContract.methods.courseCompletionYear().call();
-    if (this.transcript['hash'] !== 'Not set') {
+    if (this.transcript['hash'] !== '') {
       await this.downloadTranscript();
     }
+  }
+
+  async convertFileToBuffer(event) {
+    const file = event.target.files[0];
+    let fileDataArray;
+    const fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(file);
+    fileReader.onloadend = async () => {
+      console.log(fileReader.result);
+      fileDataArray = fileReader.result;
+      const buffer = await Buffer.from(fileDataArray);
+      console.log(buffer);
+      this.buffer = buffer;
+    };
+  }
+
+  async convertBufferToFile() {
+    const file = new Blob([this.buffer], {type: 'application/pdf'});
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
   }
 
   async downloadTranscript() {
@@ -58,9 +107,4 @@ export class SharedViewComponent implements OnInit {
     this.buffer = await this.ipfsService.retrieve(hash);
   }
 
-  async convertBufferToFile() {
-    const file = new Blob([this.buffer], {type: 'application/pdf'});
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  }
 }
