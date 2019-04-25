@@ -55,9 +55,10 @@ export class ApplicationViewComponent implements OnInit {
 
   async getTranscriptHash () {
     try {
-      const hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
-      const hashFunc = (await this.transcriptContract.methods.getTranscriptHashFunction().call()).toString('hex');
-      const hashSize = (await this.transcriptContract.methods.getTranscriptHashSize().call()).toString('hex');
+      let hashValue = await this.transcriptContract.methods.getTranscriptHashValue().call();
+      hashValue = hashValue.slice(2, hashValue.length);
+      const hashFunc = (parseInt(await this.transcriptContract.methods.getTranscriptHashFunction().call(), 10)).toString(16);
+      const hashSize = (parseInt(await this.transcriptContract.methods.getTranscriptHashSize().call(), 10)).toString(16);
       const hash = hashFunc + hashSize + hashValue;
       console.log(hash);
       const bytes = Buffer.from(hash, 'hex');
@@ -79,9 +80,9 @@ export class ApplicationViewComponent implements OnInit {
     this.transcript['course_name'] = web3.utils.toAscii(await this.transcriptContract.methods.courseName().call());
     this.transcript['course_start'] = await this.transcriptContract.methods.courseStartYear().call();
     this.transcript['course_end'] = await this.transcriptContract.methods.courseCompletionYear().call();
-    // if (!this.transcript['hash'].startsWith('Not set')) {
-    //   await this.downloadTranscript();
-    // }
+    if (this.transcript['hash'] !== '') {
+      await this.downloadTranscript();
+    }
   }
 
   async convertFileToBuffer(event) {
