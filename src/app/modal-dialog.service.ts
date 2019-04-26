@@ -15,24 +15,25 @@ export class ModalDialogService {
 
   openDialog (title: string, desc: string) {
     console.log('In modal dialog service.');
-    if (this.connectService.getWalletType() === 'METAMASK') {
-      return;
-    }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title: title,
-      description: desc
-    };
+    if (this.connectService.getWalletType() === 'METAMASK') {
+      dialogConfig.data = {
+        title: title,
+        description: 'Please wait while transaction completes.'
+      };
+    } else {
+      dialogConfig.data = {
+        title: title,
+        description: desc
+      };
+    }
     this.dialogRef = this.dialog.open(ModalDialogComponent, dialogConfig);
     console.log(this.dialogRef);
   }
 
   closeDialog () {
-    if (this.connectService.getWalletType() === 'METAMASK') {
-      return;
-    }
     this.dialogRef.close();
     this.dialogRef._containerInstance.dispose();
   }
