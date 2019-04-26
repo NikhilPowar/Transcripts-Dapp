@@ -57,7 +57,7 @@ export class EntityListService {
     providers = providers.map((obj) => {
       return {
         addr: obj.addr,
-        name: web3.utils.toAscii(obj.name)
+        name: web3.utils.hexToUtf8(obj.name)
       };
     }).filter((obj) =>
       obj.addr !== '0x0000000000000000000000000000000000000000'
