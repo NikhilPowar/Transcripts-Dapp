@@ -1,3 +1,7 @@
 .actions {
   margin: 1em auto;
 }
+
+.actions > * {
+  margin: 1em;
+}
