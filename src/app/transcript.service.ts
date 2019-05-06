@@ -18,7 +18,7 @@ export class TranscriptService {
     const transcriptListContract = this.blockchainService.viewContract(this.transcriptListContractAddress, this.transcriptListABI);
     this.blockchainService.updateContract(this.transcriptListContractAddress,
         transcriptListContract.methods.addTranscript(idAddress, collegeAddress, transcriptContractAddress));
-    return transcriptListContract.events.TranscriptAdded();
+    return transcriptListContract.events.TranscriptAdded({filter: {transcriptAddress: transcriptContractAddress}});
   }
 
   async getTranscripts(address: string) {
@@ -33,6 +33,6 @@ export class TranscriptService {
     const contractFactory =
       await this.blockchainService.createContract('transcriptApplication',
         [idContractAddress, collegeAddress, name, id, course, startYear, completionYear]);
-    return contractFactory.events.TranscriptApplicationContractCreated();
+    return contractFactory.events.TranscriptApplicationContractCreated({filter: {owner: idContractAddress}});
   }
 }

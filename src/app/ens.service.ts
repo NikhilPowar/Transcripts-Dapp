@@ -49,7 +49,7 @@ export class EnsService {
     console.log(appNameHash, userNameHash);
     // tslint:disable-next-line:max-line-length
     this.blockchainService.updateContract(subdomainCreatorAddress, subdomainCreatorContract.methods.register(appNameHash, userNameHash, address));
-    return subdomainCreatorContract.events.SubdomainCreated();
+    return subdomainCreatorContract.events.SubdomainCreated({filter: {owner: address}});
   }
 
   async createSubdomain(appname: string, username: string, address: string) {

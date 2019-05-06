@@ -70,19 +70,19 @@ export class EntityListService {
     console.log(this.entityListContract);
     name = this.stringToBytes32(name);
     this.blockchainService.updateContract(entityListContractAddress, this.entityListContract.methods.addProvidingAuthority(name, address));
-    return this.entityListContract.events.ProviderAdded();
+    return this.entityListContract.events.ProviderAdded({filter: {addr: address}});
   }
 
   async addAdmin(address: string) {
     console.log(this.entityListContract);
     this.blockchainService.updateContract(entityListContractAddress, this.entityListContract.methods.addAdmin(address));
-    return this.entityListContract.events.AdminAdded();
+    return this.entityListContract.events.AdminAdded({filter: {addr: address}});
   }
 
   async removeProvider(address: string) {
     console.log(this.entityListContract);
     this.blockchainService.updateContract(entityListContractAddress, this.entityListContract.methods.removeProvidingAuthority(address));
-    return this.entityListContract.events.ProviderRemoved();
+    return this.entityListContract.events.ProviderRemoved({filter: {addr: address}});
   }
 
 }

@@ -17,7 +17,7 @@ export class LoginService {
     const idContract = this.blockchainService.viewContract(address, idContractAbi);
     const key = this.connectService.getPublicKey32Bytes();
     await this.blockchainService.updateContract(address, idContract.methods.addKey(key, 4, 1));
-    return idContract.events.KeyAdded();
+    return idContract.events.KeyAdded({filter: {key: key}});
   }
 
   async login(appname: string, username: string): Promise<any> {
@@ -40,6 +40,6 @@ export class LoginService {
     const verifierContractAbi = [ { 'anonymous': false, 'inputs': [ { 'indexed': false, 'name': 'sender', 'type': 'address' }, { 'indexed': false, 'name': 'nonce', 'type': 'uint256' } ], 'name': 'SignedMessage', 'type': 'event' }, { 'constant': false, 'inputs': [ { 'name': 'nonce', 'type': 'uint256' } ], 'name': 'signMessage', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' } ];
     const verifierContract = this.blockchainService.viewContract(verifierContractAddress, verifierContractAbi);
     this.blockchainService.updateContract(verifierContractAddress, verifierContract.methods.signMessage(nonce));
-    return verifierContract.events.SignedMessage();
+    return verifierContract.events.SignedMessage({filter: {nonce: nonce}});
   }
 }

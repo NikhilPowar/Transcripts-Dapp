@@ -124,7 +124,7 @@ export class ApplicationViewComponent implements OnInit {
     this.modalDialogService.openDialog('Register', 'Scan the QR code with the same mobile wallet.');
     // tslint:disable-next-line:max-line-length
     await this.blockchainService.updateContract(this.transcriptAddress, this.transcriptContract.methods.setTranscriptHash(hashValue.valueOf(), hashFunc, hashSize));
-    this.transcriptContract.events.TranscriptHashSet().on('data', response => {
+    this.transcriptContract.events.TranscriptHashSet({filter: {hashValue: hashValue.valueOf()}}).on('data', response => {
       this.modalDialogService.closeDialog();
       console.log(response);
       this.getTranscriptHash();
