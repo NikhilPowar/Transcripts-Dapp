@@ -52,4 +52,11 @@ export class ApplicationListComponent implements OnInit {
     this.zone.run(() => this.router.navigate(['application-view', address])).then();
   }
 
+  toHome(): void {
+    this.zone.run(() => this.router.navigate(['user-page'])).then();
+  }
+
+  isRole() {
+    return this.connectService.getRole();
+  }
 }

@@ -54,6 +54,8 @@
 
         <div class="material-button-row">
           <button mat-flat-button color="primary" [disabled]="!applicationForm.valid" name="submit">Apply</button>
+          
+          <button mat-flat-button color="primary" type="button" name="cancel" (click)="back()">Back</button>
         </div>
       </form>
     </div>

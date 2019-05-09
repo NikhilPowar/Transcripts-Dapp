@@ -19,6 +19,11 @@
           <button mat-flat-button color="primary" class="application-actions" (click)="viewApplication(application.address)">View this application</button>
         </mat-card-actions>
       </mat-card>
+      <div *ngIf="isRole()==='student'">
+        <button mat-flat-button color="primary" class="application-actions" (click)="toHome()">
+          Back
+        </button>
+      </div>
     </div>
   </div>
 </div>

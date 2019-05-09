@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IpfsService } from '../ipfs.service';
 import { ConnectService } from '../connect.service';
 import { BlockchainService } from '../blockchain.service';
@@ -29,7 +29,9 @@ export class ApplicationViewComponent implements OnInit {
     private blockchainService: BlockchainService,
     private ipfsService: IpfsService,
     private connectService: ConnectService,
-    private modalDialogService: ModalDialogService
+    private modalDialogService: ModalDialogService,
+    private router: Router,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -159,5 +161,13 @@ export class ApplicationViewComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+  }
+
+  back(): void {
+    this.zone.run(() => this.router.navigate(['application-list'])).then();
+  }
+
+  isRole() {
+    return this.connectService.getRole();
   }
 }

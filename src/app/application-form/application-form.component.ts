@@ -143,4 +143,8 @@ export class ApplicationFormComponent {
       return;
     });
   }
+
+  back(): void {
+    this.zone.run(() => this.router.navigate(['user-page'])).then();
+  }
 }

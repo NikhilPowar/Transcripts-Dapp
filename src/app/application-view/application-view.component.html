@@ -93,6 +93,10 @@
         </div>
       </div>
 
+      <div *ngIf="role=='provider' || role=='student'" class="material-button-row">
+        <button mat-flat-button color="primary" (click)="back()">Back</button>
+      </div>
+
       <mat-spinner [hidden]="!loading" class="center-spinner"></mat-spinner>
     </div>
   </div>
