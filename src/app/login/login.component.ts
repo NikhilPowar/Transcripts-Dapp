@@ -13,12 +13,12 @@ import { ModalDialogService } from '../modal-dialog.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  private loginForm: FormGroup;
-  private username = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+')]);
-  private loginType = new FormControl('', [Validators.required]);
-  private showPopup: boolean;
-  private popupInput: string;
-  private showAuthenticationError: boolean;
+  public loginForm: FormGroup;
+  public username = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+')]);
+  public loginType = new FormControl('', [Validators.required]);
+  public showPopup: boolean;
+  public popupInput: string;
+  public showAuthenticationError: boolean;
 
   constructor(
     private formBuilder: FormBuilder,

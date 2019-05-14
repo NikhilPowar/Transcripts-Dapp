@@ -9,14 +9,14 @@ import { ModalDialogService } from '../modal-dialog.service';
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
-  private providers: Array<any>;
+  public providers: Array<any>;
 
-  private providerForm: FormGroup;
-  private collegeName = new FormControl('', [Validators.required]);
-  private collegeAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
+  public providerForm: FormGroup;
+  public collegeName = new FormControl('', [Validators.required]);
+  public collegeAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
 
-  private adminForm: FormGroup;
-  private adminAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
+  public adminForm: FormGroup;
+  public adminAddress = new FormControl('', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}')]);
 
   constructor(
     private formBuilder: FormBuilder,

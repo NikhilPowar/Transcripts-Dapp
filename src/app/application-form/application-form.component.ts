@@ -21,16 +21,16 @@ export class ApplicationErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./application-form.component.css']
 })
 export class ApplicationFormComponent {
-  private id = new FormControl('', [Validators.required]);
-  private name = new FormControl('', [Validators.required]);
-  private college = new FormControl('', [Validators.required]);
-  private course = new FormControl('', [Validators.required]);
-  private startYear = new FormControl('', [Validators.required]);
-  private completionYear = new FormControl('', [Validators.required]);
-  private applicationForm: FormGroup;
+  public id = new FormControl('', [Validators.required]);
+  public name = new FormControl('', [Validators.required]);
+  public college = new FormControl('', [Validators.required]);
+  public course = new FormControl('', [Validators.required]);
+  public startYear = new FormControl('', [Validators.required]);
+  public completionYear = new FormControl('', [Validators.required]);
+  public applicationForm: FormGroup;
 
-  private yearRange: number[];
-  private providers: any[];
+  public yearRange: number[];
+  public providers: any[];
 
   matcher = new ApplicationErrorStateMatcher();
 
