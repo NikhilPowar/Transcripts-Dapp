@@ -1,27 +1,18 @@
-# Ang6Dapp
+# Transcripts DApp
+This project is an implementation of a blockchain based transcript system.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
+## Motivation
+There is a need for a reliable system of efficient and simplified process for academic transcript application and procurement along with sufficient measures for authentication of issued transcripts and verification of the integrity of transcripts. Blockchain is an excellent technology to achieve all the requisite properties. This project is an attempt to create a blockchain based web-application which can be used by students for application of transcripts, which can only be approved and issued by the intended institute, and by universities for the verification of the transcripts issued. The system attempts to leverage the immutability and transparency of blockchain and versatility of programming provided by smart contracts to ensure that there is no avenue for alteration or forgery of transcripts.
 
-## Development server
+## Requirements
+This project requires Node.js 9 or above. To test the system you will require an Ethereum wallet. Either browser extensions like Metamask or function-call supporting mobile wallets like WallEth will work. This project runs on the Ropsten testnet and hence no real currency is required to test its working
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## How to execute
+### Package installation
+First install npm packages using `npm install` 
 
-## Code scaffolding
+### Run Development mode
+Run in development mode using `npm run start` or `ng serve`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Production build
+To deply the application, first build using `ng build --prod` and then deploy to platform of your choice.
