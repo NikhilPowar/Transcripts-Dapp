@@ -35,3 +35,7 @@ namehash.py
 # System Files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebaserc
+firebase.json
