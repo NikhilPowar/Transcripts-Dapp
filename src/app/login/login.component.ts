@@ -128,6 +128,7 @@ export class LoginComponent {
       }
       result.on('data', (response) => {
         this.modalDialogService.closeDialog();
+        this.loginService.setIDContractAddress();
         this.connectService.setRole('student');
         success = true;
         this.zone.run(() => this.router.navigate(['user-page'])).then();

@@ -82,6 +82,15 @@ export class ConnectService {
     this.generateAccount();
   }
 
+  async disconnect() {
+    this.provider = null;
+    this.web3 = null;
+    this.address = null;
+    this.account = null;
+    this.idContractAddress = null;
+    this.role = null;
+  }
+
   public getProvider() {
     return this.provider;
   }

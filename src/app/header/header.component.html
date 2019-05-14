@@ -1,0 +1,11 @@
+<div *ngIf="connectService.getIDContractAddress()">
+  <mat-toolbar color="secondary" fixed>
+    <span>
+      <b>Transcripts DApp</b>
+    </span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" type="submit" (click)="logout()">
+      Logout
+    </button>
+  </mat-toolbar>
+</div>

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:max-line-length
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule, MatRippleModule, MatDialogModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatGridListModule, MatRippleModule, MatDialogModule, MatToolbarModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +26,7 @@ import { GreaterThanPipe } from './pipes/greater-than.pipe';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { SharedViewComponent } from './shared-view/shared-view.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SharedViewComponent } from './shared-view/shared-view.component';
     AdminPageComponent,
     UserPageComponent,
     ModalDialogComponent,
-    SharedViewComponent
+    SharedViewComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ import { SharedViewComponent } from './shared-view/shared-view.component';
     MatCardModule,
     MatTabsModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule
